@@ -1,43 +1,49 @@
-# app/api/recommendations.py
+﻿import uuid
 
-from fastapi import APIRouter, BackgroundTasks, Depends
-from app.workers.tasks import run_full_pipeline
-from app.services.trip_service import TripService
+from fastapi import APIRouter, Depends, HTTPException, Request
+from slowapi import Limiter
+from sqlalchemy.orm import Session
 
-router = APIRouter()
+from app.dependencies import get_db
+from app.llm.recommender import RecommendationEngine
+from app.models.ml_result import MLRunResult
+from app.models.recommendation import Recommendation
+from app.models.trip import Trip
 
-@router.post("/trips/{trip_id}/run-analysis")
-async def trigger_analysis(
-    trip_id: str,
-    background_tasks: BackgroundTasks,
-    db: Session = Depends(get_db)
-):
-    """
-    Triggers ML pipeline + LLM recommendation generation.
-    Returns immediately with job_id (async via Celery).
-    """
-    # Validate all participants have submitted surveys
-    trip_service = TripService(db)
-    if not trip_service.all_surveys_complete(trip_id):
-        raise HTTPException(400, "Not all participants have submitted surveys")
-    
-    # Kick off background task
-    task = run_full_pipeline.delay(trip_id)
-    
-    # Update trip status
-    trip_service.update_status(trip_id, "running_ml")
-    
-    return {"job_id": task.id, "status": "processing"}
+limiter = Limiter(key_func=lambda request: request.client.host if request.client else "unknown")
+router = APIRouter(tags=["recommendations"])
 
 
-@router.get("/trips/{trip_id}/analysis")
-async def get_analysis_status(trip_id: str, db: Session = Depends(get_db)):
-    """Poll this endpoint to check if ML pipeline completed."""
-    result = db.query(MLRunResult).filter_by(trip_id=trip_id).first()
-    if not result:
-        return {"status": "not_started"}
-    return {
-        "status": "complete",
-        "cluster_count": len(set(result.cluster_labels.values())),
-        "ran_at": result.ran_at
-    }
+@router.get("/trips/{trip_id}/recommendations")
+@limiter.limit("60/minute")
+def list_recommendations(request: Request, trip_id: uuid.UUID, db: Session = Depends(get_db)):
+    rows = db.query(Recommendation).filter(Recommendation.trip_id == trip_id).order_by(Recommendation.rank.asc()).all()
+    return [
+        {
+            "id": str(r.id),
+            "destination_name": r.destination_name,
+            "why_recommended": r.why_recommended,
+            "estimated_budget_range": r.estimated_budget_range,
+            "best_activities": r.best_activities,
+            "ml_score": r.ml_score,
+            "rank": r.rank,
+            "llm_model_used": r.llm_model_used,
+        }
+        for r in rows
+    ]
+
+
+@router.post("/trips/{trip_id}/recommendations/regenerate")
+@limiter.limit("2/minute")
+def regenerate_recommendations(request: Request, trip_id: uuid.UUID, db: Session = Depends(get_db)):
+    trip = db.query(Trip).filter(Trip.id == trip_id).first()
+    if not trip:
+        raise HTTPException(status_code=404, detail="Trip not found")
+
+    latest_ml = db.query(MLRunResult).filter(MLRunResult.trip_id == trip_id).order_by(MLRunResult.ran_at.desc()).first()
+    if not latest_ml:
+        raise HTTPException(status_code=400, detail="ML analysis not found")
+
+    context = f"Re-generate using ML scores: {latest_ml.destination_scores[:5]}"
+    generated = RecommendationEngine(db).generate(trip_id, context, len(latest_ml.cluster_labels))
+    return {"success": True, "count": len(generated)}

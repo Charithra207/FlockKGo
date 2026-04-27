@@ -1,63 +1,46 @@
-# app/ml/clustering.py
-
 import numpy as np
-import pickle
 from sklearn.cluster import KMeans
-from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import silhouette_score
-from typing import List, Dict
+from sklearn.preprocessing import StandardScaler
 
 
-def cluster_participants(
-    feature_matrix: np.ndarray,
-    participant_ids: List[str]
-) -> Dict:
-    """
-    Runs KMeans clustering on participant feature vectors.
-    
-    Dynamic k selection: try k=2,3,4 and pick best silhouette score.
-    Minimum participants: 4 (otherwise clustering is meaningless)
-    """
-    n = len(participant_ids)
-    
+def cluster_participants(feature_matrix, participant_ids) -> dict:
+    n = len(feature_matrix)
     if n < 4:
-        # Everyone in one cluster
+        labels = [0] * n
         return {
-            "labels": {pid: 0 for pid in participant_ids},
-            "centers": [feature_matrix.mean(axis=0).tolist()],
+            "labels": {str(pid): int(l) for pid, l in zip(participant_ids, labels)},
+            "centers": [feature_matrix.mean(axis=0).tolist()] if n else [],
             "k": 1,
-            "silhouette_score": None
+            "silhouette_score": 0.0,
+            "dominant_cluster": 0,
+            "cluster_sizes": {"0": n},
         }
-    
-    # Normalize features
+
     scaler = StandardScaler()
-    scaled_matrix = scaler.fit_transform(feature_matrix)
-    
-    # Dynamic k selection (try k from 2 to min(4, n//2))
-    best_k = 2
-    best_score = -1
-    best_model = None
-    
-    for k in range(2, min(5, n // 2 + 1)):
-        kmeans = KMeans(n_clusters=k, random_state=42, n_init=10)
-        labels = kmeans.fit_predict(scaled_matrix)
-        
-        if len(set(labels)) < 2:
-            continue
-            
-        score = silhouette_score(scaled_matrix, labels)
-        if score > best_score:
-            best_score = score
-            best_k = k
-            best_model = kmeans
-    
-    labels = best_model.labels_
-    
+    scaled = scaler.fit_transform(feature_matrix)
+    best = None
+    max_k = min(4, n // 2)
+    for k in range(2, max_k + 1):
+        model = KMeans(n_clusters=k, n_init=10, random_state=42)
+        labels = model.fit_predict(scaled)
+        score = silhouette_score(scaled, labels)
+        if best is None or score > best["score"]:
+            best = {
+                "k": k,
+                "score": float(score),
+                "labels": labels,
+                "centers": scaler.inverse_transform(model.cluster_centers_).tolist(),
+            }
+
+    labels = best["labels"]
+    sizes = {str(i): int(np.sum(labels == i)) for i in range(best["k"])}
+    dominant = int(max(range(best["k"]), key=lambda i: sizes[str(i)]))
     return {
-        "labels": dict(zip(participant_ids, labels.tolist())),
-        "centers": best_model.cluster_centers_.tolist(),
-        "k": best_k,
-        "silhouette_score": float(best_score),
-        "scaler": scaler,  # save for inverse transform
-        "dominant_cluster": int(np.bincount(labels).argmax())
+        "labels": {str(pid): int(l) for pid, l in zip(participant_ids, labels.tolist())},
+        "centers": best["centers"],
+        "k": int(best["k"]),
+        "silhouette_score": float(best["score"]),
+        "dominant_cluster": dominant,
+        "cluster_sizes": sizes,
     }

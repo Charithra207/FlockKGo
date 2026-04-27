@@ -1,107 +1,76 @@
-# app/ml/scoring.py
-
 import numpy as np
-from sklearn.metrics.pairwise import cosine_similarity
-from typing import List, Dict
 
-# Pre-defined destination profiles 
-# (you expand this list or generate dynamically with LLM)
-DESTINATION_PROFILES = {
-    "Bali, Indonesia": {
-        "budget_midpoint": 0.15,      # ~$1500
-        "budget_flexibility": 0.3,
-        "vibes": ["beach", "cultural", "relaxation", "food"],
-        "climate": "warm",
-        "activity_level": 0.5
-    },
-    "Tokyo, Japan": {
-        "budget_midpoint": 0.35,
-        "budget_flexibility": 0.2,
-        "vibes": ["city", "cultural", "food", "nightlife"],
-        "climate": "any",
-        "activity_level": 0.7
-    },
-    "Iceland": {
-        "budget_midpoint": 0.5,
-        "budget_flexibility": 0.2,
-        "vibes": ["adventure", "nature"],
-        "climate": "cold",
-        "activity_level": 0.9
-    },
-    # ... add 20+ destinations
-}
+DESTINATIONS = [
+    {"destination_name": "Bali", "country": "Indonesia", "budget_midpoint": 1800, "budget_flexibility": 0.7, "vibes": ["beach", "relaxation", "food"], "climate": "warm", "activity_level": "moderate"},
+    {"destination_name": "Bangkok", "country": "Thailand", "budget_midpoint": 1500, "budget_flexibility": 0.8, "vibes": ["city", "food", "nightlife"], "climate": "warm", "activity_level": "moderate"},
+    {"destination_name": "Tokyo", "country": "Japan", "budget_midpoint": 3200, "budget_flexibility": 0.6, "vibes": ["city", "cultural", "food"], "climate": "any", "activity_level": "intense"},
+    {"destination_name": "Paris", "country": "France", "budget_midpoint": 3500, "budget_flexibility": 0.5, "vibes": ["city", "cultural", "food"], "climate": "any", "activity_level": "moderate"},
+    {"destination_name": "Iceland", "country": "Iceland", "budget_midpoint": 4200, "budget_flexibility": 0.4, "vibes": ["nature", "adventure", "relaxation"], "climate": "cold", "activity_level": "intense"},
+    {"destination_name": "Barcelona", "country": "Spain", "budget_midpoint": 2800, "budget_flexibility": 0.6, "vibes": ["beach", "city", "nightlife"], "climate": "warm", "activity_level": "moderate"},
+    {"destination_name": "Lisbon", "country": "Portugal", "budget_midpoint": 2500, "budget_flexibility": 0.7, "vibes": ["city", "food", "relaxation"], "climate": "warm", "activity_level": "relaxed"},
+    {"destination_name": "New Zealand", "country": "New Zealand", "budget_midpoint": 4600, "budget_flexibility": 0.5, "vibes": ["nature", "adventure", "relaxation"], "climate": "any", "activity_level": "intense"},
+    {"destination_name": "Maldives", "country": "Maldives", "budget_midpoint": 5200, "budget_flexibility": 0.3, "vibes": ["beach", "relaxation", "nature"], "climate": "warm", "activity_level": "relaxed"},
+    {"destination_name": "Vietnam", "country": "Vietnam", "budget_midpoint": 1700, "budget_flexibility": 0.8, "vibes": ["food", "adventure", "cultural"], "climate": "warm", "activity_level": "moderate"},
+    {"destination_name": "Morocco", "country": "Morocco", "budget_midpoint": 2300, "budget_flexibility": 0.6, "vibes": ["cultural", "adventure", "food"], "climate": "warm", "activity_level": "moderate"},
+    {"destination_name": "Amsterdam", "country": "Netherlands", "budget_midpoint": 3000, "budget_flexibility": 0.5, "vibes": ["city", "nightlife", "cultural"], "climate": "cold", "activity_level": "moderate"},
+    {"destination_name": "Costa Rica", "country": "Costa Rica", "budget_midpoint": 2900, "budget_flexibility": 0.6, "vibes": ["nature", "adventure", "beach"], "climate": "warm", "activity_level": "intense"},
+    {"destination_name": "Prague", "country": "Czech Republic", "budget_midpoint": 2200, "budget_flexibility": 0.7, "vibes": ["city", "cultural", "nightlife"], "climate": "cold", "activity_level": "moderate"},
+    {"destination_name": "Santorini", "country": "Greece", "budget_midpoint": 3300, "budget_flexibility": 0.5, "vibes": ["beach", "relaxation", "food"], "climate": "warm", "activity_level": "relaxed"},
+    {"destination_name": "Peru Machu Picchu", "country": "Peru", "budget_midpoint": 3100, "budget_flexibility": 0.5, "vibes": ["adventure", "nature", "cultural"], "climate": "any", "activity_level": "intense"},
+    {"destination_name": "Dubai", "country": "UAE", "budget_midpoint": 3900, "budget_flexibility": 0.4, "vibes": ["city", "nightlife", "food"], "climate": "warm", "activity_level": "moderate"},
+    {"destination_name": "Cape Town", "country": "South Africa", "budget_midpoint": 3400, "budget_flexibility": 0.5, "vibes": ["nature", "food", "adventure"], "climate": "warm", "activity_level": "intense"},
+    {"destination_name": "Kyoto", "country": "Japan", "budget_midpoint": 3000, "budget_flexibility": 0.6, "vibes": ["cultural", "food", "relaxation"], "climate": "any", "activity_level": "relaxed"},
+    {"destination_name": "Colombia Medellin", "country": "Colombia", "budget_midpoint": 2100, "budget_flexibility": 0.7, "vibes": ["city", "nightlife", "adventure"], "climate": "warm", "activity_level": "moderate"},
+]
+
+VIBES_ORDER = ["beach", "adventure", "cultural", "nightlife", "nature", "food", "relaxation", "city"]
+ACTIVITY = {"relaxed": 0.0, "moderate": 0.5, "intense": 1.0}
 
 
-def score_destinations_for_group(
-    cluster_results: Dict,
-    feature_matrix: np.ndarray
-) -> List[Dict]:
-    """
-    Score each destination based on how well it fits the group.
-    
-    Strategy:
-    1. Find dominant cluster centroid
-    2. Compare centroid to each destination profile
-    3. Also factor in minority cluster (don't completely ignore them)
-    """
-    dominant_cluster = cluster_results["dominant_cluster"]
-    centers = np.array(cluster_results["centers"])
-    dominant_centroid = centers[dominant_cluster]
-    
-    scores = []
-    
-    for dest_name, dest_props in DESTINATION_PROFILES.items():
-        dest_vector = _profile_to_vector(dest_props)
-        
-        # Primary score: dominant cluster alignment
-        dominant_score = cosine_similarity(
-            [dominant_centroid], [dest_vector]
-        )[0][0]
-        
-        # Secondary: average alignment across ALL participants
-        # (ensures minority isn't completely ignored)
-        all_scores = cosine_similarity(feature_matrix, [dest_vector])
-        mean_score = float(np.mean(all_scores))
-        min_score = float(np.min(all_scores))  # worst fit person
-        
-        # Weighted final score
-        # 50% dominant cluster, 30% group mean, 20% min (fairness bonus)
-        final_score = (
-            0.50 * dominant_score +
-            0.30 * mean_score +
-            0.20 * min_score
+def _vectorize_destination(d: dict) -> np.ndarray:
+    return np.array(
+        [
+            d["budget_midpoint"] / 10000.0,
+            d["budget_flexibility"],
+            *[1.0 if v in d["vibes"] else 0.0 for v in VIBES_ORDER],
+            *[1.0 if d["climate"] == c else 0.0 for c in ["warm", "cold", "any"]],
+            ACTIVITY[d["activity_level"]],
+            1.0,
+            0.0,
+        ]
+    )
+
+
+def score_destinations_for_group(cluster_results, feature_matrix) -> list:
+    if len(feature_matrix) == 0:
+        return []
+
+    labels = cluster_results["labels"]
+    dominant = cluster_results["dominant_cluster"]
+    dom_idxs = [i for i, pid in enumerate(labels.keys()) if labels[pid] == dominant]
+    min_idxs = [i for i, pid in enumerate(labels.keys()) if labels[pid] != dominant]
+
+    group_mean = feature_matrix.mean(axis=0)
+    dom_mean = feature_matrix[dom_idxs].mean(axis=0) if dom_idxs else group_mean
+    min_mean = feature_matrix[min_idxs].mean(axis=0) if min_idxs else group_mean
+
+    out = []
+    for d in DESTINATIONS:
+        vec = _vectorize_destination(d)
+        dominant_match = 1 - np.linalg.norm(vec - dom_mean) / np.sqrt(len(vec))
+        group_match = 1 - np.linalg.norm(vec - group_mean) / np.sqrt(len(vec))
+        minority = 1 - np.linalg.norm(vec - min_mean) / np.sqrt(len(vec))
+        score = 0.50 * dominant_match + 0.30 * group_match + 0.20 * minority
+        out.append(
+            {
+                "destination_name": d["destination_name"],
+                "country": d["country"],
+                "score": float(max(0.0, min(1.0, score))),
+                "dominant_cluster_match": float(max(0.0, min(1.0, dominant_match))),
+                "group_mean_match": float(max(0.0, min(1.0, group_match))),
+                "minority_consideration": float(max(0.0, min(1.0, minority))),
+            }
         )
-        
-        scores.append({
-            "destination": dest_name,
-            "score": round(float(final_score), 4),
-            "dominant_cluster_match": round(float(dominant_score), 4),
-            "group_mean_match": round(float(mean_score), 4),
-            "minority_consideration": round(float(min_score), 4)
-        })
-    
-    # Sort by score descending
-    scores.sort(key=lambda x: x["score"], reverse=True)
-    return scores[:10]  # Return top 10 for LLM to work with
 
-
-def _profile_to_vector(profile: Dict) -> np.ndarray:
-    """Convert destination profile dict to same feature vector format."""
-    from app.ml.feature_engineering import VIBES, CLIMATES, ACTIVITY_LEVELS
-    
-    features = [
-        profile["budget_midpoint"],
-        profile["budget_flexibility"]
-    ]
-    
-    for vibe in VIBES:
-        features.append(1.0 if vibe in profile.get("vibes", []) else 0.0)
-    
-    for climate in CLIMATES:
-        features.append(1.0 if profile.get("climate") == climate else 0.0)
-    
-    features.append(profile.get("activity_level", 0.5))
-    features.append(0.5)  # neutral date flexibility for destinations
-    features.append(0.0)  # no exclusions for destinations
-    
-    return np.array(features)
+    out.sort(key=lambda x: x["score"], reverse=True)
+    return out[:10]

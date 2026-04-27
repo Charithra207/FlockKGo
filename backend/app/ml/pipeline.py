@@ -1,118 +1,68 @@
-# app/ml/pipeline.py
+﻿import uuid
+from collections import Counter
 
-from app.ml.feature_engineering import build_feature_matrix, build_feature_vector
-from app.ml.clustering import cluster_participants
-from app.ml.similarity import compute_similarity_matrix
-from app.ml.scoring import score_destinations_for_group
-from app.ml.drift_detection import detect_preference_drift
-from app.models.survey_response import SurveyResponse
 import numpy as np
+from sqlalchemy.orm import Session
+
+from app.ml.clustering import cluster_participants
+from app.ml.drift_detection import detect_preference_drift
+from app.ml.feature_engineering import build_feature_matrix
+from app.ml.scoring import score_destinations_for_group
+from app.ml.similarity import compute_similarity_matrix, find_outlier_participants
+from app.models.ml_result import MLRunResult
+from app.models.survey_response import SurveyResponse
+
+
+class MLPipelineError(Exception):
+    pass
 
 
 class MLPipeline:
-    """
-    Orchestrates all ML steps for a trip.
-    Called by Celery background task.
-    """
-    
-    def __init__(self, db_session):
-        self.db = db_session
-    
-    def run(self, trip_id: str) -> dict:
-        """
-        Full pipeline execution.
-        Returns structured results for LLM consumption.
-        """
-        
-        # 1. Load all survey responses for trip
-        responses = self.db.query(SurveyResponse)\
-                          .filter_by(trip_id=trip_id).all()
-        
+    def __init__(self, db: Session):
+        self.db = db
+
+    def run(self, trip_id: uuid.UUID):
+        print(f"[ML] starting pipeline for {trip_id}")
+        responses = self.db.query(SurveyResponse).filter(SurveyResponse.trip_id == trip_id).all()
         if len(responses) < 2:
-            raise ValueError("Need at least 2 survey responses")
-        
-        participant_ids = [str(r.participant_id) for r in responses]
-        
-        # 2. Build feature matrix
-        feature_matrix = build_feature_matrix(responses)
-        
-        # 3. Clustering
-        cluster_results = cluster_participants(feature_matrix, participant_ids)
-        
-        # 4. Similarity matrix
-        similarity_matrix = compute_similarity_matrix(feature_matrix)
-        
-        # 5. Destination scoring
-        destination_scores = score_destinations_for_group(
-            cluster_results, feature_matrix
+            raise MLPipelineError("Need at least 2 survey responses")
+
+        participant_ids = [r.participant_id for r in responses]
+        matrix = build_feature_matrix(responses)
+        clusters = cluster_participants(matrix, participant_ids)
+        similarity_matrix = compute_similarity_matrix(matrix)
+        _outliers = find_outlier_participants(similarity_matrix, participant_ids)
+        destination_scores = score_destinations_for_group(clusters, matrix)
+
+        current = {str(r.participant_id): r.feature_vector for r in responses}
+        previous = {str(r.participant_id): r.previous_vector for r in responses}
+        drift = detect_preference_drift(current, previous)
+
+        result = MLRunResult(
+            trip_id=trip_id,
+            cluster_labels=clusters["labels"],
+            cluster_centers=clusters["centers"],
+            destination_scores=destination_scores,
+            preference_drift=drift,
+            similarity_matrix=similarity_matrix.tolist(),
         )
-        
-        # 6. Drift detection (compare to previous vectors)
-        current_vectors = {
-            str(r.participant_id): r.feature_vector 
-            for r in responses
-        }
-        previous_vectors = {
-            str(r.participant_id): r.previous_vector
-            for r in responses if r.previous_vector
-        }
-        drift_results = detect_preference_drift(current_vectors, previous_vectors)
-        
-        # 7. Compile ML context for LLM
-        ml_context = self._compile_llm_context(
-            responses, cluster_results, destination_scores, drift_results
+        self.db.add(result)
+        self.db.commit()
+
+        budget_mids = [((r.budget_min + r.budget_max) / 2.0) for r in responses]
+        all_vibes = [v for r in responses for v in (r.vibes or [])]
+        all_excluded = sorted(set(x for r in responses for x in (r.excluded_destinations or [])))
+        top_vibes = [v for v, _ in Counter(all_vibes).most_common(3)]
+        top5 = "\n".join([f"- {d['destination_name']} ({d['country']}): {d['score']:.3f}" for d in destination_scores[:5]])
+
+        llm_context = (
+            f"Number of participants: {len(responses)}\n"
+            f"Number of clusters found: {clusters['k']}\n"
+            f"Budget range and average: {min(r.budget_min for r in responses)}-{max(r.budget_max for r in responses)} USD, avg midpoint {np.mean(budget_mids):.2f} USD\n"
+            f"Top shared vibes: {', '.join(top_vibes) if top_vibes else 'None'}\n"
+            f"Top 5 ML-scored destinations with scores:\n{top5}\n"
+            f"Group stability status: {drift['group_stability']}\n"
+            f"All excluded destinations: {', '.join(all_excluded) if all_excluded else 'None'}"
         )
-        
-        return {
-            "cluster_results": cluster_results,
-            "destination_scores": destination_scores,
-            "drift_results": drift_results,
-            "similarity_matrix": similarity_matrix.tolist(),
-            "llm_context": ml_context
-        }
-    
-    def _compile_llm_context(
-        self, responses, cluster_results, destination_scores, drift_results
-    ) -> str:
-        """
-        Build the ML context string that gets injected into LLM prompt.
-        This is the BRIDGE between ML and LLM.
-        """
-        n_participants = len(responses)
-        n_clusters = cluster_results["k"]
-        dominant = cluster_results["dominant_cluster"]
-        
-        # Budget summary
-        budgets = [(r.budget_min + r.budget_max) / 2 for r in responses]
-        
-        top_destinations = destination_scores[:5]
-        
-        context = f"""
-ML ANALYSIS RESULTS:
-
-GROUP COMPOSITION:
-- {n_participants} participants analyzed
-- {n_clusters} distinct preference groups identified
-- Dominant group (Cluster {dominant}): {
-    list(cluster_results['labels'].values()).count(dominant)
-} participants
-
-BUDGET ANALYSIS:
-- Range: ${min(budgets):.0f} - ${max(budgets):.0f}
-- Group average: ${sum(budgets)/len(budgets):.0f}
-- Budget consensus: {'high' if max(budgets) - min(budgets) < 500 else 'low'}
-
-TOP ML-SCORED DESTINATIONS:
-{chr(10).join([
-    f"{i+1}. {d['destination']}: score={d['score']:.3f} "
-    f"(group fit: {d['group_mean_match']:.3f})"
-    for i, d in enumerate(top_destinations)
-])}
-
-PREFERENCE DRIFT:
-- Group stability: {drift_results['group_stability']}
-
-CONSTRAINT: Exclude any destinations that appear in participants' 
-excluded lists.
-"""
-        return context.strip()
+        print(f"[ML] completed pipeline for {trip_id}")
+        return {"clusters": clusters, "destination_scores": destination_scores, "drift": drift}, llm_context
