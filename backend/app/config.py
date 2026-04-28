@@ -5,7 +5,8 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 class Settings(BaseSettings):
     app_name: str = "FlockGo API"
     environment: str = "development"
-    database_url: str = "postgresql+psycopg2://postgres:postgres@db:5432/flockgo"
+    # Default to local Postgres host for non-docker runs.
+    database_url: str = "postgresql+psycopg2://postgres:postgres@localhost:5432/flockgo"
     openai_api_key: str | None = None
     anthropic_api_key: str | None = None
     frontend_base_url: str = "http://localhost:3000"

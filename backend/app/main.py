@@ -3,6 +3,7 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, Response
 from prometheus_client import generate_latest
+from sqlalchemy.exc import OperationalError, SQLAlchemyError
 from slowapi import _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
 
@@ -10,8 +11,6 @@ from app.api import analytics, participants, recommendations, surveys, trips, vo
 from app.db.database import Base, engine
 from app.llm.gateway import LLMError
 from app.ml.pipeline import MLPipelineError
-
-Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="FlockGo API", version="1.0.0")
 app.state.limiter = trips.limiter
@@ -43,6 +42,20 @@ def health():
     return {"status": "healthy"}
 
 
+@app.on_event("startup")
+def startup_db_init():
+    """
+    Initialize schema at startup so importing app modules does not
+    immediately require a live DB connection.
+    """
+    try:
+        Base.metadata.create_all(bind=engine)
+    except SQLAlchemyError as exc:
+        # Keep API process alive for docs/health in environments where DB
+        # isn't available yet; DB-dependent routes will still report errors.
+        print(f"[startup] database initialization skipped: {exc}")
+
+
 @app.get("/metrics")
 def metrics():
     return Response(content=generate_latest(), media_type="text/plain; version=0.0.4")
@@ -66,6 +79,17 @@ async def llm_error_handler(request: Request, exc: LLMError):
 @app.exception_handler(MLPipelineError)
 async def ml_error_handler(request: Request, exc: MLPipelineError):
     return JSONResponse(status_code=500, content={"error": "Internal server error", "detail": str(exc)})
+
+
+@app.exception_handler(OperationalError)
+async def db_unavailable_handler(request: Request, exc: OperationalError):
+    return JSONResponse(
+        status_code=503,
+        content={
+            "error": "Database unavailable",
+            "detail": "PostgreSQL is not reachable. Start Postgres and retry.",
+        },
+    )
 
 
 @app.exception_handler(Exception)
