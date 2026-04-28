@@ -1,6 +1,5 @@
 ﻿import uuid
-from sqlalchemy import Boolean, Column, DateTime, ForeignKey, String
-from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy import Boolean, Column, DateTime, ForeignKey, String, Uuid
 from sqlalchemy.sql import func
 
 from app.db.database import Base
@@ -9,8 +8,8 @@ from app.db.database import Base
 class Participant(Base):
     __tablename__ = "participants"
 
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    trip_id = Column(UUID(as_uuid=True), ForeignKey("trips.id", ondelete="CASCADE"), nullable=False)
+    id = Column(Uuid, primary_key=True, default=uuid.uuid4)
+    trip_id = Column(Uuid, ForeignKey("trips.id", ondelete="CASCADE"), nullable=False)
     name = Column(String(100), nullable=False)
     email = Column(String(255), nullable=True)
     phone = Column(String(20), nullable=True)

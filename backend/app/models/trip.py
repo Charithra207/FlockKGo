@@ -1,6 +1,5 @@
 ﻿import uuid
-from sqlalchemy import JSON, Column, DateTime, Integer, String
-from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy import JSON, Column, DateTime, Integer, String, Uuid
 from sqlalchemy.sql import func
 
 from app.db.database import Base
@@ -9,7 +8,7 @@ from app.db.database import Base
 class Trip(Base):
     __tablename__ = "trips"
 
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    id = Column(Uuid, primary_key=True, default=uuid.uuid4)
     organizer_name = Column(String(100), nullable=False)
     organizer_email = Column(String(255), nullable=False)
     name = Column(String(200), nullable=False)

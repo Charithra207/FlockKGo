@@ -1,6 +1,5 @@
 ﻿import uuid
-from sqlalchemy import JSON, Column, DateTime, Float, ForeignKey, Integer, String, Text
-from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy import JSON, Column, DateTime, Float, ForeignKey, Integer, String, Text, Uuid
 from sqlalchemy.sql import func
 
 from app.db.database import Base
@@ -9,8 +8,8 @@ from app.db.database import Base
 class Recommendation(Base):
     __tablename__ = "recommendations"
 
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    trip_id = Column(UUID(as_uuid=True), ForeignKey("trips.id"), nullable=False)
+    id = Column(Uuid, primary_key=True, default=uuid.uuid4)
+    trip_id = Column(Uuid, ForeignKey("trips.id"), nullable=False)
     destination_name = Column(String(200), nullable=False)
     country = Column(String(100), nullable=True)
     description = Column(Text, nullable=True)
@@ -29,8 +28,8 @@ class Recommendation(Base):
 class LLMUsageLog(Base):
     __tablename__ = "llm_usage_logs"
 
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    trip_id = Column(UUID(as_uuid=True), ForeignKey("trips.id"), nullable=True)
+    id = Column(Uuid, primary_key=True, default=uuid.uuid4)
+    trip_id = Column(Uuid, ForeignKey("trips.id"), nullable=True)
     model_name = Column(String(100), nullable=False)
     task_type = Column(String(100), nullable=False)
     prompt_tokens = Column(Integer, nullable=False)

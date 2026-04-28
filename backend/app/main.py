@@ -87,7 +87,7 @@ async def db_unavailable_handler(request: Request, exc: OperationalError):
         status_code=503,
         content={
             "error": "Database unavailable",
-            "detail": "PostgreSQL is not reachable. Start Postgres and retry.",
+            "detail": "Configured database is not reachable. Start DB and retry.",
         },
     )
 
