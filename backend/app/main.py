@@ -3,12 +3,11 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, Response
 from prometheus_client import generate_latest
-from sqlalchemy.exc import OperationalError, SQLAlchemyError
+from sqlalchemy.exc import OperationalError
 from slowapi import _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
 
 from app.api import analytics, participants, recommendations, surveys, trips, voting
-from app.db.database import Base, engine
 from app.llm.gateway import LLMError
 from app.ml.pipeline import MLPipelineError
 
@@ -40,20 +39,6 @@ def root():
 @app.get("/health")
 def health():
     return {"status": "healthy"}
-
-
-@app.on_event("startup")
-def startup_db_init():
-    """
-    Initialize schema at startup so importing app modules does not
-    immediately require a live DB connection.
-    """
-    try:
-        Base.metadata.create_all(bind=engine)
-    except SQLAlchemyError as exc:
-        # Keep API process alive for docs/health in environments where DB
-        # isn't available yet; DB-dependent routes will still report errors.
-        print(f"[startup] database initialization skipped: {exc}")
 
 
 @app.get("/metrics")
