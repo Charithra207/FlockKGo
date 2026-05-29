@@ -21,6 +21,7 @@ class Recommendation(Base):
     potential_concerns = Column(Text, nullable=True)
     llm_model_used = Column(String(100), nullable=True)
     prompt_version = Column(String(20), nullable=True)
+    quality_score = Column(Float, nullable=True)   # 0.0–1.0 from LLMEvaluator
     rank = Column(Integer, nullable=True)
     generated_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
 

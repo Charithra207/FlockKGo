@@ -42,6 +42,8 @@ class MLPipeline:
             trip_id=trip_id,
             cluster_labels=clusters["labels"],
             cluster_centers=clusters["centers"],
+            cluster_count=clusters["k"],
+            silhouette_score=clusters["silhouette_score"],
             destination_scores=destination_scores,
             preference_drift=drift,
             similarity_matrix=similarity_matrix.tolist(),

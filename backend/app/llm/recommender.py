@@ -4,6 +4,9 @@ from app.llm.gateway import LLMError, ModelGateway
 from app.llm.prompts import recommendation_v1, recommendation_v2
 from app.models.recommendation import Recommendation
 from app.monitoring.cost_tracker import log_llm_usage
+from app.monitoring.metrics import llm_low_quality_total
+
+QUALITY_THRESHOLD = 0.5
 
 
 class RecommendationEngine:
@@ -29,7 +32,11 @@ class RecommendationEngine:
             temperature=0.4,
         )
         parsed = payload["content"]
-        _quality = self.evaluator.evaluate(parsed)
+        quality_score = self.evaluator.evaluate(parsed)
+
+        if quality_score < QUALITY_THRESHOLD:
+            print(f"[LLM] low quality score={quality_score:.2f} trip={trip_id} version={version}")
+            llm_low_quality_total.labels(prompt_version=version).inc()
 
         self.db.query(Recommendation).filter(Recommendation.trip_id == trip_id).delete()
         rows = []
@@ -46,6 +53,7 @@ class RecommendationEngine:
                 ml_score=rec.get("ml_alignment_score", 0.0),
                 llm_model_used=payload["model"],
                 prompt_version=version,
+                quality_score=quality_score,
                 rank=idx,
             )
             self.db.add(row)

@@ -155,12 +155,18 @@ def final_results(request: Request, trip_id: uuid.UUID, db: Session = Depends(ge
 def trip_metrics(request: Request, trip_id: uuid.UUID, db: Session = Depends(get_db)):
     run = db.query(MLRunResult).filter(MLRunResult.trip_id == trip_id).order_by(MLRunResult.ran_at.desc()).first()
     if not run:
-        raise HTTPException(status_code=404, detail="No ML metrics found")
+        raise HTTPException(status_code=404, detail="No ML metrics found for this trip")
+
+    top_destinations = [
+        {"destination": d.get("destination_name"), "score": d.get("score")}
+        for d in (run.destination_scores or [])[:5]
+    ]
 
     return {
-        "silhouette_score": run.preference_drift.get("average_drift", 0.0),
-        "cluster_count": len(set(run.cluster_labels.values())) if run.cluster_labels else 0,
-        "budget_range": "derived from survey responses",
-        "top_vibes": [x.get("destination_name") for x in run.destination_scores[:3]],
+        "silhouette_score": run.silhouette_score,
+        "cluster_count": run.cluster_count,
         "drift_status": run.preference_drift.get("group_stability"),
+        "average_drift": run.preference_drift.get("average_drift"),
+        "top_destinations": top_destinations,
+        "ran_at": run.ran_at.isoformat(),
     }
