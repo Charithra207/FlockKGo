@@ -29,7 +29,7 @@ export default function Voting() {
       <h1 className="text-3xl font-bold text-primary">Rank your favorites</h1>
       <p className="text-muted">Drag to rank these destinations from most to least preferred</p>
       <DraggableRankList items={items} setItems={setItems} />
-      <button disabled={hasVoted || loading} onClick={() => submitVote(items.map((i) => i.id))} className="rounded-xl bg-accent px-5 py-3 font-semibold text-white disabled:opacity-50">{hasVoted ? "You've voted! Waiting for others..." : 'Submit My Rankings'}</button>
+      <button disabled={hasVoted || loading} onClick={() => submitVote({ participant_id: participantId, ranked_choices: items.map((item, index) => ({ rank: index + 1, recommendation_id: item.id })) })} className="rounded-xl bg-accent px-5 py-3 font-semibold text-white disabled:opacity-50">{hasVoted ? "You've voted! Waiting for others..." : 'Submit My Rankings'}</button>
       <VoteProgress voted={voteStatus.voted_count} total={voteStatus.total_count} />
     </div>
   )
