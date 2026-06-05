@@ -31,6 +31,7 @@ import app.models.survey_response  # noqa: F401
 import app.models.recommendation   # noqa: F401
 import app.models.vote             # noqa: F401
 import app.models.ml_result        # noqa: F401
+import app.models.destination      # noqa: F401
 
 target_metadata = Base.metadata
 

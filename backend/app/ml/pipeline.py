@@ -32,7 +32,12 @@ class MLPipeline:
         clusters = cluster_participants(matrix, participant_ids)
         similarity_matrix = compute_similarity_matrix(matrix)
         _outliers = find_outlier_participants(similarity_matrix, participant_ids)
-        destination_scores = score_destinations_for_group(clusters, matrix)
+
+        # Collect all excluded destinations across the group
+        all_excluded = list(set(x for r in responses for x in (r.excluded_destinations or [])))
+        destination_scores = score_destinations_for_group(
+            clusters, matrix, db=self.db, excluded_destinations=all_excluded
+        )
 
         current = {str(r.participant_id): r.feature_vector for r in responses}
         previous = {str(r.participant_id): r.previous_vector for r in responses}
@@ -53,7 +58,6 @@ class MLPipeline:
 
         budget_mids = [((r.budget_min + r.budget_max) / 2.0) for r in responses]
         all_vibes = [v for r in responses for v in (r.vibes or [])]
-        all_excluded = sorted(set(x for r in responses for x in (r.excluded_destinations or [])))
         top_vibes = [v for v, _ in Counter(all_vibes).most_common(3)]
         top5 = "\n".join([f"- {d['destination_name']} ({d['country']}): {d['score']:.3f}" for d in destination_scores[:5]])
 
@@ -64,7 +68,7 @@ class MLPipeline:
             f"Top shared vibes: {', '.join(top_vibes) if top_vibes else 'None'}\n"
             f"Top 5 ML-scored destinations with scores:\n{top5}\n"
             f"Group stability status: {drift['group_stability']}\n"
-            f"All excluded destinations: {', '.join(all_excluded) if all_excluded else 'None'}"
+            f"All excluded destinations: {', '.join(sorted(all_excluded)) if all_excluded else 'None'}"
         )
         print(f"[ML] completed pipeline for {trip_id}")
         return {"clusters": clusters, "destination_scores": destination_scores, "drift": drift}, llm_context
