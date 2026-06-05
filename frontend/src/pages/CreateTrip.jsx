@@ -2,12 +2,14 @@ import { useCallback, useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import { Link } from 'react-router-dom'
 import { addParticipant, createTrip, getParticipants, runAnalysis } from '../services/tripService'
+import { getSurveyStatus } from '../services/surveyService'
 import { MONTHS, DEV_MODE } from '../utils/constants'
 import { MOCK_PARTICIPANTS, MOCK_TRIP } from '../utils/mockData'
 
 export default function CreateTrip() {
   const [trip, setTrip] = useState(null)
   const [participants, setParticipants] = useState([])
+  const [surveySubmittedCount, setSurveySubmittedCount] = useState(0)
   const [form, setForm] = useState({ name: '', organizer_name: '', organizer_email: '', trip_month: 'Jun', duration_days: 5 })
   const [participant, setParticipant] = useState({ name: '', email: '', phone: '' })
   const [loading, setLoading] = useState(false)
@@ -16,6 +18,8 @@ export default function CreateTrip() {
     if (!trip?.id || DEV_MODE) return
     const latest = await getParticipants(trip.id)
     setParticipants(latest)
+    const status = await getSurveyStatus(trip.id)
+    setSurveySubmittedCount(status.submitted_count ?? 0)
   }, [trip?.id])
 
   useEffect(() => {
@@ -46,7 +50,7 @@ export default function CreateTrip() {
     e.preventDefault()
     if (!participant.name) return toast.error('Participant name is required')
     try {
-      const p = DEV_MODE ? { id: crypto.randomUUID(), ...participant, survey_submitted: false, survey_link: `/survey/mock-${Date.now()}` } : await addParticipant(trip.id, participant)
+      const p = DEV_MODE ? { id: crypto.randomUUID(), ...participant, survey_link: `/survey/mock-${Date.now()}` } : await addParticipant(trip.id, participant)
       setParticipants((s) => [...s, p])
       setParticipant({ name: '', email: '', phone: '' })
       if (!DEV_MODE) await refreshParticipants()
@@ -55,8 +59,8 @@ export default function CreateTrip() {
     }
   }
 
-  const submitted = participants.filter((p) => p.survey_submitted).length
-  const canRun = participants.length >= 2 && participants.every((p) => p.survey_submitted)
+  const submitted = DEV_MODE ? participants.filter((p) => p.survey_submitted).length : surveySubmittedCount
+  const canRun = participants.length >= 2 && submitted === participants.length && participants.length > 0
 
   return (
     <div className="space-y-6">

@@ -17,12 +17,12 @@ export default function useRecommendations(tripId) {
       try {
         if (DEV_MODE) {
           setRecommendations(MOCK_RECOMMENDATIONS)
-          setStatus('complete')
+          setStatus('voting')
           return
         }
         const analysis = await getAnalysisStatus(tripId)
         setStatus(analysis.status)
-        if (analysis.status === 'complete') {
+        if (analysis.status === 'voting') {
           const recs = await getRecommendations(tripId)
           setRecommendations(recs)
           setLoading(false)

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
-import { getParticipants, getTripSummary } from '../services/tripService'
+import { getTripSummary } from '../services/tripService'
 import { DEV_MODE } from '../utils/constants'
 import { MOCK_PARTICIPANTS, MOCK_TRIP } from '../utils/mockData'
 
@@ -18,9 +18,9 @@ export default function useTrip(tripId) {
         setParticipants(MOCK_PARTICIPANTS)
         return
       }
-      const [tripRes, participantsRes] = await Promise.all([getTripSummary(tripId), getParticipants(tripId)])
-      setTrip(tripRes)
-      setParticipants(participantsRes)
+      const summary = await getTripSummary(tripId)
+      setTrip(summary.trip)
+      setParticipants(summary.participants)
       setError('')
     } catch (e) {
       setError(e.message)

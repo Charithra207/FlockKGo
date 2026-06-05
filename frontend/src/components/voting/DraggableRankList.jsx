@@ -10,7 +10,7 @@ function SortableItem({ item, index }) {
     <div ref={setNodeRef} style={{ transform: CSS.Transform.toString(transform), transition }} className={`flex items-center gap-3 rounded-xl border bg-white p-4 ${isDragging ? 'scale-[1.01] shadow-xl' : ''}`}>
       <button {...attributes} {...listeners}><GripVertical className="h-4 w-4 text-muted" /></button>
       <span className="rounded-full bg-primary/10 px-2 py-1 text-xs font-bold text-primary">#{index + 1}</span>
-      <div className="flex-1"><p className="font-semibold">{item.name}</p><p className="text-xs text-muted">${item.budget_min} - ${item.budget_max}</p></div>
+      <div className="flex-1"><p className="font-semibold">{item.destination_name}</p><p className="text-xs text-muted">{item.estimated_budget_range}</p></div>
       <MLScoreBadge score={item.ml_score} />
     </div>
   )

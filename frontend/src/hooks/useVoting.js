@@ -19,7 +19,8 @@ export default function useVoting(tripId, participantId) {
         }
         const status = await getVoteStatus(tripId)
         setVoteStatus(status)
-        setHasVoted(Boolean(status?.voters?.includes(participantId)))
+        const participant = status?.participants?.find((p) => p.id === participantId)
+        setHasVoted(Boolean(participant?.has_voted))
       } catch (e) {
         toast.error(e.message)
       } finally {
@@ -30,10 +31,10 @@ export default function useVoting(tripId, participantId) {
     return () => clearTimeout(timer)
   }, [participantId, tripId])
 
-  const submitVote = async (ranking) => {
+  const submitVote = async (payload) => {
     try {
       setLoading(true)
-      if (!DEV_MODE) await submitVoteService(tripId, { participant_id: participantId, ranking })
+      if (!DEV_MODE) await submitVoteService(tripId, payload)
       setHasVoted(true)
       toast.success('Vote submitted!')
     } catch (e) {
