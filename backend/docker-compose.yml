@@ -9,8 +9,10 @@ services:
       - "8000:8000"
     environment:
       - DATABASE_URL=postgresql+psycopg2://postgres:postgres@db:5432/flockgo
+      - REDIS_URL=redis://redis:6379/0
       - OPENAI_API_KEY=${OPENAI_API_KEY}
-      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - FRONTEND_BASE_URL=http://localhost:5173
+      - ENVIRONMENT=development
     depends_on:
       db:
         condition: service_healthy
@@ -18,6 +20,32 @@ services:
         condition: service_started
     volumes:
       - ./:/app
+
+  worker:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.worker
+    environment:
+      - DATABASE_URL=postgresql+psycopg2://postgres:postgres@db:5432/flockgo
+      - REDIS_URL=redis://redis:6379/0
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    volumes:
+      - ./:/app
+
+  # Flower — Celery task monitor UI at http://localhost:5555
+  flower:
+    image: mher/flower:2.0
+    ports:
+      - "5555:5555"
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6379/0
+    depends_on:
+      - redis
 
   db:
     image: postgres:15

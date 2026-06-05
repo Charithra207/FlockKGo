@@ -7,6 +7,8 @@ class Settings(BaseSettings):
     environment: str = "development"
     # Demo-friendly default: local SQLite file (no Docker/Postgres required).
     database_url: str = "sqlite:///./flockgo_demo.db"
+    # Redis — used by Celery broker + result backend
+    redis_url: str = "redis://localhost:6379/0"
     openai_api_key: str | None = None
     anthropic_api_key: str | None = None
     frontend_base_url: str = "http://localhost:3000"

@@ -1,8 +1,14 @@
 ﻿FROM python:3.11-slim
 
 WORKDIR /app
+
 RUN apt-get update && apt-get install -y gcc g++ libpq-dev && rm -rf /var/lib/apt/lists/*
+
 COPY requirements.txt requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
-CMD ["celery", "-A", "app.main:app", "worker", "--loglevel=info"]
+
+# -A app.workers.celery_app:celery_app  → tells Celery where to find the app instance
+# --loglevel=info                        → structured logs visible in Render/Docker
+# --concurrency=2                        → 2 worker processes (ML is CPU-heavy, keep low)
+CMD ["celery", "-A", "app.workers.celery_app:celery_app", "worker", "--loglevel=info", "--concurrency=2"]
