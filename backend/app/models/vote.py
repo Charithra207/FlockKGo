@@ -1,5 +1,5 @@
 ﻿import uuid
-from sqlalchemy import Column, DateTime, ForeignKey, JSON, UniqueConstraint, Uuid
+from sqlalchemy import Column, DateTime, ForeignKey, Index, JSON, UniqueConstraint, Uuid
 from sqlalchemy.sql import func
 
 from app.db.database import Base
@@ -7,7 +7,10 @@ from app.db.database import Base
 
 class Vote(Base):
     __tablename__ = "votes"
-    __table_args__ = (UniqueConstraint("trip_id", "participant_id", name="uq_trip_participant_vote"),)
+    __table_args__ = (
+        UniqueConstraint("trip_id", "participant_id", name="uq_trip_participant_vote"),
+        Index("ix_votes_trip_id", "trip_id"),
+    )
 
     id = Column(Uuid, primary_key=True, default=uuid.uuid4)
     trip_id = Column(Uuid, ForeignKey("trips.id"), nullable=False)

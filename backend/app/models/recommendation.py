@@ -1,5 +1,5 @@
 ﻿import uuid
-from sqlalchemy import JSON, Column, DateTime, Float, ForeignKey, Integer, String, Text, Uuid
+from sqlalchemy import JSON, Column, DateTime, Float, ForeignKey, Index, Integer, String, Text, Uuid
 from sqlalchemy.sql import func
 
 from app.db.database import Base
@@ -7,6 +7,10 @@ from app.db.database import Base
 
 class Recommendation(Base):
     __tablename__ = "recommendations"
+    __table_args__ = (
+        Index("ix_recommendations_trip_id", "trip_id"),
+        Index("ix_recommendations_trip_rank", "trip_id", "rank"),
+    )
 
     id = Column(Uuid, primary_key=True, default=uuid.uuid4)
     trip_id = Column(Uuid, ForeignKey("trips.id"), nullable=False)

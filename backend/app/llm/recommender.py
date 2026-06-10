@@ -17,7 +17,7 @@ class RecommendationEngine:
         self.ab = ABTestManager()
 
     def generate(self, trip_id, ml_context, group_size):
-        version = self.ab.pick_prompt_version(trip_id)
+        version = self.ab.pick_prompt_version(trip_id, db=self.db)
         if version == "v1":
             system = recommendation_v1.SYSTEM_PROMPT
             user = recommendation_v1.build_user_prompt(ml_context, group_size)

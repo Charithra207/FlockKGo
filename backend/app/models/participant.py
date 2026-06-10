@@ -1,5 +1,5 @@
 ﻿import uuid
-from sqlalchemy import Boolean, Column, DateTime, ForeignKey, String, Uuid
+from sqlalchemy import Boolean, Column, DateTime, ForeignKey, Index, String, Uuid
 from sqlalchemy.sql import func
 
 from app.db.database import Base
@@ -7,6 +7,10 @@ from app.db.database import Base
 
 class Participant(Base):
     __tablename__ = "participants"
+    __table_args__ = (
+        Index("ix_participants_trip_id", "trip_id"),
+        Index("ix_participants_survey_token", "survey_token"),
+    )
 
     id = Column(Uuid, primary_key=True, default=uuid.uuid4)
     trip_id = Column(Uuid, ForeignKey("trips.id", ondelete="CASCADE"), nullable=False)
