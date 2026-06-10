@@ -5,6 +5,7 @@ import Footer from './components/layout/Footer'
 import Navbar from './components/layout/Navbar'
 import CreateTrip from './pages/CreateTrip'
 import Home from './pages/Home'
+import NotFound from './pages/NotFound'
 import Recommendations from './pages/Recommendations'
 import Results from './pages/Results'
 import Survey from './pages/Survey'
@@ -30,6 +31,7 @@ export default function App() {
                 <Route path="/trip/:tripId/recs" element={<Recommendations />} />
                 <Route path="/trip/:tripId/vote" element={<Voting />} />
                 <Route path="/trip/:tripId/results" element={<Results />} />
+                <Route path="*" element={<NotFound />} />
               </Routes>
             </motion.div>
           </AnimatePresence>

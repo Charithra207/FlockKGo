@@ -11,7 +11,7 @@
 
 | Day | Task | Why It Matters |
 |-----|------|----------------|
-| 1 | Audit all existing pages — fix broken API calls, loading states, error states in TripDashboard, Survey, Voting | Right now some pages show blank on error instead of a real message |
+| ✅ 1 | Audit all existing pages — fix broken API calls, loading states, error states in TripDashboard, Survey, Voting, Recommendations, Results. Added NotFound page + 404 catch-all route. Fixed `useTrip` hook (`survey_submitted` was faked). Improved `ErrorBoundary` with reset + details. | Right now some pages show blank on error instead of a real message |
 | 2 | Fix `useTrip` hook — add proper `survey_submitted` flag derivation from `/survey-status` endpoint (it's currently faked) | `ParticipantList` shows wrong checkmarks without this |
 | 3 | Add global error boundary + 404 page + empty-state components (no trips, no participants yet) | App currently crashes or shows nothing on bad URLs |
 | 4 | Wire `TripDashboard` status polling — auto-refresh trip status every 5s when status is `running_ml`, stop when done | Without this, user has to manually refresh to see analysis complete |

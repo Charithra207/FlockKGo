@@ -1,9 +1,12 @@
 import { useCallback, useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import { getTripSummary } from '../services/tripService'
-import { DEV_MODE } from '../utils/constants'
-import { MOCK_PARTICIPANTS, MOCK_TRIP } from '../utils/mockData'
 
+/**
+ * Fetches trip + participants from GET /trips/{id}/summary.
+ * The summary endpoint already includes survey_submitted on each participant,
+ * so no extra survey-status call is needed.
+ */
 export default function useTrip(tripId) {
   const [trip, setTrip] = useState(null)
   const [participants, setParticipants] = useState([])
@@ -11,16 +14,21 @@ export default function useTrip(tripId) {
   const [error, setError] = useState('')
 
   const refetch = useCallback(async () => {
+    if (!tripId) return
     try {
       setLoading(true)
-      if (DEV_MODE) {
-        setTrip({ ...MOCK_TRIP, id: tripId || MOCK_TRIP.id })
-        setParticipants(MOCK_PARTICIPANTS)
+      const summary = await getTripSummary(tripId)
+
+      // getTripSummary returns {} if trip not found — treat that as 404
+      if (!summary?.trip) {
+        setTrip(null)
+        setParticipants([])
+        setError('')
         return
       }
-      const summary = await getTripSummary(tripId)
+
       setTrip(summary.trip)
-      setParticipants(summary.participants)
+      setParticipants(summary.participants ?? [])
       setError('')
     } catch (e) {
       setError(e.message)
