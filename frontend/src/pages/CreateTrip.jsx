@@ -5,6 +5,7 @@ import { addParticipant, createTrip, getParticipants, runAnalysis } from '../ser
 import { getSurveyStatus } from '../services/surveyService'
 import { MONTHS, DEV_MODE } from '../utils/constants'
 import { MOCK_PARTICIPANTS, MOCK_TRIP } from '../utils/mockData'
+import { saveRecentTrip } from './Home'
 
 export default function CreateTrip() {
   const [trip, setTrip] = useState(null)
@@ -38,6 +39,7 @@ export default function CreateTrip() {
       setLoading(true)
       const res = DEV_MODE ? { ...MOCK_TRIP, ...form } : await createTrip(form)
       setTrip(res)
+      saveRecentTrip(res.id, res.name)
       toast.success('Trip created')
     } catch (err) {
       toast.error(err.message)
