@@ -8,7 +8,7 @@ from app.ml.clustering import cluster_participants
 from app.ml.drift_detection import detect_preference_drift
 from app.ml.feature_engineering import build_feature_matrix
 from app.ml.scoring import score_destinations_for_group
-from app.ml.similarity import compute_similarity_matrix, find_outlier_participants
+from app.ml.similarity import compute_similarity_matrix, find_outlier_participants, get_most_similar_pairs
 from app.models.ml_result import MLRunResult
 from app.models.survey_response import SurveyResponse
 
@@ -31,7 +31,8 @@ class MLPipeline:
         matrix = build_feature_matrix(responses)
         clusters = cluster_participants(matrix, participant_ids)
         similarity_matrix = compute_similarity_matrix(matrix)
-        _outliers = find_outlier_participants(similarity_matrix, participant_ids)
+        outliers = find_outlier_participants(similarity_matrix, participant_ids)
+        similar_pairs = get_most_similar_pairs(similarity_matrix, participant_ids, top_n=3)
 
         # Collect all excluded destinations across the group
         all_excluded = list(set(x for r in responses for x in (r.excluded_destinations or [])))
@@ -52,6 +53,8 @@ class MLPipeline:
             destination_scores=destination_scores,
             preference_drift=drift,
             similarity_matrix=similarity_matrix.tolist(),
+            outlier_participants=outliers,
+            similar_pairs=similar_pairs,
         )
         self.db.add(result)
         self.db.commit()

@@ -258,9 +258,199 @@ def final_results(request: Request, trip_id: uuid.UUID, db: Session = Depends(ge
     return result
 
 
-@router.get("/{trip_id}/metrics")
+@router.get("/{trip_id}/ml-insights")
 @limiter.limit("60/minute")
-def trip_metrics(request: Request, trip_id: uuid.UUID, db: Session = Depends(get_db)):
+def ml_insights(request: Request, trip_id: uuid.UUID, db: Session = Depends(get_db)):
+    """
+    Full ML breakdown for a trip — everything the pipeline computed.
+
+    Returns:
+      - clustering: k, silhouette score, cluster sizes, which participant is in which cluster
+      - compatibility: overall group score, most similar pairs, outlier participants
+      - drift: per-participant preference drift vs previous submission
+      - top_destinations: top 10 scored destinations with scoring mode
+      - scoring_mode: whether semantic embeddings or feature vectors were used
+      - summary: plain-English group description for display in the UI
+    """
+    run = (
+        db.query(MLRunResult)
+        .filter(MLRunResult.trip_id == trip_id)
+        .order_by(MLRunResult.ran_at.desc())
+        .first()
+    )
+    if not run:
+        raise HTTPException(status_code=404, detail="ML analysis not found — run analysis first")
+
+    # Enrich participant IDs with names for readability
+    participants = db.query(Participant).filter(Participant.trip_id == trip_id).all()
+    id_to_name = {str(p.id): p.name for p in participants}
+
+    # ── Clustering ────────────────────────────────────────────────────────────
+    labels = run.cluster_labels or {}
+    cluster_sizes = {}
+    cluster_members = {}
+    for pid_str, cluster_id in labels.items():
+        key = str(cluster_id)
+        cluster_sizes[key] = cluster_sizes.get(key, 0) + 1
+        cluster_members.setdefault(key, []).append({
+            "participant_id": pid_str,
+            "name": id_to_name.get(pid_str, "Unknown"),
+        })
+
+    clustering = {
+        "k": run.cluster_count,
+        "silhouette_score": round(run.silhouette_score or 0.0, 3),
+        "interpretation": _interpret_silhouette(run.silhouette_score),
+        "clusters": [
+            {
+                "cluster_id": k,
+                "size": cluster_sizes.get(k, 0),
+                "members": cluster_members.get(k, []),
+            }
+            for k in sorted(cluster_sizes.keys())
+        ],
+    }
+
+    # ── Compatibility ─────────────────────────────────────────────────────────
+    sim_matrix = run.similarity_matrix or []
+    if sim_matrix and len(sim_matrix) > 1:
+        import numpy as np
+        mat = np.array(sim_matrix)
+        n = len(mat)
+        upper = [mat[i][j] for i in range(n) for j in range(i + 1, n)]
+        avg_compatibility = float(np.mean(upper)) if upper else 1.0
+    else:
+        avg_compatibility = 1.0
+
+    # Enrich outliers + pairs with participant names
+    outliers = [
+        {
+            "participant_id": o["participant_id"],
+            "name": id_to_name.get(o["participant_id"], "Unknown"),
+            "avg_similarity": round(o["avg_similarity"], 3),
+            "note": "This participant's preferences differ significantly from the group",
+        }
+        for o in (run.outlier_participants or [])
+    ]
+
+    similar_pairs = [
+        {
+            "participant_1": {"id": p["p1"], "name": id_to_name.get(p["p1"], "Unknown")},
+            "participant_2": {"id": p["p2"], "name": id_to_name.get(p["p2"], "Unknown")},
+            "similarity": round(p["similarity"], 3),
+        }
+        for p in (run.similar_pairs or [])
+    ]
+
+    compatibility = {
+        "avg_group_compatibility": round(avg_compatibility, 3),
+        "compatibility_level": _compatibility_label(avg_compatibility),
+        "most_similar_pairs": similar_pairs,
+        "outlier_participants": outliers,
+    }
+
+    # ── Drift ─────────────────────────────────────────────────────────────────
+    drift_data = run.preference_drift or {}
+    per_participant_drift = [
+        {
+            "participant_id": pid,
+            "name": id_to_name.get(pid, "Unknown"),
+            "status": info.get("status"),
+            "distance": round(info.get("distance", 0.0), 3),
+        }
+        for pid, info in drift_data.get("participants", {}).items()
+    ]
+
+    drift = {
+        "group_stability": drift_data.get("group_stability", "stable"),
+        "average_drift": round(drift_data.get("average_drift", 0.0), 3),
+        "action_needed": drift_data.get("action_needed", False),
+        "per_participant": per_participant_drift,
+    }
+
+    # ── Top destinations ──────────────────────────────────────────────────────
+    dest_scores = run.destination_scores or []
+    scoring_mode = dest_scores[0].get("scoring_mode", "feature") if dest_scores else "unknown"
+
+    top_destinations = [
+        {
+            "rank": idx + 1,
+            "destination": d.get("destination_name"),
+            "country": d.get("country"),
+            "score": round(d.get("score", 0.0), 3),
+            "dominant_cluster_match": round(d.get("dominant_cluster_match", 0.0), 3),
+            "group_mean_match": round(d.get("group_mean_match", 0.0), 3),
+            "minority_consideration": round(d.get("minority_consideration", 0.0), 3),
+            "scoring_mode": d.get("scoring_mode", "feature"),
+        }
+        for idx, d in enumerate(dest_scores[:10])
+    ]
+
+    # ── Plain-English summary ─────────────────────────────────────────────────
+    summary = _build_summary(
+        k=run.cluster_count or 1,
+        silhouette=run.silhouette_score or 0.0,
+        compatibility=avg_compatibility,
+        drift_status=drift_data.get("group_stability", "stable"),
+        outlier_count=len(outliers),
+        top_dest=dest_scores[0].get("destination_name") if dest_scores else None,
+    )
+
+    return {
+        "trip_id": str(trip_id),
+        "ran_at": run.ran_at.isoformat(),
+        "scoring_mode": scoring_mode,
+        "summary": summary,
+        "clustering": clustering,
+        "compatibility": compatibility,
+        "drift": drift,
+        "top_destinations": top_destinations,
+    }
+
+
+def _interpret_silhouette(score: float) -> str:
+    if score is None:
+        return "unknown"
+    if score >= 0.5:
+        return "strong — clear preference groups exist"
+    if score >= 0.25:
+        return "moderate — some preference differences"
+    return "weak — group has similar preferences overall"
+
+
+def _compatibility_label(score: float) -> str:
+    if score >= 0.8:
+        return "highly compatible — everyone wants similar things"
+    if score >= 0.6:
+        return "compatible — mostly aligned with minor differences"
+    if score >= 0.4:
+        return "mixed — noticeable preference gaps"
+    return "low compatibility — very different preferences in the group"
+
+
+def _build_summary(k, silhouette, compatibility, drift_status, outlier_count, top_dest) -> str:
+    parts = []
+    if k == 1:
+        parts.append("The group has highly uniform preferences.")
+    elif k == 2:
+        parts.append("The group splits into 2 preference clusters.")
+    else:
+        parts.append(f"The group has {k} distinct preference clusters.")
+
+    parts.append(f"Group compatibility is {_compatibility_label(compatibility).split(' —')[0]}.")
+
+    if outlier_count == 1:
+        parts.append("One participant has notably different preferences.")
+    elif outlier_count > 1:
+        parts.append(f"{outlier_count} participants have notably different preferences.")
+
+    if drift_status != "stable":
+        parts.append(f"Preference drift detected ({drift_status.replace('_', ' ')}) — some members changed their answers.")
+
+    if top_dest:
+        parts.append(f"Top ML-scored destination: {top_dest}.")
+
+    return " ".join(parts)
     run = (
         db.query(MLRunResult)
         .filter(MLRunResult.trip_id == trip_id)
