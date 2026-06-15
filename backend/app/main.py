@@ -7,7 +7,7 @@ from sqlalchemy.exc import OperationalError
 from slowapi import _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
 
-from app.api import analytics, participants, recommendations, surveys, trips, voting
+from app.api import analytics, participants, recommendations, surveys, trips, voting, ws
 from app.llm.gateway import LLMError
 from app.ml.pipeline import MLPipelineError
 
@@ -29,6 +29,7 @@ app.include_router(surveys.router, prefix="/v1")
 app.include_router(recommendations.router, prefix="/v1")
 app.include_router(voting.router, prefix="/v1")
 app.include_router(analytics.router, prefix="/v1")
+app.include_router(ws.router)   # WebSocket — no /v1 prefix (WS clients use full path)
 
 
 @app.get("/")
@@ -39,6 +40,15 @@ def root():
 @app.get("/health")
 def health():
     return {"status": "healthy"}
+
+
+@app.get("/ws/connections")
+def ws_connections():
+    """Returns active WebSocket connection count — useful for monitoring."""
+    from app.services.websocket_manager import manager
+    return {
+        "total_active_connections": manager.total_connections(),
+    }
 
 
 @app.get("/metrics")

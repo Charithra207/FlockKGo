@@ -75,6 +75,10 @@ def run_ml_pipeline(self, trip_id_str: str) -> dict:
             task_run.started_at = datetime.now(timezone.utc)
             db.commit()
 
+        # Notify WebSocket clients — pipeline has started
+        from app.services.websocket_manager import notify_trip_status
+        notify_trip_status(trip_id_str, "running_ml", {"task_status": "running"})
+
         logger.info(f"[ML] starting pipeline trip={trip_id}")
         start = time.perf_counter()
 
@@ -107,6 +111,15 @@ def run_ml_pipeline(self, trip_id_str: str) -> dict:
             task_run.status = "complete"
             task_run.completed_at = datetime.now(timezone.utc)
             db.commit()
+
+        # Notify WebSocket clients — pipeline finished
+        top_dest = dest_scores[0].get("destination_name") if dest_scores else None
+        notify_trip_status(trip_id_str, "voting", {
+            "task_status": "complete",
+            "top_destination": top_dest,
+            "clusters_found": clusters["k"],
+            "duration_seconds": round(duration, 2),
+        })
 
         logger.info(f"[ML] done trip={trip_id} duration={duration:.1f}s recs={len(recs)}")
 
@@ -143,6 +156,13 @@ def run_ml_pipeline(self, trip_id_str: str) -> dict:
                 db.commit()
             except Exception:
                 db.rollback()
+
+        # Notify WebSocket clients — pipeline failed
+        from app.services.websocket_manager import notify_trip_status
+        notify_trip_status(trip_id_str, "collecting_preferences", {
+            "task_status": "failed",
+            "error": error_msg[:200],
+        })
 
         # Don't retry data errors — they won't fix themselves
         if isinstance(exc, MLPipelineError):
