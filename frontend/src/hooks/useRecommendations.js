@@ -1,43 +1,56 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import { getAnalysisStatus } from '../services/tripService'
 import { getRecommendations } from '../services/votingService'
-import { DEV_MODE } from '../utils/constants'
-import { MOCK_RECOMMENDATIONS } from '../utils/mockData'
 
+/**
+ * Polls GET /trips/{id}/analysis until status === 'voting', then fetches
+ * recommendations. Uses a ref-based timer so it doesn't restart on every
+ * render and doesn't depend on DEV_MODE mock data.
+ */
 export default function useRecommendations(tripId) {
   const [recommendations, setRecommendations] = useState([])
   const [status, setStatus] = useState('processing')
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
 
+  // Keep a ref so the recursive setTimeout doesn't capture stale closure
+  const stopped = useRef(false)
+
   useEffect(() => {
-    let timer
+    stopped.current = false
+
     const load = async () => {
+      if (stopped.current || !tripId) return
       try {
-        if (DEV_MODE) {
-          setRecommendations(MOCK_RECOMMENDATIONS)
-          setStatus('voting')
-          return
-        }
         const analysis = await getAnalysisStatus(tripId)
         setStatus(analysis.status)
-        if (analysis.status === 'voting') {
+
+        if (analysis.status === 'voting' || analysis.status === 'completed') {
           const recs = await getRecommendations(tripId)
           setRecommendations(recs)
           setLoading(false)
-          return
+          return // done — no more polling
         }
-        timer = setTimeout(load, 3000)
+
+        // Still running — check again in 3s
+        if (!stopped.current) {
+          setTimeout(load, 3000)
+        }
       } catch (e) {
-        setError(e.message)
-        toast.error(e.message)
-      } finally {
-        setLoading(false)
+        if (!stopped.current) {
+          setError(e.message)
+          toast.error(e.message)
+          setLoading(false)
+        }
       }
     }
-    if (tripId) load()
-    return () => clearTimeout(timer)
+
+    load()
+
+    return () => {
+      stopped.current = true
+    }
   }, [tripId])
 
   return { recommendations, status, loading, error }
