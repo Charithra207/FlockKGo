@@ -1,6 +1,8 @@
 import { useCallback } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-hot-toast'
+import { Copy, Check } from 'lucide-react'
+import { useState } from 'react'
 import LoadingSpinner from '../components/common/LoadingSpinner'
 import ProgressBar from '../components/common/ProgressBar'
 import ParticipantList from '../components/trip/ParticipantList'
@@ -10,6 +12,26 @@ import useTrip from '../hooks/useTrip'
 import useSurveyStatus from '../hooks/useSurveyStatus'
 import useAnalysisPoller from '../hooks/useAnalysisPoller'
 import { runAnalysis } from '../services/tripService'
+
+function CopyLinkButton({ url }) {
+  const [copied, setCopied] = useState(false)
+  const handle = () => {
+    navigator.clipboard.writeText(url).then(() => {
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    })
+  }
+  return (
+    <button
+      onClick={handle}
+      className="inline-flex items-center gap-1 rounded-lg border px-3 py-1.5 text-xs font-medium text-slate-500 hover:bg-slate-50"
+      aria-label="Copy trip link"
+    >
+      {copied ? <Check className="h-3 w-3 text-emerald-500" /> : <Copy className="h-3 w-3" />}
+      {copied ? 'Copied!' : 'Copy trip link'}
+    </button>
+  )
+}
 
 export default function TripDashboard() {
   const { tripId } = useParams()
@@ -95,7 +117,16 @@ export default function TripDashboard() {
 
   return (
     <div className="space-y-5">
-      <TripCard trip={trip} />
+      <div className="flex items-start justify-between gap-3">
+        <div className="flex-1 min-w-0">
+          <TripCard trip={trip} />
+        </div>
+      </div>
+
+      {/* Share link */}
+      <div className="flex items-center gap-2">
+        <CopyLinkButton url={`${window.location.origin}/trip/${tripId}`} />
+      </div>
 
       {/* ML running banner with elapsed timer */}
       {isPolling && <MLStatusBanner elapsedSec={elapsedSec} />}
