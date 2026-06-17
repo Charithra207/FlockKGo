@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import BudgetSlider from '../components/survey/BudgetSlider'
 import DateRangePicker from '../components/survey/DateRangePicker'
 import ExclusionInput from '../components/survey/ExclusionInput'
@@ -17,6 +17,7 @@ export default function Survey() {
   const [submitted, setSubmitted] = useState(false)
   const [participantName, setParticipantName] = useState('Traveler')
   const [tripName, setTripName] = useState('')
+  const [tripId, setTripId] = useState('')
   const [pageLoading, setPageLoading] = useState(true)
   const [pageError, setPageError] = useState('')
   const [submitting, setSubmitting] = useState(false)
@@ -41,6 +42,7 @@ export default function Survey() {
         }
         setParticipantName(d.participant_name || 'Traveler')
         setTripName(d.trip_name || '')
+        setTripId(d.trip_id || '')
       })
       .catch((e) => setPageError(e.message))
       .finally(() => setPageLoading(false))
@@ -72,6 +74,14 @@ export default function Survey() {
         <p className="mt-3 text-sm text-slate-400">
           Your organizer will let you know when recommendations are ready.
         </p>
+        {tripId && (
+          <Link
+            to={`/trip/${tripId}`}
+            className="mt-5 inline-block rounded-xl bg-primary px-5 py-2 text-sm font-semibold text-white hover:opacity-90"
+          >
+            View Trip Dashboard
+          </Link>
+        )}
       </div>
     )
   }

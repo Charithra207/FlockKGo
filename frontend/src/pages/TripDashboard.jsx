@@ -1,35 +1,67 @@
-import { useEffect, useRef } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { useCallback } from 'react'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-hot-toast'
+import { Copy, Check } from 'lucide-react'
+import { useState } from 'react'
 import LoadingSpinner from '../components/common/LoadingSpinner'
 import ProgressBar from '../components/common/ProgressBar'
 import ParticipantList from '../components/trip/ParticipantList'
 import TripCard from '../components/trip/TripCard'
+import MLStatusBanner from '../components/trip/MLStatusBanner'
 import useTrip from '../hooks/useTrip'
 import useSurveyStatus from '../hooks/useSurveyStatus'
+import useAnalysisPoller from '../hooks/useAnalysisPoller'
 import { runAnalysis } from '../services/tripService'
+
+function CopyLinkButton({ url }) {
+  const [copied, setCopied] = useState(false)
+  const handle = () => {
+    navigator.clipboard.writeText(url).then(() => {
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    })
+  }
+  return (
+    <button
+      onClick={handle}
+      className="inline-flex items-center gap-1 rounded-lg border px-3 py-1.5 text-xs font-medium text-slate-500 hover:bg-slate-50"
+      aria-label="Copy trip link"
+    >
+      {copied ? <Check className="h-3 w-3 text-emerald-500" /> : <Copy className="h-3 w-3" />}
+      {copied ? 'Copied!' : 'Copy trip link'}
+    </button>
+  )
+}
 
 export default function TripDashboard() {
   const { tripId } = useParams()
+  const navigate = useNavigate()
   const { trip, participants, loading, error, refetch } = useTrip(tripId)
 
   // Live survey progress — polls every 5s, stops once all submitted
   const { submittedCount, totalCount, allSubmitted, submittedMap } = useSurveyStatus(
-    trip ? tripId : null
+    trip ? tripId : null,
   )
 
-  // Auto-poll trip status while ML pipeline is running
-  const pollingRef = useRef(null)
-  useEffect(() => {
-    if (trip?.status === 'running_ml') {
-      pollingRef.current = setInterval(() => {
-        refetch().catch(() => {})
-      }, 4000)
-    } else {
-      clearInterval(pollingRef.current)
-    }
-    return () => clearInterval(pollingRef.current)
-  }, [trip?.status, refetch])
+  // When ML finishes, silently re-fetch the trip so the status badge flips,
+  // then navigate to recommendations automatically
+  const handleAnalysisComplete = useCallback(
+    (newStatus) => {
+      refetch({ silent: true }).finally(() => {
+        if (newStatus === 'voting') {
+          navigate(`/trip/${tripId}/recs`)
+        }
+      })
+    },
+    [refetch, navigate, tripId],
+  )
+
+  // Polls /analysis every 4s while status === 'running_ml'
+  const { isPolling, elapsedSec } = useAnalysisPoller(
+    tripId,
+    trip?.status,
+    handleAnalysisComplete,
+  )
 
   if (loading) return <LoadingSpinner />
 
@@ -67,7 +99,7 @@ export default function TripDashboard() {
     )
   }
 
-  // Use live counts from useSurveyStatus; fall back to what the summary gave us
+  // Use live counts from useSurveyStatus; fall back to summary data
   const submitted = totalCount > 0 ? submittedCount : participants.filter((p) => p.survey_submitted).length
   const total = totalCount > 0 ? totalCount : participants.length
   const pct = total ? (submitted / total) * 100 : 0
@@ -76,8 +108,8 @@ export default function TripDashboard() {
   const handleGenerateRecs = async () => {
     try {
       await runAnalysis(tripId)
-      toast.success("Analysis started — AI is crunching your flock's preferences…")
-      await refetch()
+      // Silent refetch flips the status badge without a full-page spinner
+      await refetch({ silent: true })
     } catch (e) {
       toast.error(e.message)
     }
@@ -85,15 +117,25 @@ export default function TripDashboard() {
 
   return (
     <div className="space-y-5">
-      <TripCard trip={trip} />
+      <div className="flex items-start justify-between gap-3">
+        <div className="flex-1 min-w-0">
+          <TripCard trip={trip} />
+        </div>
+      </div>
+
+      {/* Share link */}
+      <div className="flex items-center gap-2">
+        <CopyLinkButton url={`${window.location.origin}/trip/${tripId}`} />
+      </div>
+
+      {/* ML running banner with elapsed timer */}
+      {isPolling && <MLStatusBanner elapsedSec={elapsedSec} />}
 
       {/* Live survey progress */}
       <div className="rounded-2xl bg-white p-6 shadow-card">
         <div className="mb-2 flex items-center justify-between">
           <h2 className="text-lg font-bold">Survey Progress</h2>
-          <p className="text-sm text-slate-500">
-            {submitted}/{total} submitted
-          </p>
+          <p className="text-sm text-slate-500">{submitted}/{total} submitted</p>
         </div>
         <ProgressBar value={pct} />
         {total === 0 && (
@@ -123,13 +165,6 @@ export default function TripDashboard() {
               Waiting for all {total} surveys…
             </p>
           )
-        )}
-
-        {trip.status === 'running_ml' && (
-          <div className="flex items-center gap-2 rounded-xl bg-amber-50 px-4 py-2 text-sm font-semibold text-amber-700">
-            <span className="h-2 w-2 animate-pulse rounded-full bg-amber-500" />
-            AI is analyzing your flock's preferences…
-          </div>
         )}
 
         {trip.status === 'voting' && (
