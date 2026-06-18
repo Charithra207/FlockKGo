@@ -7,7 +7,7 @@ from sqlalchemy.exc import OperationalError
 from slowapi import _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
 
-from app.api import analytics, budget, participants, recommendations, surveys, trips, voting, ws
+from app.api import admin, analytics, budget, participants, recommendations, surveys, trips, voting, ws
 from app.llm.gateway import LLMError
 from app.ml.pipeline import MLPipelineError
 
@@ -30,6 +30,7 @@ app.include_router(recommendations.router, prefix="/v1")
 app.include_router(voting.router, prefix="/v1")
 app.include_router(analytics.router, prefix="/v1")
 app.include_router(budget.router, prefix="/v1")
+app.include_router(admin.router, prefix="/v1")
 app.include_router(ws.router)   # WebSocket — no /v1 prefix (WS clients use full path)
 
 

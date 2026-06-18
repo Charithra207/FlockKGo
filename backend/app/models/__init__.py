@@ -7,3 +7,4 @@ from app.models.ml_result import MLRunResult
 from app.models.destination import Destination
 from app.models.task_run import TaskRun
 from app.models.prompt_version import PromptVersionAssignment
+from app.models.api_key import APIKey

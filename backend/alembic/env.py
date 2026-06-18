@@ -34,6 +34,7 @@ import app.models.ml_result        # noqa: F401
 import app.models.destination      # noqa: F401
 import app.models.task_run         # noqa: F401
 import app.models.prompt_version   # noqa: F401
+import app.models.api_key          # noqa: F401
 
 target_metadata = Base.metadata
 

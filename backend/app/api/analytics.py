@@ -111,9 +111,14 @@ def ab_test_results(request: Request, db: Session = Depends(get_db)):
         else:
             winner = "v1" if v1_q >= v2_q else "v2"
 
+    # Get current selection strategy from ABTestManager
+    from app.llm.ab_testing import ABTestManager
+    strategy = ABTestManager().get_current_strategy(db)
+
     return {
         "versions": result,
         "winner_by_quality": winner,
+        "selection_strategy": strategy,
         "note": "quality_score is 0–1 from LLMEvaluator (completeness + format correctness). "
                 "Winner declared when difference > 0.05.",
     }
