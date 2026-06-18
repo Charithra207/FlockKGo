@@ -21,6 +21,9 @@ from threading import Lock
 from openai import OpenAI
 
 from app.config import get_settings
+from app.core.logging import get_logger
+
+log = get_logger(__name__)
 
 
 class LLMError(Exception):
@@ -66,7 +69,7 @@ class CircuitBreaker:
                 self._success_count += 1
                 if self._success_count >= self.success_threshold:
                     self._state = CircuitState.CLOSED
-                    print("[CircuitBreaker] closed — OpenAI recovered")
+                    log.warning("circuit_breaker_closed", reason="OpenAI recovered")
 
     def record_failure(self):
         with self._lock:
@@ -74,7 +77,11 @@ class CircuitBreaker:
             self._last_failure_time = time.monotonic()
             if self._failure_count >= self.failure_threshold:
                 if self._state != CircuitState.OPEN:
-                    print(f"[CircuitBreaker] OPEN — {self._failure_count} consecutive failures")
+                    log.error(
+                        "circuit_breaker_open",
+                        failure_count=self._failure_count,
+                        cooldown_seconds=self.cooldown_seconds,
+                    )
                 self._state = CircuitState.OPEN
 
     def is_allowed(self) -> bool:
@@ -127,20 +134,28 @@ class ModelGateway:
         # Try primary model, fall back to gpt-4o-mini
         for model in [primary, "gpt-4o-mini"]:
             try:
-                print(f"[LLM] model={model} task={task} circuit={_circuit_breaker.state.value}")
+                log.info("llm_call_start", model=model, task=task, circuit=_circuit_breaker.state.value)
                 start = time.perf_counter()
                 response = self.client.chat.completions.create(
                     model=model,
                     messages=messages,
                     temperature=temperature,
                     response_format={"type": "json_object"},
-                    timeout=30,   # hard timeout per call
+                    timeout=30,
                 )
                 latency_ms = int((time.perf_counter() - start) * 1000)
                 usage = response.usage
                 content = json.loads(response.choices[0].message.content)
 
                 _circuit_breaker.record_success()
+                log.info(
+                    "llm_call_complete",
+                    model=model,
+                    task=task,
+                    latency_ms=latency_ms,
+                    prompt_tokens=usage.prompt_tokens,
+                    completion_tokens=usage.completion_tokens,
+                )
 
                 return {
                     "model": model,
@@ -152,11 +167,11 @@ class ModelGateway:
                 }
 
             except LLMError:
-                raise  # circuit breaker errors bubble up immediately
+                raise
 
             except Exception as e:
                 _circuit_breaker.record_failure()
-                print(f"[LLM] {model} failed: {e}")
+                log.error("llm_call_failed", model=model, task=task, error=str(e))
                 if model == "gpt-4o-mini":
                     raise LLMError(str(e))
 

@@ -8,13 +8,22 @@ from slowapi import _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
 
 from app.api import admin, analytics, budget, participants, recommendations, surveys, trips, voting, ws
+from app.core.logging import configure_logging, get_logger
+from app.core.middleware import AccessLogMiddleware, RequestIDMiddleware
 from app.llm.gateway import LLMError
 from app.ml.pipeline import MLPipelineError
 
-app = FastAPI(title="FlockGo API", version="1.0.0")
+# Configure structured logging before anything else
+configure_logging()
+log = get_logger(__name__)
+
+app = FastAPI(title="PackVote+ API", version="1.0.0")
 app.state.limiter = trips.limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
+# ── Middleware (order matters — first added = outermost) ──────────────────────
+app.add_middleware(AccessLogMiddleware)      # logs after request_id is set
+app.add_middleware(RequestIDMiddleware)      # sets request_id first
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -23,6 +32,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# ── Routers ───────────────────────────────────────────────────────────────────
 app.include_router(trips.router, prefix="/v1")
 app.include_router(participants.router, prefix="/v1")
 app.include_router(surveys.router, prefix="/v1")
@@ -31,12 +41,14 @@ app.include_router(voting.router, prefix="/v1")
 app.include_router(analytics.router, prefix="/v1")
 app.include_router(budget.router, prefix="/v1")
 app.include_router(admin.router, prefix="/v1")
-app.include_router(ws.router)   # WebSocket — no /v1 prefix (WS clients use full path)
+app.include_router(ws.router)
 
+
+# ── Health + utility endpoints ────────────────────────────────────────────────
 
 @app.get("/")
 def root():
-    return {"message": "FlockGo API", "docs": "/docs"}
+    return {"message": "PackVote+ API", "docs": "/docs"}
 
 
 @app.get("/health")
@@ -46,11 +58,8 @@ def health():
 
 @app.get("/ws/connections")
 def ws_connections():
-    """Returns active WebSocket connection count — useful for monitoring."""
     from app.services.websocket_manager import manager
-    return {
-        "total_active_connections": manager.total_connections(),
-    }
+    return {"total_active_connections": manager.total_connections()}
 
 
 @app.get("/metrics")
@@ -58,28 +67,46 @@ def metrics():
     return Response(content=generate_latest(), media_type="text/plain; version=0.0.4")
 
 
+# ── Exception handlers ────────────────────────────────────────────────────────
+
 @app.exception_handler(404)
 async def not_found_handler(request: Request, exc):
-    return JSONResponse(status_code=404, content={"error": "Not found", "detail": getattr(exc, "detail", "Resource not found")})
+    return JSONResponse(
+        status_code=404,
+        content={"error": "Not found", "detail": getattr(exc, "detail", "Resource not found")},
+    )
 
 
 @app.exception_handler(RequestValidationError)
 async def validation_handler(request: Request, exc: RequestValidationError):
-    return JSONResponse(status_code=422, content={"error": "Validation error", "detail": exc.errors()})
+    log.warning("validation_error", path=request.url.path, errors=exc.errors())
+    return JSONResponse(
+        status_code=422,
+        content={"error": "Validation error", "detail": exc.errors()},
+    )
 
 
 @app.exception_handler(LLMError)
 async def llm_error_handler(request: Request, exc: LLMError):
-    return JSONResponse(status_code=500, content={"error": "Internal server error", "detail": str(exc)})
+    log.error("llm_error", path=request.url.path, error=str(exc))
+    return JSONResponse(
+        status_code=500,
+        content={"error": "LLM error", "detail": str(exc)},
+    )
 
 
 @app.exception_handler(MLPipelineError)
 async def ml_error_handler(request: Request, exc: MLPipelineError):
-    return JSONResponse(status_code=500, content={"error": "Internal server error", "detail": str(exc)})
+    log.error("ml_pipeline_error", path=request.url.path, error=str(exc))
+    return JSONResponse(
+        status_code=500,
+        content={"error": "ML pipeline error", "detail": str(exc)},
+    )
 
 
 @app.exception_handler(OperationalError)
 async def db_unavailable_handler(request: Request, exc: OperationalError):
+    log.error("db_unavailable", path=request.url.path)
     return JSONResponse(
         status_code=503,
         content={
@@ -91,4 +118,8 @@ async def db_unavailable_handler(request: Request, exc: OperationalError):
 
 @app.exception_handler(Exception)
 async def internal_handler(request: Request, exc: Exception):
-    return JSONResponse(status_code=500, content={"error": "Internal server error", "detail": str(exc)})
+    log.error("unhandled_exception", path=request.url.path, error=str(exc), exc_info=exc)
+    return JSONResponse(
+        status_code=500,
+        content={"error": "Internal server error", "detail": str(exc)},
+    )

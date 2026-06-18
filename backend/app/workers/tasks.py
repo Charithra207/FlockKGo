@@ -11,6 +11,7 @@ import time
 import uuid as uuid_lib
 from datetime import datetime, timezone
 
+import structlog
 from celery import Task
 from celery.utils.log import get_task_logger
 
@@ -63,6 +64,12 @@ def run_ml_pipeline(self, trip_id_str: str) -> dict:
     trip_id = uuid_lib.UUID(trip_id_str)
     db = SessionLocal()
 
+    # Bind trip_id to structlog context so all logs include it
+    structlog.contextvars.bind_contextvars(
+        trip_id=trip_id_str,
+        celery_task_id=self.request.id,
+    )
+
     # Find our TaskRun record (created by the API before dispatching)
     task_run = db.query(TaskRun).filter(
         TaskRun.celery_task_id == self.request.id
@@ -79,7 +86,7 @@ def run_ml_pipeline(self, trip_id_str: str) -> dict:
         from app.services.websocket_manager import notify_trip_status
         notify_trip_status(trip_id_str, "running_ml", {"task_status": "running"})
 
-        logger.info(f"[ML] starting pipeline trip={trip_id}")
+        logger.info("ml_task_start", extra={"trip_id": trip_id_str})
         start = time.perf_counter()
 
         pipeline = MLPipeline(db)
@@ -88,7 +95,7 @@ def run_ml_pipeline(self, trip_id_str: str) -> dict:
         clusters = ml_data["clusters"]
         dest_scores = ml_data["destination_scores"]
 
-        logger.info(f"[ML] pipeline complete — k={clusters['k']} destinations={len(dest_scores)}")
+        logger.info("ml_pipeline_complete", extra={"k": clusters["k"], "destinations": len(dest_scores)})
 
         # Generate LLM recommendations
         recs = RecommendationEngine(db).generate(
@@ -121,7 +128,7 @@ def run_ml_pipeline(self, trip_id_str: str) -> dict:
             "duration_seconds": round(duration, 2),
         })
 
-        logger.info(f"[ML] done trip={trip_id} duration={duration:.1f}s recs={len(recs)}")
+        logger.info("ml_task_complete", extra={"duration_s": round(duration, 2), "recs": len(recs)})
 
         return {
             "trip_id": trip_id_str,
@@ -133,7 +140,7 @@ def run_ml_pipeline(self, trip_id_str: str) -> dict:
 
     except Exception as exc:
         error_msg = str(exc)
-        logger.error(f"[ML] failed trip={trip_id}: {error_msg}")
+        logger.error("ml_task_failed", extra={"error": error_msg[:200]})
 
         # Import here to avoid top-level circular import
         from app.ml.pipeline import MLPipelineError

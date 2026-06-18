@@ -4,6 +4,7 @@ from collections import Counter
 import numpy as np
 from sqlalchemy.orm import Session
 
+from app.core.logging import get_logger
 from app.ml.clustering import cluster_participants
 from app.ml.drift_detection import detect_preference_drift
 from app.ml.feature_engineering import build_feature_matrix
@@ -11,6 +12,8 @@ from app.ml.scoring import score_destinations_for_group
 from app.ml.similarity import compute_similarity_matrix, find_outlier_participants, get_most_similar_pairs
 from app.models.ml_result import MLRunResult
 from app.models.survey_response import SurveyResponse
+
+log = get_logger(__name__)
 
 
 class MLPipelineError(Exception):
@@ -22,7 +25,7 @@ class MLPipeline:
         self.db = db
 
     def run(self, trip_id: uuid.UUID):
-        print(f"[ML] starting pipeline for {trip_id}")
+        log.info("ml_pipeline_start", trip_id=str(trip_id))
         responses = self.db.query(SurveyResponse).filter(SurveyResponse.trip_id == trip_id).all()
         if len(responses) < 2:
             raise MLPipelineError("Need at least 2 survey responses")
@@ -73,5 +76,11 @@ class MLPipeline:
             f"Group stability status: {drift['group_stability']}\n"
             f"All excluded destinations: {', '.join(sorted(all_excluded)) if all_excluded else 'None'}"
         )
-        print(f"[ML] completed pipeline for {trip_id}")
+        log.info(
+            "ml_pipeline_complete",
+            trip_id=str(trip_id),
+            clusters=clusters["k"],
+            silhouette=round(clusters["silhouette_score"], 3),
+            destinations_scored=len(destination_scores),
+        )
         return {"clusters": clusters, "destination_scores": destination_scores, "drift": drift}, llm_context

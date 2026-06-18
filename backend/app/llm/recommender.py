@@ -5,7 +5,9 @@ from app.llm.prompts import recommendation_v1, recommendation_v2
 from app.models.recommendation import Recommendation
 from app.monitoring.cost_tracker import log_llm_usage
 from app.monitoring.metrics import llm_low_quality_total
+from app.core.logging import get_logger
 
+log = get_logger(__name__)
 QUALITY_THRESHOLD = 0.5
 
 
@@ -25,7 +27,7 @@ class RecommendationEngine:
             system = recommendation_v2.SYSTEM_PROMPT
             user = recommendation_v2.build_user_prompt(ml_context, group_size)
 
-        print(f"[LLM] generating recommendations for trip={trip_id} version={version}")
+        log.info("llm_generating_recommendations", trip_id=str(trip_id), prompt_version=version)
         payload = self.gateway.complete(
             "recommendation_generation",
             [{"role": "system", "content": system}, {"role": "user", "content": user}],
@@ -35,7 +37,12 @@ class RecommendationEngine:
         quality_score = self.evaluator.evaluate(parsed)
 
         if quality_score < QUALITY_THRESHOLD:
-            print(f"[LLM] low quality score={quality_score:.2f} trip={trip_id} version={version}")
+            log.warning(
+                "llm_low_quality",
+                trip_id=str(trip_id),
+                prompt_version=version,
+                quality_score=round(quality_score, 3),
+            )
             llm_low_quality_total.labels(prompt_version=version).inc()
 
         self.db.query(Recommendation).filter(Recommendation.trip_id == trip_id).delete()
