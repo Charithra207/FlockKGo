@@ -7,11 +7,12 @@ from sqlalchemy.exc import OperationalError
 from slowapi import _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
 
-from app.api import admin, analytics, budget, participants, recommendations, surveys, trips, voting, ws
+from app.api import admin, analytics, budget, health as health_router, participants, recommendations, surveys, trips, voting, ws
 from app.core.logging import configure_logging, get_logger
 from app.core.middleware import AccessLogMiddleware, RequestIDMiddleware
 from app.llm.gateway import LLMError
 from app.ml.pipeline import MLPipelineError
+from app.monitoring.metrics import llm_circuit_breaker_state, ws_active_connections
 
 # Configure structured logging before anything else
 configure_logging()
@@ -41,6 +42,7 @@ app.include_router(voting.router, prefix="/v1")
 app.include_router(analytics.router, prefix="/v1")
 app.include_router(budget.router, prefix="/v1")
 app.include_router(admin.router, prefix="/v1")
+app.include_router(health_router.router)  # /health and /health/detailed (no prefix)
 app.include_router(ws.router)
 
 
@@ -51,11 +53,6 @@ def root():
     return {"message": "PackVote+ API", "docs": "/docs"}
 
 
-@app.get("/health")
-def health():
-    return {"status": "healthy"}
-
-
 @app.get("/ws/connections")
 def ws_connections():
     from app.services.websocket_manager import manager
@@ -64,6 +61,12 @@ def ws_connections():
 
 @app.get("/metrics")
 def metrics():
+    # Update gauges with current values before scrape
+    from app.services.websocket_manager import manager
+    from app.llm.gateway import _circuit_breaker, CircuitState
+    ws_active_connections.set(manager.total_connections())
+    state_map = {CircuitState.CLOSED: 0, CircuitState.HALF_OPEN: 1, CircuitState.OPEN: 2}
+    llm_circuit_breaker_state.set(state_map.get(_circuit_breaker.state, 0))
     return Response(content=generate_latest(), media_type="text/plain; version=0.0.4")
 
 

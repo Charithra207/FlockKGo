@@ -25,6 +25,7 @@ from app.ml.budget_optimizer import (
 from app.models.participant import Participant
 from app.models.survey_response import SurveyResponse
 from app.models.trip import Trip
+from app.monitoring.metrics import budget_optimizer_calls_total
 from app.schemas.budget import (
     BudgetPlanOut,
     BudgetPlanRequest,
@@ -152,6 +153,9 @@ def compute_budget_plan(
 
     # Run LP optimizer
     plan = solve_group_budget(optimizer_inputs)
+
+    # Record metric
+    budget_optimizer_calls_total.labels(status=plan.status).inc()
 
     # Persist plan summary in trip settings for GET retrieval
     try:

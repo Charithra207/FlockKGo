@@ -12,6 +12,7 @@ from app.ml.scoring import score_destinations_for_group
 from app.ml.similarity import compute_similarity_matrix, find_outlier_participants, get_most_similar_pairs
 from app.models.ml_result import MLRunResult
 from app.models.survey_response import SurveyResponse
+from app.monitoring.metrics import ml_cluster_count, ml_silhouette_score
 
 log = get_logger(__name__)
 
@@ -83,4 +84,8 @@ class MLPipeline:
             silhouette=round(clusters["silhouette_score"], 3),
             destinations_scored=len(destination_scores),
         )
+
+        # Record ML metrics
+        ml_cluster_count.observe(clusters["k"])
+        ml_silhouette_score.observe(clusters["silhouette_score"] or 0.0)
         return {"clusters": clusters, "destination_scores": destination_scores, "drift": drift}, llm_context

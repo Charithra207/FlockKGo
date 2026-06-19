@@ -4,7 +4,7 @@ from app.llm.gateway import LLMError, ModelGateway
 from app.llm.prompts import recommendation_v1, recommendation_v2
 from app.models.recommendation import Recommendation
 from app.monitoring.cost_tracker import log_llm_usage
-from app.monitoring.metrics import llm_low_quality_total
+from app.monitoring.metrics import llm_low_quality_total, llm_recommendation_quality
 from app.core.logging import get_logger
 
 log = get_logger(__name__)
@@ -44,6 +44,9 @@ class RecommendationEngine:
                 quality_score=round(quality_score, 3),
             )
             llm_low_quality_total.labels(prompt_version=version).inc()
+
+        # Always record quality score in histogram
+        llm_recommendation_quality.labels(prompt_version=version).observe(quality_score)
 
         self.db.query(Recommendation).filter(Recommendation.trip_id == trip_id).delete()
         rows = []
