@@ -46,6 +46,9 @@ target_metadata = Base.metadata
 def get_url() -> str:
     url = os.environ.get("DATABASE_URL")
     if url:
+        # Render provides postgres:// — SQLAlchemy needs postgresql+psycopg2://
+        if url.startswith("postgres://"):
+            url = url.replace("postgres://", "postgresql+psycopg2://", 1)
         return url
     # Fall back to app settings (reads .env file)
     from app.config import get_settings
