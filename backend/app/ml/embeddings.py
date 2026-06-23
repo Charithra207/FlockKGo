@@ -10,20 +10,20 @@ This means the app works fully offline (SQLite + no key) and upgrades
 automatically to semantic embeddings when a key is present.
 """
 
-import time
 from typing import Optional
 
 import numpy as np
+
+from app.core.logging import get_logger
+
+log = get_logger(__name__)
 
 EMBEDDING_MODEL = "text-embedding-3-small"
 EMBEDDING_DIM = 1536
 
 
 def _build_destination_text(destination) -> str:
-    """
-    Converts a Destination row into a rich natural-language string for embedding.
-    The more descriptive the text, the better the semantic match.
-    """
+    """Convert a Destination row into natural-language text for embedding."""
     vibes = ", ".join(destination.vibes) if destination.vibes else "general travel"
     return (
         f"{destination.name} in {destination.country}. "
@@ -41,11 +41,9 @@ def get_or_create_embedding(destination, db) -> Optional[list]:
     Generates + caches it if not present and API key is available.
     Returns None if offline (no key, no cached embedding).
     """
-    # Already cached
     if destination.embedding:
         return destination.embedding
 
-    # Try to generate
     try:
         from app.config import get_settings
         api_key = get_settings().openai_api_key
@@ -54,32 +52,25 @@ def get_or_create_embedding(destination, db) -> Optional[list]:
 
         from openai import OpenAI
         client = OpenAI(api_key=api_key)
-
         text = _build_destination_text(destination)
-        print(f"[Embedding] generating for: {destination.name}")
 
-        response = client.embeddings.create(
-            model=EMBEDDING_MODEL,
-            input=text,
-        )
-        vector = response.data[0].embedding  # list of 1536 floats
+        log.info("embedding_generating", destination=destination.name)
+        response = client.embeddings.create(model=EMBEDDING_MODEL, input=text)
+        vector = response.data[0].embedding
 
-        # Cache in DB
         destination.embedding = vector
         destination.embedding_model = EMBEDDING_MODEL
         db.commit()
-
         return vector
 
     except Exception as e:
-        print(f"[Embedding] failed for {destination.name}: {e}")
+        log.error("embedding_failed", destination=destination.name, error=str(e))
         return None
 
 
 def embed_all_destinations(db) -> int:
     """
     Batch-generate embeddings for every destination that doesn't have one yet.
-    Called by the embed_destinations.py script and optionally at startup.
     Returns number of destinations newly embedded.
     """
     from app.models.destination import Destination
@@ -90,23 +81,21 @@ def embed_all_destinations(db) -> int:
     ).all()
 
     if not pending:
-        print("[Embedding] all destinations already embedded")
+        log.info("embedding_all_cached", count=0)
         return 0
 
     try:
         from app.config import get_settings
         api_key = get_settings().openai_api_key
         if not api_key:
-            print("[Embedding] no OPENAI_API_KEY — skipping batch embedding")
+            log.info("embedding_skipped", reason="no OPENAI_API_KEY")
             return 0
 
         from openai import OpenAI
         client = OpenAI(api_key=api_key)
-
         texts = [_build_destination_text(d) for d in pending]
 
-        # Batch call — text-embedding-3-small supports up to 2048 inputs at once
-        print(f"[Embedding] embedding {len(pending)} destinations...")
+        log.info("embedding_batch_start", count=len(pending))
         response = client.embeddings.create(model=EMBEDDING_MODEL, input=texts)
 
         for destination, emb_obj in zip(pending, response.data):
@@ -114,11 +103,11 @@ def embed_all_destinations(db) -> int:
             destination.embedding_model = EMBEDDING_MODEL
 
         db.commit()
-        print(f"[Embedding] done — {len(pending)} destinations embedded")
+        log.info("embedding_batch_complete", count=len(pending))
         return len(pending)
 
     except Exception as e:
-        print(f"[Embedding] batch embedding failed: {e}")
+        log.error("embedding_batch_failed", error=str(e))
         db.rollback()
         return 0
 

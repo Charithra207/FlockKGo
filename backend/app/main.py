@@ -23,11 +23,18 @@ app.state.limiter = trips.limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 # ── Middleware (order matters — first added = outermost) ──────────────────────
-app.add_middleware(AccessLogMiddleware)      # logs after request_id is set
-app.add_middleware(RequestIDMiddleware)      # sets request_id first
+app.add_middleware(AccessLogMiddleware)
+app.add_middleware(RequestIDMiddleware)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    # In production, FRONTEND_BASE_URL is set to the Vercel URL.
+    # Credentials (cookies/auth headers) require an explicit origin — not "*".
+    allow_origins=[
+        "http://localhost:5173",
+        "http://localhost:3000",
+        "http://127.0.0.1:5173",
+    ],
+    allow_origin_regex=r"https://.*\.vercel\.app",  # all Vercel preview deploys
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

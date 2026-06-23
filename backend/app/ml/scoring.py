@@ -14,8 +14,11 @@ embeddings are present in the DB.
 import numpy as np
 from sqlalchemy.orm import Session
 
+from app.core.logging import get_logger
 from app.ml.embeddings import cosine_similarity_score
 from app.models.destination import Destination
+
+log = get_logger(__name__)
 
 # ── Feature-vector helpers ────────────────────────────────────────────────────
 # Keep these in sync with feature_engineering.py
@@ -95,19 +98,17 @@ def score_destinations_for_group(
         destinations = db.query(Destination).filter(Destination.is_active == True).all()
 
     if not destinations:
-        print("[Scoring] no destinations in DB — run seed_destinations.py first")
+        log.warning("scoring_no_destinations", hint="run seed_destinations.py first")
         return []
 
-    # ── Decide scoring mode ───────────────────────────────────────────────────
-    # Use semantic mode if at least half the destinations have embeddings
     embedded_count = sum(1 for d in destinations if d.embedding)
     use_semantic = embedded_count >= len(destinations) // 2
 
     if use_semantic:
-        print(f"[Scoring] semantic mode ({embedded_count}/{len(destinations)} destinations embedded)")
+        log.info("scoring_mode", mode="semantic", embedded=embedded_count, total=len(destinations))
         return _score_semantic(destinations, centroids, feature_matrix, excluded)
     else:
-        print(f"[Scoring] feature mode ({embedded_count}/{len(destinations)} destinations embedded)")
+        log.info("scoring_mode", mode="feature", embedded=embedded_count, total=len(destinations))
         return _score_feature(destinations, centroids, excluded)
 
 
