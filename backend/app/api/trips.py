@@ -137,7 +137,7 @@ def summary(request: Request, trip_id: uuid.UUID, db: Session = Depends(get_db))
 
 
 @router.post("/{trip_id}/run-analysis")
-@limiter.limit("2/minute")
+@limiter.limit("20/minute")
 def run_analysis(
     request: Request,
     trip_id: uuid.UUID,
@@ -473,3 +473,4 @@ def _build_summary(k, silhouette, compatibility, drift_status, outlier_count, to
         "top_destinations": top_destinations,
         "ran_at": run.ran_at.isoformat(),
     }
+

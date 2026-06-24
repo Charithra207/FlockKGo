@@ -1,4 +1,4 @@
-import { useCallback } from 'react'
+﻿import { useCallback } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-hot-toast'
 import { Copy, Check } from 'lucide-react'
@@ -38,7 +38,7 @@ export default function TripDashboard() {
   const navigate = useNavigate()
   const { trip, participants, loading, error, refetch } = useTrip(tripId)
 
-  // Live survey progress — polls every 5s, stops once all submitted
+  // Live survey progress â€” polls every 5s, stops once all submitted
   const { submittedCount, totalCount, allSubmitted, submittedMap } = useSurveyStatus(
     trip ? tripId : null,
   )
@@ -68,7 +68,7 @@ export default function TripDashboard() {
   if (error) {
     return (
       <div className="rounded-2xl bg-white p-8 text-center shadow-card">
-        <p className="text-2xl">😕</p>
+        <p className="text-2xl">ðŸ˜•</p>
         <h2 className="mt-2 text-lg font-bold text-red-600">Failed to load trip</h2>
         <p className="mt-1 text-sm text-slate-500">{error}</p>
         <button
@@ -84,7 +84,7 @@ export default function TripDashboard() {
   if (!trip) {
     return (
       <div className="rounded-2xl bg-white p-8 text-center shadow-card">
-        <p className="text-4xl">🐦</p>
+        <p className="text-4xl">ðŸ¦</p>
         <h2 className="mt-2 text-xl font-bold text-primary">Trip not found</h2>
         <p className="mt-1 text-sm text-slate-500">
           This trip doesn't exist or the link has expired.
@@ -108,8 +108,21 @@ export default function TripDashboard() {
   const handleGenerateRecs = async () => {
     try {
       await runAnalysis(tripId)
-      // Silent refetch flips the status badge without a full-page spinner
-      await refetch({ silent: true })
+      // Poll until backend finishes (fallback runs fast, no redis needed)
+      let attempts = 0
+      const checkDone = async () => {
+        try {
+          const res = await fetch(`/v1/trips/${tripId}/analysis`)
+          const data = await res.json()
+          if (data.status === 'voting' || data.status === 'completed') {
+            navigate(`/trip/${tripId}/recs`)
+            return
+          }
+        } catch {}
+        attempts++
+        if (attempts < 20) setTimeout(checkDone, 1000)
+      }
+      setTimeout(checkDone, 800)
     } catch (e) {
       toast.error(e.message)
     }
@@ -140,7 +153,7 @@ export default function TripDashboard() {
         <ProgressBar value={pct} />
         {total === 0 && (
           <p className="mt-3 text-sm text-slate-400">
-            No participants yet — add some from the Create page.
+            No participants yet â€” add some from the Create page.
           </p>
         )}
       </div>
@@ -162,7 +175,7 @@ export default function TripDashboard() {
             </button>
           ) : (
             <p className="rounded-xl bg-slate-100 px-4 py-2 text-sm text-slate-500">
-              Waiting for all {total} surveys…
+              Waiting for all {total} surveysâ€¦
             </p>
           )
         )}
@@ -181,10 +194,12 @@ export default function TripDashboard() {
             to={`/trip/${trip.id}/results`}
             className="rounded-xl bg-emerald-600 px-4 py-2 font-semibold text-white hover:opacity-90"
           >
-            See Results 🎉
+            See Results ðŸŽ‰
           </Link>
         )}
       </div>
     </div>
   )
 }
+
+

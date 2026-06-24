@@ -22,6 +22,15 @@ app = FastAPI(title="PackVote+ API", version="1.0.0")
 app.state.limiter = trips.limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
+
+@app.on_event("startup")
+def _create_tables():
+    """Create all SQLite tables on first run (dev convenience)."""
+    import app.models  # noqa: F401 — ensure all models are registered
+    from app.db.database import Base, engine
+    Base.metadata.create_all(bind=engine)
+
+
 # ── Middleware (order matters — first added = outermost) ──────────────────────
 app.add_middleware(AccessLogMiddleware)
 app.add_middleware(RequestIDMiddleware)
@@ -133,3 +142,5 @@ async def internal_handler(request: Request, exc: Exception):
         status_code=500,
         content={"error": "Internal server error", "detail": str(exc)},
     )
+
+
