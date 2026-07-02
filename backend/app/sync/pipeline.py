@@ -1,7 +1,8 @@
 """
 pipeline.py — Sync orchestration for the India Destination Sync.
 
-Phase 5, Task 5.2.
+Phase 5, Task 5.2 — core upsert logic.
+Phase 8, Task 8.1 — structured stage logging with duration, warning_count.
 
 UPSERT CONTRACT
 ---------------
@@ -28,10 +29,16 @@ COUNTS RETURNED
   unchanged  — existing destinations with no field change
   deactivated — destinations soft-deleted this run
   skipped    — medium-quality candidates rejected due to catalog cap
+
+STRUCTURED LOGGING PER STAGE
+-----------------------------
+Every call to _log_stage emits a structlog entry with:
+  stage, duration_s, processed, accepted, rejected, warning_count
 """
 
 from __future__ import annotations
 
+import time
 import uuid
 from typing import Any
 
@@ -346,30 +353,12 @@ def upsert_destinations(
 
 def run_sync_pipeline(db: Session) -> dict:
     """
-    Orchestrate all sync components in sequence:
+    Orchestrate all sync components in sequence.
 
-      1. fetch_india_destinations   (Overpass API)
-      2. filter_candidates          (Geometry filter)
-      3. enrich_wikidata / enrich_opentripmap  (per candidate)
-      4. score_candidates           (Quality scorer)
-      5. compute_dna                (DNA mapper)
-      6. upsert_destinations        (DB upsert)
-      7. run_embedding_update       (Incremental embeddings)
-
-    Emits structlog entries at each stage with processed/accepted/rejected counts.
+    Emits structlog entries at each stage with:
+      stage, duration_s, processed, accepted, rejected, warning_count
     Emits WARNING if rejected > 80% of processed at any stage.
     Returns stage counts dict compatible with SyncRun.stage_counts.
-
-    Parameters
-    ----------
-    db:
-        Active SQLAlchemy session.
-
-    Returns
-    -------
-    dict
-        Keys: inserted, updated, unchanged, deactivated, skipped,
-              fetched, stage_counts
     """
     settings = get_settings()
     stage_counts: dict[str, dict] = {}
@@ -377,29 +366,31 @@ def run_sync_pipeline(db: Session) -> dict:
     # -----------------------------------------------------------------------
     # Stage 1 — OSM Fetch
     # -----------------------------------------------------------------------
+    t0 = time.perf_counter()
     raw_candidates = fetch_india_destinations(
         overpass_url=settings.overpass_api_url,
         batch_size=settings.osm_batch_size,
     )
     fetched = len(raw_candidates)
-    _log_stage(stage_counts, "osm_fetch", processed=fetched, accepted=fetched, rejected=0)
+    _log_stage(stage_counts, "osm_fetch",
+               processed=fetched, accepted=fetched, rejected=0,
+               duration_s=round(time.perf_counter() - t0, 3))
 
     # -----------------------------------------------------------------------
     # Stage 2 — Geometry Filter
     # -----------------------------------------------------------------------
+    t0 = time.perf_counter()
     filter_result = filter_candidates(raw_candidates)
     accepted_geo = filter_result.accepted
     rejected_geo = len(filter_result.rejected)
-    _log_stage(
-        stage_counts, "geometry_filter",
-        processed=fetched,
-        accepted=len(accepted_geo),
-        rejected=rejected_geo,
-    )
+    _log_stage(stage_counts, "geometry_filter",
+               processed=fetched, accepted=len(accepted_geo), rejected=rejected_geo,
+               duration_s=round(time.perf_counter() - t0, 3))
 
     # -----------------------------------------------------------------------
     # Stage 3 — Enrichment (Wikidata + OpenTripMap per candidate)
     # -----------------------------------------------------------------------
+    t0 = time.perf_counter()
     wikidata_map: dict[str, WikidataInfo] = {}
     otm_map: dict[str, OTMInfo] = {}
 
@@ -413,16 +404,14 @@ def run_sync_pipeline(db: Session) -> dict:
         else:
             otm_map[candidate.osm_source_id] = OTMInfo()
 
-    _log_stage(
-        stage_counts, "enrichment",
-        processed=len(accepted_geo),
-        accepted=len(accepted_geo),
-        rejected=0,
-    )
+    _log_stage(stage_counts, "enrichment",
+               processed=len(accepted_geo), accepted=len(accepted_geo), rejected=0,
+               duration_s=round(time.perf_counter() - t0, 3))
 
     # -----------------------------------------------------------------------
     # Stage 4 — Quality Scoring
     # -----------------------------------------------------------------------
+    t0 = time.perf_counter()
     scored = score_candidates(
         accepted_geo,
         wikidata_map,
@@ -431,48 +420,43 @@ def run_sync_pipeline(db: Session) -> dict:
         threshold_medium=settings.quality_threshold_medium,
     )
     rejected_quality = len(accepted_geo) - len(scored)
-    _log_stage(
-        stage_counts, "quality_scorer",
-        processed=len(accepted_geo),
-        accepted=len(scored),
-        rejected=rejected_quality,
-    )
+    _log_stage(stage_counts, "quality_scorer",
+               processed=len(accepted_geo), accepted=len(scored), rejected=rejected_quality,
+               duration_s=round(time.perf_counter() - t0, 3))
 
     # -----------------------------------------------------------------------
     # Stage 5 — DNA Computation
     # -----------------------------------------------------------------------
+    t0 = time.perf_counter()
     dna_results: dict[str, DNAResult] = {}
     for s in scored:
         dna_results[s.candidate.osm_source_id] = compute_dna(s)
 
-    _log_stage(
-        stage_counts, "dna_mapper",
-        processed=len(scored),
-        accepted=len(dna_results),
-        rejected=0,
-    )
+    _log_stage(stage_counts, "dna_mapper",
+               processed=len(scored), accepted=len(dna_results), rejected=0,
+               duration_s=round(time.perf_counter() - t0, 3))
 
     # -----------------------------------------------------------------------
     # Stage 6 — Upsert
     # -----------------------------------------------------------------------
+    t0 = time.perf_counter()
     upsert_result = upsert_destinations(scored, dna_results, db)
-    _log_stage(
-        stage_counts, "upsert",
-        processed=len(scored),
-        accepted=upsert_result["inserted"] + upsert_result["updated"] + upsert_result["unchanged"],
-        rejected=upsert_result["skipped"],
-    )
+    _log_stage(stage_counts, "upsert",
+               processed=len(scored),
+               accepted=upsert_result["inserted"] + upsert_result["updated"] + upsert_result["unchanged"],
+               rejected=upsert_result["skipped"],
+               duration_s=round(time.perf_counter() - t0, 3))
 
     # -----------------------------------------------------------------------
     # Stage 7 — Embedding Update
     # -----------------------------------------------------------------------
+    t0 = time.perf_counter()
     embedding_result = run_embedding_update(upsert_result["upserted_changes"], db)
-    _log_stage(
-        stage_counts, "embedding_update",
-        processed=len(upsert_result["upserted_changes"]),
-        accepted=embedding_result.embedded,
-        rejected=0,
-    )
+    _log_stage(stage_counts, "embedding_update",
+               processed=len(upsert_result["upserted_changes"]),
+               accepted=embedding_result.embedded,
+               rejected=0,
+               duration_s=round(time.perf_counter() - t0, 3))
 
     result = {
         "fetched": fetched,
@@ -506,21 +490,37 @@ def _log_stage(
     processed: int,
     accepted: int,
     rejected: int,
+    duration_s: float = 0.0,
 ) -> None:
-    """Emit a structlog entry for a pipeline stage and check rejection rate."""
+    """
+    Emit a structlog entry for a pipeline stage and check rejection rate.
+
+    Structured fields emitted:
+      stage, duration_s, processed, accepted, rejected, warning_count
+    warning_count is 1 if the high-rejection threshold is exceeded, else 0.
+    """
+    is_high_rejection = processed > 0 and rejected > 0.8 * processed
+    warning_count = 1 if is_high_rejection else 0
+
     stage_counts[stage] = {
         "processed": processed,
         "accepted": accepted,
         "rejected": rejected,
+        "duration_s": duration_s,
+        "warning_count": warning_count,
     }
+
     log.info(
         "sync_stage_complete",
         stage=stage,
+        duration_s=duration_s,
         processed=processed,
         accepted=accepted,
         rejected=rejected,
+        warning_count=warning_count,
     )
-    if processed > 0 and rejected > 0.8 * processed:
+
+    if is_high_rejection:
         log.warning(
             "high_rejection_rate",
             stage=stage,

@@ -23,3 +23,4 @@ celery==5.3.4
 redis==5.0.1
 pulp==2.7.0
 structlog==24.1.0
+hypothesis==6.112.2
