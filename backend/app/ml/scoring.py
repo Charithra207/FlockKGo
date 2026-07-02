@@ -17,6 +17,7 @@ from sqlalchemy.orm import Session
 from app.core.logging import get_logger
 from app.ml.embeddings import cosine_similarity_score
 from app.models.destination import Destination
+from app.sync.availability_layer import filter_unavailable
 
 log = get_logger(__name__)
 
@@ -96,6 +97,7 @@ def score_destinations_for_group(
     destinations = []
     if db is not None:
         destinations = db.query(Destination).filter(Destination.is_active == True).all()
+        destinations = filter_unavailable(destinations, db)
 
     if not destinations:
         log.warning("scoring_no_destinations", hint="run seed_destinations.py first")
