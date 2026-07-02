@@ -8,3 +8,5 @@ from app.models.destination import Destination
 from app.models.task_run import TaskRun
 from app.models.prompt_version import PromptVersionAssignment
 from app.models.api_key import APIKey
+from app.models.sync_run import SyncRun  # noqa
+from app.models.destination_availability import DestinationAvailability  # noqa

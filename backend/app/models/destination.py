@@ -38,3 +38,8 @@ class Destination(Base):
 
     is_active = Column(Boolean, nullable=False, default=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
+
+    # India Sync columns
+    osm_source_id = Column(String(100), nullable=True, unique=True, index=True)
+    travel_dna = Column(JSON, nullable=True)
+    tourism_metadata = Column(JSON, nullable=True)

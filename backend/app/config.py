@@ -14,6 +14,15 @@ class Settings(BaseSettings):
     # If not set, auth is disabled in development mode
     api_secret_key: str | None = None
 
+    # India Sync settings
+    overpass_api_url: str = "https://overpass-api.de/api/interpreter"
+    osm_batch_size: int = 500
+    opentripmap_api_key: str | None = None
+    sync_schedule_cron: str = "0 2 * * 0"
+    quality_threshold_high: int = 70
+    quality_threshold_medium: int = 50
+    catalog_max_active: int = 20_000
+
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
 
