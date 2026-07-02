@@ -34,3 +34,10 @@ htmlcov/
 # Build artifacts
 *.egg-info/
 build/
+
+# Kiro
+.kiro/
+.config.kiro
+
+# Hypothesis test database
+backend/.hypothesis/
