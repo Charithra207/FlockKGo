@@ -4,11 +4,11 @@ tests/sync/test_quality_scorer.py — Unit tests for app/sync/quality_scorer.py
 import pytest
 
 from app.sync.osm_fetcher import CandidateRecord
+from app.sync.wikidata_enricher import WikidataInfo
+from app.sync.opentripmap_enricher import OTMInfo
 from app.sync.quality_scorer import (
-    OTMInfo,
     QualityTier,
     ScoredCandidate,
-    WikidataInfo,
     _score_access_quality,
     _score_image,
     _score_name_quality,

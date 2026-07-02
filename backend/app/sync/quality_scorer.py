@@ -4,10 +4,6 @@ quality_scorer.py — Quality_Scorer component for the India Destination Sync pi
 Computes a 0–100 integer quality score for each candidate destination across
 nine weighted dimensions, assigns a QualityTier, and returns only high/medium
 candidates. All thresholds are read from config at call time — no restart required.
-
-Phase 2 note: WikidataInfo and OTMInfo are defined here as forward-compatible stubs.
-Phase 3 will provide real implementations in wikidata_enricher.py and
-opentripmap_enricher.py, and this module will import from those instead.
 """
 
 from __future__ import annotations
@@ -18,28 +14,8 @@ from enum import Enum
 
 from app.config import get_settings
 from app.sync.osm_fetcher import CandidateRecord
-
-
-# ---------------------------------------------------------------------------
-# Phase 2 stubs — will be replaced by Phase 3 enricher imports
-# ---------------------------------------------------------------------------
-# These will be imported from enricher modules in Phase 3.
-# Defined here as stubs for Phase 2 testability.
-from dataclasses import dataclass as _dataclass
-
-
-@_dataclass
-class WikidataInfo:
-    wikidata_id: str | None = None
-    wikipedia_url: str | None = None
-    image_url: str | None = None
-    is_unesco: bool = False
-
-
-@_dataclass
-class OTMInfo:
-    rate: float = 0.0
-    otm_xid: str | None = None
+from app.sync.wikidata_enricher import WikidataInfo
+from app.sync.opentripmap_enricher import OTMInfo
 
 
 # ---------------------------------------------------------------------------
