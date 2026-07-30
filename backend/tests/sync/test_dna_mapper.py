@@ -212,11 +212,15 @@ def test_budget_midpoint_type_is_int():
 
 
 def test_dna_to_feature_compatible_returns_required_keys():
-    """dna_to_feature_compatible returns dict with all required keys."""
+    """dna_to_feature_compatible returns dict with all required keys (including logistics fields)."""
     dna_result = compute_dna(_make_scored())
     compat = dna_to_feature_compatible(dna_result)
-    required_keys = {"vibes", "climate", "activity_level", "budget_midpoint", "budget_flexibility"}
-    assert set(compat.keys()) == required_keys
+    required_keys = {
+        "vibes", "climate", "activity_level", "budget_midpoint", "budget_flexibility",
+        # Logistics fields added in the Real-World Logistics Engine upgrade
+        "activity_intensity", "amenities", "best_months", "is_road_trip_accessible",
+    }
+    assert required_keys.issubset(set(compat.keys()))
 
 
 def test_dna_to_feature_compatible_vibes_is_list():

@@ -10,3 +10,4 @@ from app.models.prompt_version import PromptVersionAssignment
 from app.models.api_key import APIKey
 from app.models.sync_run import SyncRun  # noqa
 from app.models.destination_availability import DestinationAvailability  # noqa
+from app.models.budget_plan import BudgetPlanRecord  # noqa

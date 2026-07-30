@@ -23,9 +23,14 @@ EMBEDDING_DIM = 1536
 
 
 def _build_destination_text(destination) -> str:
-    """Convert a Destination row into natural-language text for embedding."""
+    """
+    Convert a Destination row into natural-language text for embedding.
+
+    Includes quick_info when present so offbeat destinations with rich
+    human-readable descriptions produce semantically richer embeddings.
+    """
     vibes = ", ".join(destination.vibes) if destination.vibes else "general travel"
-    return (
+    base = (
         f"{destination.name} in {destination.country}. "
         f"This destination is known for: {vibes}. "
         f"Climate: {destination.climate}. "
@@ -33,6 +38,10 @@ def _build_destination_text(destination) -> str:
         f"Typical budget: around ${destination.budget_midpoint} USD per person. "
         f"Budget flexibility: {'high' if destination.budget_flexibility >= 0.7 else 'medium' if destination.budget_flexibility >= 0.5 else 'low'}."
     )
+    quick_info = getattr(destination, "quick_info", None)
+    if quick_info:
+        base += f"  {quick_info}"
+    return base
 
 
 def get_or_create_embedding(destination, db) -> Optional[list]:

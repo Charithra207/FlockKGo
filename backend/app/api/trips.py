@@ -1,4 +1,4 @@
-﻿"""
+"""
 trips.py — Trip management endpoints.
 
 ML analysis is dispatched to a Celery worker (Redis broker).
@@ -255,6 +255,39 @@ def final_results(request: Request, trip_id: uuid.UUID, db: Session = Depends(ge
                 "estimated_budget_range": winner.estimated_budget_range,
                 "ml_score": winner.ml_score,
             }
+
+    # Attach sacrifice telemetry to the results so the Results page can
+    # display who compromised most and reference the budget relief they received.
+    ml_run = (
+        db.query(MLRunResult)
+        .filter(MLRunResult.trip_id == trip_id)
+        .order_by(MLRunResult.ran_at.desc())
+        .first()
+    )
+    if ml_run and ml_run.sacrifice_scores:
+        participants = db.query(Participant).filter(Participant.trip_id == trip_id).all()
+        id_to_name = {str(p.id): p.name for p in participants}
+        result["sacrifice_telemetry"] = [
+            {
+                "participant_id": pid,
+                "name": id_to_name.get(pid, "Unknown"),
+                "sacrifice_score": round(float(score), 4),
+                "interpretation": _sacrifice_label(float(score)),
+            }
+            for pid, score in sorted(
+                ml_run.sacrifice_scores.items(),
+                key=lambda kv: float(kv[1]),
+                reverse=True,
+            )
+        ]
+    else:
+        result["sacrifice_telemetry"] = []
+
+    # Attach logistics constraint report so the Results page can explain
+    # how the destination pool was narrowed before ML scoring.
+    trip = db.query(Trip).filter(Trip.id == trip_id).first()
+    result["logistics_constraints"] = _build_logistics_summary(trip, ml_run)
+
     return result
 
 
@@ -382,8 +415,23 @@ def ml_insights(request: Request, trip_id: uuid.UUID, db: Session = Depends(get_
             "group_mean_match": round(d.get("group_mean_match", 0.0), 3),
             "minority_consideration": round(d.get("minority_consideration", 0.0), 3),
             "scoring_mode": d.get("scoring_mode", "feature"),
+            "quick_info": d.get("quick_info"),
         }
         for idx, d in enumerate(dest_scores[:10])
+    ]
+
+    # ── Anti-Dictator: Sacrifice Scores ───────────────────────────────────────
+    raw_sacrifice = run.sacrifice_scores or {}
+    sacrifice_telemetry = [
+        {
+            "participant_id": pid,
+            "name": id_to_name.get(pid, "Unknown"),
+            "sacrifice_score": round(float(score), 4),
+            "interpretation": _sacrifice_label(float(score)),
+        }
+        for pid, score in sorted(
+            raw_sacrifice.items(), key=lambda kv: float(kv[1]), reverse=True
+        )
     ]
 
     # ── Plain-English summary ─────────────────────────────────────────────────
@@ -405,6 +453,8 @@ def ml_insights(request: Request, trip_id: uuid.UUID, db: Session = Depends(get_
         "compatibility": compatibility,
         "drift": drift,
         "top_destinations": top_destinations,
+        "sacrifice_telemetry": sacrifice_telemetry,
+        "logistics_constraints": _build_logistics_summary(trip, run),
     }
 
 
@@ -428,6 +478,16 @@ def _compatibility_label(score: float) -> str:
     return "low compatibility — very different preferences in the group"
 
 
+def _sacrifice_label(score: float) -> str:
+    if score <= 0.20:
+        return "minimal — destination aligns closely with their preferences"
+    if score <= 0.45:
+        return "moderate — some compromise on destination type"
+    if score <= 0.70:
+        return "significant — notably different from their ideal"
+    return "high — this participant sacrificed considerably for the group"
+
+
 def _build_summary(k, silhouette, compatibility, drift_status, outlier_count, top_dest) -> str:
     parts = []
     if k == 1:
@@ -445,32 +505,73 @@ def _build_summary(k, silhouette, compatibility, drift_status, outlier_count, to
         parts.append(f"{outlier_count} participants have notably different preferences.")
 
     if drift_status != "stable":
-        parts.append(f"Preference drift detected ({drift_status.replace('_', ' ')}) — some members changed their answers.")
+        parts.append(
+            f"Preference drift detected ({drift_status.replace('_', ' ')}) "
+            "— some members changed their answers."
+        )
 
     if top_dest:
         parts.append(f"Top ML-scored destination: {top_dest}.")
 
     return " ".join(parts)
-    run = (
-        db.query(MLRunResult)
-        .filter(MLRunResult.trip_id == trip_id)
-        .order_by(MLRunResult.ran_at.desc())
-        .first()
-    )
-    if not run:
-        raise HTTPException(status_code=404, detail="No ML metrics found for this trip")
 
-    top_destinations = [
-        {"destination": d.get("destination_name"), "score": d.get("score"), "mode": d.get("scoring_mode")}
-        for d in (run.destination_scores or [])[:5]
-    ]
+
+def _build_logistics_summary(trip: Trip, ml_run: MLRunResult | None) -> dict:
+    """
+    Build a summary of the logistics constraints that were applied during
+    the ML pipeline for transparency in the API response.
+
+    Returns a dict with:
+      - activity_intensity_range: tuple[int | None, int | None]
+      - mandatory_amenities: list[str]
+      - trip_month: str | None
+      - transit_preferences: list[str]
+      - origin_city: str | None
+      - duration_days: int | None
+      - constraint_summary: plain-English explanation
+    """
+    if not trip:
+        return {}
+
+    # Aggregate constraints from trip + survey responses would be done in the
+    # pipeline, but we can show what the trip-level settings were:
+    intensity_min = trip.activity_intensity_min
+    intensity_max = trip.activity_intensity_max
+    amenities = trip.mandatory_amenities or []
+    trip_month = trip.trip_month
+    transit_prefs = trip.transit_preferences or []
+    origin_city = trip.origin_city
+    duration_days = trip.duration_days
+
+    # Build plain-English summary
+    lines = []
+    if intensity_min or intensity_max:
+        lines.append(
+            f"Activity intensity filtered to {intensity_min or 1}–{intensity_max or 5} on the 1–5 scale."
+        )
+    if amenities:
+        lines.append(f"Required amenities: {', '.join(amenities)}.")
+    if trip_month:
+        lines.append(f"Destinations filtered for optimal conditions in {trip_month}.")
+    if transit_prefs:
+        lines.append(f"Transit mode(s): {', '.join(transit_prefs)}.")
+        if "Private Car" in transit_prefs and duration_days and duration_days <= 2:
+            lines.append(
+                f"Road trip radius cap applied for a {duration_days}-day trip "
+                f"to maximize time at the destination."
+            )
+    if origin_city:
+        lines.append(f"Departure city: {origin_city}.")
+
+    constraint_summary = " ".join(lines) if lines else "No hard logistics constraints applied."
 
     return {
-        "silhouette_score": run.silhouette_score,
-        "cluster_count": run.cluster_count,
-        "drift_status": run.preference_drift.get("group_stability"),
-        "average_drift": run.preference_drift.get("average_drift"),
-        "top_destinations": top_destinations,
-        "ran_at": run.ran_at.isoformat(),
+        "activity_intensity_range": (intensity_min, intensity_max),
+        "mandatory_amenities": amenities,
+        "trip_month": trip_month,
+        "transit_preferences": transit_prefs,
+        "origin_city": origin_city,
+        "duration_days": duration_days,
+        "constraint_summary": constraint_summary,
     }
 

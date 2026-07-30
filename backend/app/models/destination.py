@@ -43,3 +43,26 @@ class Destination(Base):
     osm_source_id = Column(String(100), nullable=True, unique=True, index=True)
     travel_dna = Column(JSON, nullable=True)
     tourism_metadata = Column(JSON, nullable=True)
+
+    # Human-readable one-liner generated during sync — returned to the React UI
+    quick_info = Column(String(400), nullable=True)
+
+    # ── Logistics Constraint Columns ──────────────────────────────────────────
+    # Numeric intensity 1–5, derived from DNA adventure_score during sync.
+    # 1=relaxed/accessible, 3=moderate, 5=high-adventure.
+    activity_intensity = Column(Integer, nullable=True)
+
+    # Amenity labels present at this destination.
+    # Derived from OSM tags + tourism_metadata during sync.
+    # e.g. ["Vegetarian Friendly", "Wheelchair Accessible"]
+    amenities = Column(JSON, nullable=True, default=list)
+
+    # Calendar months (1–12) when this destination is ideal to visit.
+    # Derived from DNA seasonal scores during sync.
+    # e.g. [10, 11, 12, 1, 2] = October through February
+    best_months = Column(JSON, nullable=True, default=list)
+
+    # True if the destination is plausibly reachable by a 6-hour private car
+    # journey from most Indian metro areas (heuristic based on location).
+    # Used by the Contextual Duration Calculator.
+    is_road_trip_accessible = Column(Boolean, nullable=True)

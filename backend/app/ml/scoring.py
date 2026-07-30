@@ -9,6 +9,21 @@ Two modes (selected automatically):
 
 The pipeline always produces scores; semantic mode activates silently when
 embeddings are present in the DB.
+
+ANTI-DICTATOR: Individual Sacrifice Score
+-----------------------------------------
+After destinations are scored and a winning cluster center is known, this
+module computes an Individual Sacrifice Score (ISS) for every participant:
+
+    ISS_i = ‖feature_vector_i - cluster_center_winning‖₂ / √D
+
+Where D=16 (feature dimensions), normalising L2 distance to [0, 1].
+
+A participant with ISS close to 1.0 has preferences maximally distant from
+the group's chosen direction — they "sacrificed" the most. This score is
+surfaced through analytics and used by the budget optimizer to dynamically
+lower their spending target, subsidising their participation from the group
+pool.
 """
 
 import numpy as np
@@ -21,11 +36,17 @@ from app.sync.availability_layer import filter_unavailable
 
 log = get_logger(__name__)
 
-# ── Feature-vector helpers ────────────────────────────────────────────────────
+# ── Feature-vector constants ──────────────────────────────────────────────────
 # Keep these in sync with feature_engineering.py
 
-VIBES_ORDER = ["beach", "adventure", "cultural", "nightlife", "nature", "food", "relaxation", "city"]
+VIBES_ORDER = [
+    "beach", "adventure", "cultural", "nightlife",
+    "nature", "food", "relaxation", "city",
+]
 ACTIVITY = {"relaxed": 0.0, "moderate": 0.5, "intense": 1.0}
+
+# Number of feature dimensions (must match build_feature_vector output length)
+FEATURE_DIM = 16
 
 
 def _feature_vec_from_destination(d: Destination) -> np.ndarray:
@@ -72,6 +93,80 @@ def _is_excluded(destination_name: str, excluded: list[str]) -> bool:
     return any(ex.lower() in name_lower or name_lower in ex.lower() for ex in excluded)
 
 
+# ── ANTI-DICTATOR: Individual Sacrifice Score ─────────────────────────────────
+
+def compute_sacrifice_scores(
+    cluster_results: dict,
+    feature_matrix: np.ndarray,
+    participant_ids: list,
+) -> dict[str, float]:
+    """
+    Compute the Individual Sacrifice Score (ISS) for every participant.
+
+    The ISS measures how far each participant's 16-d preference vector sits
+    from the dominant cluster center — the direction the group chose to travel.
+
+    Formula:
+        ISS_i = ‖v_i - center_dominant‖₂ / √D
+
+    Where:
+        v_i            — participant i's 16-d feature vector
+        center_dominant — centroid of the dominant (largest) cluster
+        D              — number of feature dimensions (16)
+        √D             — normalisation constant so ISS ∈ [0, 1]
+
+    Interpretation:
+        0.0  — participant's preferences perfectly match the group direction
+        1.0  — participant's preferences are maximally distant (full sacrifice)
+
+    The dominant cluster center is taken from cluster_results["centers"] at
+    index cluster_results["dominant_cluster"], which was already computed by
+    clustering.py using inverse-transformed (original feature space) centroids.
+
+    Parameters
+    ----------
+    cluster_results : dict
+        Output of cluster_participants() from clustering.py.
+    feature_matrix  : np.ndarray
+        Shape (n_participants, 16).  Row order must match participant_ids.
+    participant_ids : list
+        Participant UUIDs (or strings) in the same order as feature_matrix rows.
+
+    Returns
+    -------
+    dict[str, float]
+        Mapping of str(participant_id) → ISS float in [0.0, 1.0].
+    """
+    if len(feature_matrix) == 0:
+        return {}
+
+    dominant_idx = cluster_results.get("dominant_cluster", 0)
+    centers = cluster_results.get("centers", [])
+
+    # Defensive: if centers list is shorter than expected, fall back to group mean
+    if dominant_idx < len(centers):
+        dominant_center = np.array(centers[dominant_idx], dtype=float)
+    else:
+        dominant_center = feature_matrix.mean(axis=0)
+
+    norm_factor = float(np.sqrt(FEATURE_DIM))  # √16 = 4.0
+    scores: dict[str, float] = {}
+
+    for i, pid in enumerate(participant_ids):
+        vec = feature_matrix[i]
+        l2_dist = float(np.linalg.norm(vec - dominant_center))
+        iss = l2_dist / norm_factor
+        scores[str(pid)] = round(float(np.clip(iss, 0.0, 1.0)), 4)
+
+    log.info(
+        "sacrifice_scores_computed",
+        n_participants=len(scores),
+        avg_iss=round(float(np.mean(list(scores.values()))), 4),
+        max_iss=round(float(max(scores.values())), 4) if scores else 0.0,
+    )
+    return scores
+
+
 # ── Main scoring function ─────────────────────────────────────────────────────
 
 def score_destinations_for_group(
@@ -79,6 +174,7 @@ def score_destinations_for_group(
     feature_matrix: np.ndarray,
     db: Session = None,
     excluded_destinations: list[str] = None,
+    prefiltered_destinations: list = None,
 ) -> list:
     """
     Score all active destinations against the group's preference clusters.
@@ -86,6 +182,22 @@ def score_destinations_for_group(
     Returns a list of dicts sorted by score descending, top 10.
     Each dict has: destination_name, country, score, scoring_mode,
                    dominant_cluster_match, group_mean_match, minority_consideration.
+
+    Parameters
+    ----------
+    cluster_results:
+        Output from cluster_participants().
+    feature_matrix:
+        Participant feature vectors, shape (n_participants, 16).
+    db:
+        SQLAlchemy session. Used to load destinations if prefiltered_destinations
+        is None.
+    excluded_destinations:
+        List of destination names to skip (participant-excluded).
+    prefiltered_destinations:
+        If provided, this list of Destination objects is used directly,
+        bypassing the DB query. Used by the pipeline to pass the logistics-
+        filtered pool directly without a second DB fetch.
     """
     if len(feature_matrix) == 0:
         return []
@@ -93,11 +205,14 @@ def score_destinations_for_group(
     excluded = excluded_destinations or []
     centroids = _group_centroids(cluster_results, feature_matrix)
 
-    # ── Load destinations from DB if available, else return empty ────────────
-    destinations = []
-    if db is not None:
+    # ── Load destinations: prefer pre-filtered pool over DB query ────────────
+    if prefiltered_destinations is not None:
+        destinations = prefiltered_destinations
+    elif db is not None:
         destinations = db.query(Destination).filter(Destination.is_active == True).all()
         destinations = filter_unavailable(destinations, db)
+    else:
+        destinations = []
 
     if not destinations:
         log.warning("scoring_no_destinations", hint="run seed_destinations.py first")
@@ -107,10 +222,20 @@ def score_destinations_for_group(
     use_semantic = embedded_count >= len(destinations) // 2
 
     if use_semantic:
-        log.info("scoring_mode", mode="semantic", embedded=embedded_count, total=len(destinations))
+        log.info(
+            "scoring_mode",
+            mode="semantic",
+            embedded=embedded_count,
+            total=len(destinations),
+        )
         return _score_semantic(destinations, centroids, feature_matrix, excluded)
     else:
-        log.info("scoring_mode", mode="feature", embedded=embedded_count, total=len(destinations))
+        log.info(
+            "scoring_mode",
+            mode="feature",
+            embedded=embedded_count,
+            total=len(destinations),
+        )
         return _score_feature(destinations, centroids, excluded)
 
 
@@ -155,9 +280,9 @@ def _score_semantic(destinations, centroids, feature_matrix, excluded):
         fv = _feature_vec_from_destination(d)
 
         # Feature-space scores (budget, activity)
-        dom_match = 1 - np.linalg.norm(fv - centroids["dominant"]) / np.sqrt(len(fv))
-        grp_match = 1 - np.linalg.norm(fv - centroids["group"]) / np.sqrt(len(fv))
-        min_match = 1 - np.linalg.norm(fv - centroids["minority"]) / np.sqrt(len(fv))
+        dom_match = 1 - np.linalg.norm(fv - centroids["dominant"]) / np.sqrt(FEATURE_DIM)
+        grp_match = 1 - np.linalg.norm(fv - centroids["group"]) / np.sqrt(FEATURE_DIM)
+        min_match = 1 - np.linalg.norm(fv - centroids["minority"]) / np.sqrt(FEATURE_DIM)
 
         # Semantic score
         if d.embedding:
@@ -173,11 +298,12 @@ def _score_semantic(destinations, centroids, feature_matrix, excluded):
         out.append({
             "destination_name": d.name,
             "country": d.country,
-            "score": float(max(0.0, min(1.0, score))),
-            "dominant_cluster_match": float(max(0.0, min(1.0, dom_match))),
-            "group_mean_match": float(max(0.0, min(1.0, grp_match))),
-            "minority_consideration": float(max(0.0, min(1.0, min_match))),
+            "score": float(np.clip(score, 0.0, 1.0)),
+            "dominant_cluster_match": float(np.clip(dom_match, 0.0, 1.0)),
+            "group_mean_match": float(np.clip(grp_match, 0.0, 1.0)),
+            "minority_consideration": float(np.clip(min_match, 0.0, 1.0)),
             "scoring_mode": mode,
+            "quick_info": getattr(d, "quick_info", None),
         })
 
     out.sort(key=lambda x: x["score"], reverse=True)
@@ -197,19 +323,20 @@ def _score_feature(destinations, centroids, excluded):
             continue
 
         fv = _feature_vec_from_destination(d)
-        dom_match = 1 - np.linalg.norm(fv - centroids["dominant"]) / np.sqrt(len(fv))
-        grp_match = 1 - np.linalg.norm(fv - centroids["group"]) / np.sqrt(len(fv))
-        min_match = 1 - np.linalg.norm(fv - centroids["minority"]) / np.sqrt(len(fv))
+        dom_match = 1 - np.linalg.norm(fv - centroids["dominant"]) / np.sqrt(FEATURE_DIM)
+        grp_match = 1 - np.linalg.norm(fv - centroids["group"]) / np.sqrt(FEATURE_DIM)
+        min_match = 1 - np.linalg.norm(fv - centroids["minority"]) / np.sqrt(FEATURE_DIM)
         score = 0.50 * dom_match + 0.30 * grp_match + 0.20 * min_match
 
         out.append({
             "destination_name": d.name,
             "country": d.country,
-            "score": float(max(0.0, min(1.0, score))),
-            "dominant_cluster_match": float(max(0.0, min(1.0, dom_match))),
-            "group_mean_match": float(max(0.0, min(1.0, grp_match))),
-            "minority_consideration": float(max(0.0, min(1.0, min_match))),
+            "score": float(np.clip(score, 0.0, 1.0)),
+            "dominant_cluster_match": float(np.clip(dom_match, 0.0, 1.0)),
+            "group_mean_match": float(np.clip(grp_match, 0.0, 1.0)),
+            "minority_consideration": float(np.clip(min_match, 0.0, 1.0)),
             "scoring_mode": "feature",
+            "quick_info": getattr(d, "quick_info", None),
         })
 
     out.sort(key=lambda x: x["score"], reverse=True)

@@ -1,4 +1,4 @@
-﻿import uuid
+import uuid
 from sqlalchemy import JSON, Column, DateTime, Float, ForeignKey, Uuid
 from sqlalchemy.sql import func
 
@@ -20,4 +20,9 @@ class MLRunResult(Base):
     # New — stored so the insights endpoint doesn't recompute every request
     outlier_participants = Column(JSON, nullable=True, default=list)   # [{participant_id, avg_similarity}]
     similar_pairs = Column(JSON, nullable=True, default=list)          # [{p1, p2, similarity}]
+    # Anti-Dictator: {participant_id: float} — Individual Sacrifice Scores [0.0, 1.0]
+    sacrifice_scores = Column(JSON, nullable=True, default=dict)
+    # Logistics pre-filter report — stored for transparency in the Results page
+    # Contains: total_initial, filtered counts per phase, constraint_report dict
+    constraint_report = Column(JSON, nullable=True, default=dict)
     ran_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
