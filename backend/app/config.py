@@ -23,6 +23,10 @@ class Settings(BaseSettings):
     quality_threshold_medium: int = 50
     catalog_max_active: int = 20_000
 
+    # Bus & Travel API (Module 3 — Bus & Room Logistics Integrator)
+    trawex_api_url: str | None = None      # e.g. "https://api.trawex.com/v1"
+    trawex_api_key: str | None = None      # Trawex partner API key
+
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
 

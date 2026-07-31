@@ -8,6 +8,7 @@ from slowapi import _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
 
 from app.api import admin, analytics, budget, health as health_router, participants, recommendations, surveys, trips, voting, ws, sync_admin
+from app.api import checklist, expenses
 from app.core.logging import configure_logging, get_logger
 from app.core.middleware import AccessLogMiddleware, RequestIDMiddleware
 from app.llm.gateway import LLMError
@@ -61,6 +62,9 @@ app.include_router(admin.router, prefix="/v1")
 app.include_router(sync_admin.router, prefix="/v1")
 app.include_router(health_router.router)  # /health and /health/detailed (no prefix)
 app.include_router(ws.router)
+# Trip Lifecycle Companion — Phase 2
+app.include_router(checklist.router, prefix="/v1")
+app.include_router(expenses.router, prefix="/v1")
 
 
 # ── Health + utility endpoints ────────────────────────────────────────────────

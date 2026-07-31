@@ -4,6 +4,12 @@ trips.py — Trip management endpoints.
 ML analysis is dispatched to a Celery worker (Redis broker).
 If Redis is unavailable (local dev without Docker), the task falls back
 to running in-process via FastAPI BackgroundTasks so the app still works.
+
+On-Trip Concierge endpoints (added in Trip Lifecycle phase):
+  GET /trips/{id}/itinerary          — Daily hourly itinerary guide
+  GET /trips/{id}/sos                — Emergency SOS contacts for destination
+  GET /trips/{id}/travel-options     — Bus schedules + accommodation options
+  GET /trips/{id}/dashboard          — Offline-ready full trip dashboard
 """
 
 import uuid
@@ -13,6 +19,7 @@ from slowapi import Limiter
 from sqlalchemy.orm import Session
 
 from app.dependencies import get_db
+from app.models.destination import Destination
 from app.models.ml_result import MLRunResult
 from app.models.participant import Participant
 from app.models.recommendation import Recommendation
@@ -22,6 +29,10 @@ from app.models.trip import Trip
 from app.models.vote import Vote
 from app.monitoring.metrics import trips_created_total
 from app.schemas.trip import TripCreate
+from app.services.auth import get_current_api_key
+from app.services.emergency_sos import get_sos_block
+from app.services.itinerary_builder import build_itinerary
+from app.services.travel_api import fetch_accommodations, fetch_bus_schedules
 from app.services.trip_service import get_trip_summary
 from app.services.voting_service import RankedChoiceVoting
 
@@ -575,3 +586,327 @@ def _build_logistics_summary(trip: Trip, ml_run: MLRunResult | None) -> dict:
         "constraint_summary": constraint_summary,
     }
 
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# ON-TRIP CONCIERGE ENDPOINTS
+# ═══════════════════════════════════════════════════════════════════════════════
+
+
+def _get_winning_destination(trip_id: uuid.UUID, db: Session):
+    """
+    Return (top_recommendation, destination_row) for a trip.
+    destination_row may be None if no Destination record matches.
+    """
+    top_rec = (
+        db.query(Recommendation)
+        .filter(Recommendation.trip_id == trip_id)
+        .order_by(Recommendation.rank.asc())
+        .first()
+    )
+    if not top_rec:
+        return None, None
+
+    dest = (
+        db.query(Destination)
+        .filter(Destination.name == top_rec.destination_name)
+        .first()
+    )
+    return top_rec, dest
+
+
+@router.get("/{trip_id}/itinerary")
+@limiter.limit("30/minute")
+def get_itinerary(
+    request: Request,
+    trip_id: uuid.UUID,
+    db: Session = Depends(get_db),
+    _api_key=Depends(get_current_api_key),
+):
+    """
+    Daily Itinerary Guide — hourly breakdown of each trip day.
+
+    Includes:
+    - Morning / afternoon activity blocks derived from destination vibes
+    - Meal stop suggestions (breakfast, lunch, dinner) with context
+    - Arrival / departure day logistics
+    - Evening group checklist review slot
+
+    Suitable for offline storage — pure JSON, no external dependencies.
+    """
+    trip = db.query(Trip).filter(Trip.id == trip_id).first()
+    if not trip:
+        raise HTTPException(status_code=404, detail="Trip not found")
+
+    top_rec, dest = _get_winning_destination(trip_id, db)
+
+    destination_name = (
+        top_rec.destination_name if top_rec else trip.name
+    )
+    vibes = dest.vibes if dest else []
+    duration_days = trip.duration_days or 3
+
+    itinerary = build_itinerary(
+        destination_name=destination_name,
+        duration_days=duration_days,
+        vibes=vibes,
+        group_size=db.query(Participant).filter(Participant.trip_id == trip_id).count(),
+    )
+
+    return {
+        "trip_id": str(trip_id),
+        "destination": destination_name,
+        "duration_days": duration_days,
+        "trip_month": trip.trip_month,
+        "itinerary": itinerary,
+        "note": "Times are guidelines. Adjust based on your travel schedule.",
+        "offline_ready": True,
+    }
+
+
+@router.get("/{trip_id}/sos")
+@limiter.limit("30/minute")
+def get_sos(
+    request: Request,
+    trip_id: uuid.UUID,
+    db: Session = Depends(get_db),
+    _api_key=Depends(get_current_api_key),
+):
+    """
+    Emergency SOS metadata block for the trip destination.
+
+    Returns:
+    - Local hospital contacts
+    - Police station contacts
+    - National Indian emergency numbers
+    - State tourist helpline
+    - Altitude warning (if applicable)
+
+    Data sourced from known-city database, OSM Overpass API, or
+    national numbers as a fallback. Suitable for offline storage.
+    """
+    trip = db.query(Trip).filter(Trip.id == trip_id).first()
+    if not trip:
+        raise HTTPException(status_code=404, detail="Trip not found")
+
+    top_rec, dest = _get_winning_destination(trip_id, db)
+    destination_name = top_rec.destination_name if top_rec else trip.name
+
+    # Extract lat/lon from destination tourism_metadata if available
+    lat, lon = None, None
+    if dest and dest.tourism_metadata:
+        lat = dest.tourism_metadata.get("lat") or dest.tourism_metadata.get("latitude")
+        lon = dest.tourism_metadata.get("lon") or dest.tourism_metadata.get("longitude")
+    if lat:
+        try:
+            lat, lon = float(lat), float(lon)
+        except (TypeError, ValueError):
+            lat, lon = None, None
+
+    sos_block = get_sos_block(destination_name, lat=lat, lon=lon)
+    sos_block["trip_id"] = str(trip_id)
+    sos_block["offline_ready"] = True
+    return sos_block
+
+
+@router.get("/{trip_id}/travel-options")
+@limiter.limit("20/minute")
+def get_travel_options(
+    request: Request,
+    trip_id: uuid.UUID,
+    travel_date: str | None = None,
+    db: Session = Depends(get_db),
+    _api_key=Depends(get_current_api_key),
+):
+    """
+    Bus & Accommodation Logistics for the trip.
+
+    Returns:
+    - Bus schedules from the group's origin city to the destination
+    - High-rated hostels / guesthouses within the per-person budget
+
+    Uses Trawex API for buses (stubs if not configured) and
+    OpenTripMap for accommodation (stubs if not configured).
+    """
+    trip = db.query(Trip).filter(Trip.id == trip_id).first()
+    if not trip:
+        raise HTTPException(status_code=404, detail="Trip not found")
+
+    top_rec, dest = _get_winning_destination(trip_id, db)
+    destination_name = top_rec.destination_name if top_rec else trip.name
+    origin = trip.origin_city or "Mumbai"
+
+    # Estimate per-person accommodation budget from the optimised plan
+    from app.models.budget_plan import BudgetPlanRecord
+    plan = (
+        db.query(BudgetPlanRecord)
+        .filter(BudgetPlanRecord.trip_id == trip_id)
+        .order_by(BudgetPlanRecord.computed_at.desc())
+        .first()
+    )
+    per_person_budget_inr: int | None = None
+    if plan and trip.duration_days:
+        # 30% of per-person budget in INR goes to accommodation
+        usd_per_person = plan.group_average
+        inr_per_person = usd_per_person * 83.5
+        nights = max(trip.duration_days - 1, 1)
+        per_night = round(inr_per_person * 0.30 / nights)
+        per_person_budget_inr = per_night
+
+    # Lat/lon for accommodation search
+    lat, lon = None, None
+    if dest and dest.tourism_metadata:
+        lat = dest.tourism_metadata.get("lat") or dest.tourism_metadata.get("latitude")
+        lon = dest.tourism_metadata.get("lon") or dest.tourism_metadata.get("longitude")
+    if lat:
+        try:
+            lat, lon = float(lat), float(lon)
+        except (TypeError, ValueError):
+            lat, lon = None, None
+
+    bus_data = fetch_bus_schedules(origin, destination_name, travel_date)
+    accom_data = fetch_accommodations(
+        destination_name,
+        lat=lat,
+        lon=lon,
+        per_person_budget_inr=per_person_budget_inr,
+    )
+
+    return {
+        "trip_id": str(trip_id),
+        "origin": origin,
+        "destination": destination_name,
+        "bus_schedules": bus_data,
+        "accommodations": accom_data,
+        "per_person_accommodation_budget_inr": per_person_budget_inr,
+    }
+
+
+@router.get("/{trip_id}/dashboard")
+@limiter.limit("30/minute")
+def get_trip_dashboard(
+    request: Request,
+    trip_id: uuid.UUID,
+    db: Session = Depends(get_db),
+    _api_key=Depends(get_current_api_key),
+):
+    """
+    Offline-ready Trip Dashboard payload.
+
+    Aggregates ALL data the React frontend needs into one response:
+    - Trip metadata + participants
+    - Winning destination + quick_info
+    - Daily itinerary
+    - Emergency SOS block
+    - Budget plan summary
+    - Packing checklist summary
+    - Expense summary
+
+    Structured for localStorage / AsyncStorage offline caching.
+    The `_meta` block tells the frontend how to handle stale data.
+    """
+    from datetime import datetime, timezone
+    from app.models.budget_plan import BudgetPlanRecord
+    from app.models.checklist import ChecklistItem
+    from app.models.expense import Expense
+
+    trip = db.query(Trip).filter(Trip.id == trip_id).first()
+    if not trip:
+        raise HTTPException(status_code=404, detail="Trip not found")
+
+    participants = db.query(Participant).filter(Participant.trip_id == trip_id).all()
+    top_rec, dest = _get_winning_destination(trip_id, db)
+    destination_name = top_rec.destination_name if top_rec else trip.name
+
+    # Itinerary
+    vibes = dest.vibes if dest else []
+    itinerary = build_itinerary(
+        destination_name=destination_name,
+        duration_days=trip.duration_days or 3,
+        vibes=vibes,
+        group_size=len(participants),
+    )
+
+    # SOS block
+    lat, lon = None, None
+    if dest and dest.tourism_metadata:
+        try:
+            lat = float(dest.tourism_metadata.get("lat") or dest.tourism_metadata.get("latitude") or 0) or None
+            lon = float(dest.tourism_metadata.get("lon") or dest.tourism_metadata.get("longitude") or 0) or None
+        except (TypeError, ValueError):
+            pass
+    sos = get_sos_block(destination_name, lat=lat, lon=lon)
+
+    # Budget summary
+    plan = (
+        db.query(BudgetPlanRecord)
+        .filter(BudgetPlanRecord.trip_id == trip_id)
+        .order_by(BudgetPlanRecord.computed_at.desc())
+        .first()
+    )
+    budget_summary = {
+        "group_total_usd": plan.group_total if plan else None,
+        "group_average_usd": plan.group_average if plan else None,
+        "fairness_score": plan.fairness_score if plan else None,
+        "status": plan.status if plan else None,
+        "computed_at": plan.computed_at.isoformat() if plan else None,
+    }
+
+    # Checklist summary
+    all_items = db.query(ChecklistItem).filter(ChecklistItem.trip_id == trip_id).all()
+    checklist_summary = {
+        "total": len(all_items),
+        "packed": sum(1 for i in all_items if i.is_packed),
+        "categories": list({i.category for i in all_items}),
+    }
+
+    # Expense summary
+    expenses = db.query(Expense).filter(Expense.trip_id == trip_id).all()
+    expense_summary = {
+        "total_spend_inr": sum(e.amount_inr for e in expenses),
+        "expense_count": len(expenses),
+    }
+
+    now_iso = datetime.now(timezone.utc).isoformat()
+
+    return {
+        "_meta": {
+            "schema_version": "1.0",
+            "generated_at": now_iso,
+            "trip_id": str(trip_id),
+            "offline_ready": True,
+            "cache_ttl_seconds": 3600,
+            "note": "Cache this payload in localStorage for offline access. Refresh when online.",
+        },
+        "trip": {
+            "id": str(trip.id),
+            "name": trip.name,
+            "organizer_name": trip.organizer_name,
+            "organizer_email": trip.organizer_email,
+            "status": trip.status,
+            "trip_month": trip.trip_month,
+            "duration_days": trip.duration_days,
+            "origin_city": trip.origin_city,
+        },
+        "participants": [
+            {"id": str(p.id), "name": p.name, "email": p.email}
+            for p in participants
+        ],
+        "destination": {
+            "name": destination_name,
+            "country": top_rec.country if top_rec else None,
+            "quick_info": dest.quick_info if dest else None,
+            "vibes": vibes,
+            "climate": dest.climate if dest else None,
+            "activity_level": dest.activity_level if dest else None,
+            "budget_midpoint_inr": dest.budget_midpoint if dest else None,
+            "best_months": dest.best_months if dest else [],
+            "amenities": dest.amenities if dest else [],
+            "why_recommended": top_rec.why_recommended if top_rec else None,
+            "best_activities": top_rec.best_activities if top_rec else [],
+        },
+        "itinerary": itinerary,
+        "sos": sos,
+        "budget": budget_summary,
+        "checklist": checklist_summary,
+        "expenses": expense_summary,
+    }

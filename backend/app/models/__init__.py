@@ -11,3 +11,6 @@ from app.models.api_key import APIKey
 from app.models.sync_run import SyncRun  # noqa
 from app.models.destination_availability import DestinationAvailability  # noqa
 from app.models.budget_plan import BudgetPlanRecord  # noqa
+# Trip Lifecycle Companion — Phase 2
+from app.models.checklist import ChecklistItem  # noqa
+from app.models.expense import Expense, ExpenseSplit  # noqa
