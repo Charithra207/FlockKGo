@@ -15,10 +15,9 @@ WebSocket broadcast:
   clients subscribed to trip_{trip_id} so everyone sees real-time sync.
 """
 
-from __future__ import annotations
-
 import uuid
 from datetime import datetime, timezone
+from typing import Optional
 
 from fastapi import APIRouter, Depends, HTTPException, Request
 from pydantic import BaseModel, Field
@@ -43,19 +42,19 @@ router = APIRouter(tags=["checklist"])
 class AddItemRequest(BaseModel):
     name: str = Field(min_length=1, max_length=200)
     category: str = Field(default="misc", max_length=50)
-    notes: str | None = Field(default=None, max_length=500)
-    assigned_to_participant_id: str | None = None
+    notes: Optional[str] = Field(default=None, max_length=500)
+    assigned_to_participant_id: Optional[str] = None
     sort_order: int = 0
 
 
 class PatchItemRequest(BaseModel):
-    name: str | None = Field(default=None, max_length=200)
-    category: str | None = Field(default=None, max_length=50)
-    notes: str | None = Field(default=None, max_length=500)
-    is_packed: bool | None = None
-    assigned_to_participant_id: str | None = None  # Pass empty string "" to unassign
-    sort_order: int | None = None
-    packed_by_participant_id: str | None = None
+    name: Optional[str] = Field(default=None, max_length=200)
+    category: Optional[str] = Field(default=None, max_length=50)
+    notes: Optional[str] = Field(default=None, max_length=500)
+    is_packed: Optional[bool] = None
+    assigned_to_participant_id: Optional[str] = None  # Pass empty string "" to unassign
+    sort_order: Optional[int] = None
+    packed_by_participant_id: Optional[str] = None
 
 
 # ── Helpers ────────────────────────────────────────────────────────────────────

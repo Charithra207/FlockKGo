@@ -31,6 +31,7 @@ from sqlalchemy.orm import Session
 
 from app.core.logging import get_logger
 from app.ml.embeddings import cosine_similarity_score
+from app.ml.feature_engineering import normalize_budget_inr
 from app.models.destination import Destination
 from app.sync.availability_layer import filter_unavailable
 
@@ -57,7 +58,7 @@ def _feature_vec_from_destination(d: Destination) -> np.ndarray:
     # Build on the fly if not cached
     return np.array(
         [
-            d.budget_midpoint / 10000.0,
+            normalize_budget_inr(d.budget_midpoint),
             0.5,                                          # budget_range_size placeholder
             *[1.0 if v in (d.vibes or []) else 0.0 for v in VIBES_ORDER],
             *[1.0 if d.climate == c else 0.0 for c in ["warm", "cold", "any"]],

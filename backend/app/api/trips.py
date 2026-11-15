@@ -13,6 +13,9 @@ On-Trip Concierge endpoints (added in Trip Lifecycle phase):
 """
 
 import uuid
+from typing import Optional
+
+from app.config import get_settings
 
 from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, Request
 from slowapi import Limiter
@@ -173,9 +176,13 @@ def run_analysis(
     db.commit()
     db.refresh(task_run)
 
-    # Try Celery first — fall back to in-process if Redis is down
+    # Celery only when a worker is actually deployed (USE_CELERY=true).
+    # Otherwise a reachable Redis with no worker would accept the task and the
+    # trip would sit in "running_ml" forever. Falls back in-process on error.
     dispatched_via = "celery"
     try:
+        if not get_settings().use_celery:
+            raise RuntimeError("celery disabled")
         from app.workers.tasks import run_ml_pipeline
 
         celery_result = run_ml_pipeline.apply_async(
@@ -185,8 +192,8 @@ def run_analysis(
         task_run.celery_task_id = celery_result.id
         db.commit()
 
-    except Exception as e:
-        # Redis unavailable — fall back to BackgroundTasks
+    except Exception:
+        # Celery disabled or Redis unavailable — run in-process
         dispatched_via = "background_task_fallback"
         task_run.celery_task_id = str(task_run.id)
         db.commit()
@@ -713,7 +720,7 @@ def get_sos(
 def get_travel_options(
     request: Request,
     trip_id: uuid.UUID,
-    travel_date: str | None = None,
+    travel_date: Optional[str] = None,
     db: Session = Depends(get_db),
     _api_key=Depends(get_current_api_key),
 ):

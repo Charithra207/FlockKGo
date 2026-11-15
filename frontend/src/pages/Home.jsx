@@ -92,6 +92,32 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Karnataka hidden spots */}
+      <section className="grid items-center gap-6 rounded-3xl bg-gradient-to-br from-primary to-[#2f5d8a] p-8 text-white shadow-card md:grid-cols-2">
+        <div>
+          <p className="text-sm font-semibold uppercase tracking-wider text-white/70">Karnataka, by locals</p>
+          <h2 className="mt-1 text-3xl font-extrabold">Give a hidden spot, get a hidden spot</h2>
+          <p className="mt-2 text-white/80">
+            Secret viewpoints, monsoon falls, the cafe only the town knows. Share one place you love and
+            unlock three that other locals shared.
+          </p>
+          <div className="mt-5 flex flex-wrap gap-3">
+            <Link to="/explore" className="rounded-xl bg-white px-5 py-2.5 font-semibold text-primary hover:opacity-90">Explore the map</Link>
+            <Link to="/spots/share" className="rounded-xl bg-accent px-5 py-2.5 font-semibold text-white hover:opacity-90">Share a spot</Link>
+          </div>
+        </div>
+        <ul className="space-y-3 text-sm">
+          {[
+            ['🎁', 'Sign up and get 1 free unlock'],
+            ['📍', 'Share a place you have been to: +3 unlocks when approved'],
+            ['🔒', 'Spend 1 unlock to see a hidden spot’s exact location and directions'],
+            ['✅', 'Vouch for spots you visit so others know they are real'],
+          ].map(([e, t]) => (
+            <li key={t} className="flex items-start gap-3 rounded-xl bg-white/10 p-3"><span className="text-xl">{e}</span>{t}</li>
+          ))}
+        </ul>
+      </section>
+
       {/* Recent trips — only visible if localStorage has data */}
       <RecentTrips />
 

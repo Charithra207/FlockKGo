@@ -22,8 +22,15 @@ class Destination(Base):
     name = Column(String(200), nullable=False, unique=True)
     country = Column(String(100), nullable=False)
 
+    # Location (Karnataka-only catalog). Nullable for rows synced before these
+    # columns existed.
+    state = Column(String(100), nullable=True, index=True)      # "Karnataka"
+    district = Column(String(100), nullable=True, index=True)   # e.g. "Kodagu"
+    latitude = Column(Float, nullable=True)
+    longitude = Column(Float, nullable=True)
+
     # Budget characteristics
-    budget_midpoint = Column(Integer, nullable=False)   # USD per person
+    budget_midpoint = Column(Integer, nullable=False)   # INR per person
     budget_flexibility = Column(Float, nullable=False)  # 0.0 (rigid) – 1.0 (flexible)
 
     # Preference metadata (used for both embedding text and fallback scoring)

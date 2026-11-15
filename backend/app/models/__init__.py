@@ -14,3 +14,6 @@ from app.models.budget_plan import BudgetPlanRecord  # noqa
 # Trip Lifecycle Companion — Phase 2
 from app.models.checklist import ChecklistItem  # noqa
 from app.models.expense import Expense, ExpenseSplit  # noqa
+# Karnataka spots — give a spot, get a spot
+from app.models.user import User  # noqa
+from app.models.spot import Spot, SpotUnlock, SpotVouch  # noqa

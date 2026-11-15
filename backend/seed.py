@@ -15,11 +15,13 @@ import argparse
 import sys
 import uuid
 from datetime import date
+from pathlib import Path
 
 from sqlalchemy.orm import Session
 
-# ── bootstrap path so this runs from backend/ ────────────────────────────────
-sys.path.insert(0, ".")
+# Windows-compatible absolute path insertion for the 'app' module
+backend_dir = Path(__file__).resolve().parent
+sys.path.insert(0, str(backend_dir))
 
 from app.db.database import SessionLocal, engine
 from app.ml.feature_engineering import build_feature_vector

@@ -7,7 +7,13 @@ export default function Footer() {
         <Link to="/" className="font-semibold text-primary">
           FlockGo 🐦
         </Link>
-        <p>Group travel, decided by AI.</p>
+        <p>Group travel, decided by AI. Made for Karnataka.</p>
+        <p className="text-xs">
+          Map data ©{' '}
+          <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer" className="underline">
+            OpenStreetMap contributors
+          </a>
+        </p>
       </div>
     </footer>
   )

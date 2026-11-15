@@ -1,4 +1,4 @@
-﻿from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, Response
@@ -9,6 +9,8 @@ from slowapi.errors import RateLimitExceeded
 
 from app.api import admin, analytics, budget, health as health_router, participants, recommendations, surveys, trips, voting, ws, sync_admin
 from app.api import checklist, expenses
+from app.api import accounts, spots
+from app.config import get_settings
 from app.core.logging import configure_logging, get_logger
 from app.core.middleware import AccessLogMiddleware, RequestIDMiddleware
 from app.llm.gateway import LLMError
@@ -43,6 +45,8 @@ app.add_middleware(
         "http://localhost:5173",
         "http://localhost:3000",
         "http://127.0.0.1:5173",
+        # Production frontend (custom domain or Vercel URL)
+        *([get_settings().frontend_base_url.rstrip("/")] if get_settings().frontend_base_url else []),
     ],
     allow_origin_regex=r"https://.*\.vercel\.app",  # all Vercel preview deploys
     allow_credentials=True,
@@ -65,6 +69,8 @@ app.include_router(ws.router)
 # Trip Lifecycle Companion — Phase 2
 app.include_router(checklist.router, prefix="/v1")
 app.include_router(expenses.router, prefix="/v1")
+app.include_router(accounts.router, prefix="/v1")
+app.include_router(spots.router, prefix="/v1")
 
 
 # ── Health + utility endpoints ────────────────────────────────────────────────

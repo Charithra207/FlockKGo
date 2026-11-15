@@ -37,6 +37,11 @@ import app.models.prompt_version   # noqa: F401
 import app.models.api_key          # noqa: F401
 import app.models.sync_run             # noqa: F401
 import app.models.destination_availability  # noqa: F401
+import app.models.budget_plan          # noqa: F401
+import app.models.checklist            # noqa: F401
+import app.models.expense              # noqa: F401
+import app.models.user                 # noqa: F401
+import app.models.spot                 # noqa: F401
 
 target_metadata = Base.metadata
 

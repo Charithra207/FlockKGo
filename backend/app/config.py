@@ -7,12 +7,25 @@ class Settings(BaseSettings):
     environment: str = "development"
     database_url: str = "sqlite:///./flockgo_demo.db"
     redis_url: str = "redis://localhost:6379/0"
+    # Dispatch ML jobs to Celery only if a worker is deployed. When False the
+    # pipeline runs as a FastAPI background task inside the API process.
+    use_celery: bool = False
     openai_api_key: str | None = None
     anthropic_api_key: str | None = None
     frontend_base_url: str = "http://localhost:3000"
     # Master secret used to sign/verify API keys (set in production env)
     # If not set, auth is disabled in development mode
     api_secret_key: str | None = None
+
+    # Signs user login tokens. Required in production (openssl rand -hex 32).
+    auth_token_secret: str | None = None
+    auth_token_ttl_days: int = 30
+
+    # Give-a-spot-get-a-spot economy
+    signup_bonus_credits: int = 1          # one free unlock to show the value
+    credits_per_hidden_spot: int = 3       # reward when a hidden spot is approved
+    credits_per_public_spot: int = 1       # reward when a cafe/public spot is approved
+    max_pending_submissions: int = 5       # anti-spam: per user
 
     # India Sync settings
     overpass_api_url: str = "https://overpass-api.de/api/interpreter"

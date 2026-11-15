@@ -16,8 +16,6 @@ Split logic:
   The sum of all split amounts must equal the total `amount_inr`.
 """
 
-from __future__ import annotations
-
 import uuid
 from typing import Optional
 
