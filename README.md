@@ -2,8 +2,20 @@
 
 **Collaborative group travel consensus engine** — uses a hybrid ML/LLM pipeline to solve the hardest problem in group travel: getting 6 people with different budgets, vibes, and schedules to agree on a destination.
 
-> Live API: `https://packvote-api.onrender.com`
-> API Docs: `https://packvote-api.onrender.com/docs`
+> Deploy guide: [DEPLOY.md](DEPLOY.md) (Vercel + Render + Neon, all free tier)
+
+---
+
+## Karnataka, by locals
+
+The app focuses on **Karnataka only**: 65 destination hubs across the state, plus a map of individual spots.
+
+- **Give a spot, get a spot.** Hidden gems stay locked on the server until you unlock them. Every new account gets 1 free unlock. Sharing a spot earns credits once an admin approves it: +3 for a hidden spot, +1 for a public one. Spending 1 credit unlocks a hidden spot permanently.
+- **Vouching.** "I've been here" confirmations rank spots. Vouching earns nothing, so it can't be farmed.
+- **Cafes, waterfalls, viewpoints and peaks** come from OpenStreetMap (`backend/import_osm_spots.py`, ODbL). Famous places are public; lesser-known ones are hidden gems.
+- **Photo uploads.** The browser resizes photos before upload, and they are stored in Postgres.
+- **ಕನ್ನಡ / English** switch for the Karnataka screens.
+- **Trip companion.** Packing list, expense splitting, itinerary, getting there, and SOS with live nearby hospitals and police from OpenStreetMap.
 
 ---
 

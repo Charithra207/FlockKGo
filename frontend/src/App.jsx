@@ -15,6 +15,7 @@ import Results from './pages/Results'
 import ShareSpot from './pages/ShareSpot'
 import SpotDetail from './pages/SpotDetail'
 import Survey from './pages/Survey'
+import TripCompanion from './pages/TripCompanion'
 import TripDashboard from './pages/TripDashboard'
 import Voting from './pages/Voting'
 
@@ -51,9 +52,11 @@ export default function App() {
                 <Route path="/trip/:tripId/recs"    element={<Page><Recommendations /></Page>} />
                 <Route path="/trip/:tripId/vote"    element={<Page><Voting /></Page>} />
                 <Route path="/trip/:tripId/results" element={<Page><Results /></Page>} />
+                <Route path="/trip/:tripId/plan"    element={<Page><TripCompanion /></Page>} />
                 <Route path="/explore"              element={<Page><Explore /></Page>} />
                 <Route path="/spots/share"          element={<Page><ShareSpot /></Page>} />
                 <Route path="/spots/:spotId"        element={<Page><SpotDetail /></Page>} />
+                <Route path="/spots/:spotId/edit"   element={<Page><ShareSpot /></Page>} />
                 <Route path="/login"                element={<Page><Login /></Page>} />
                 <Route path="/me"                   element={<Page><MySpots /></Page>} />
                 <Route path="/admin/spots"          element={<Page><AdminSpots /></Page>} />

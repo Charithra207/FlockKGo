@@ -3,11 +3,13 @@ import toast from 'react-hot-toast'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { authApi } from '../services/spotsService'
 import useAuthStore from '../store/authStore'
+import { useT } from '../i18n'
 
 export default function Login() {
   const [params] = useSearchParams()
   const navigate = useNavigate()
   const setSession = useAuthStore((s) => s.setSession)
+  const t = useT()
   const [mode, setMode] = useState('register')
   const [form, setForm] = useState({ email: '', password: '', display_name: '' })
   const [busy, setBusy] = useState(false)
@@ -37,7 +39,7 @@ export default function Login() {
   return (
     <div className="mx-auto max-w-md rounded-3xl bg-white p-8 shadow-card">
       <div className="mb-6 flex rounded-xl bg-slate-100 p-1">
-        {[['register', 'Sign up'], ['login', 'Log in']].map(([k, label]) => (
+        {[['register', t('login.signup')], ['login', t('login.login')]].map(([k, label]) => (
           <button
             key={k}
             onClick={() => setMode(k)}
@@ -51,16 +53,16 @@ export default function Login() {
       <form onSubmit={submit} className="space-y-4">
         {mode === 'register' && (
           <label className="block">
-            <span className="text-sm font-semibold text-slate-700">Your name</span>
+            <span className="text-sm font-semibold text-slate-700">{t('login.name')}</span>
             <input required maxLength={80} value={form.display_name} onChange={(e) => setForm({ ...form, display_name: e.target.value })} className={input} />
           </label>
         )}
         <label className="block">
-          <span className="text-sm font-semibold text-slate-700">Email</span>
+          <span className="text-sm font-semibold text-slate-700">{t('login.email')}</span>
           <input required type="email" autoComplete="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} className={input} />
         </label>
         <label className="block">
-          <span className="text-sm font-semibold text-slate-700">Password</span>
+          <span className="text-sm font-semibold text-slate-700">{t('login.password')}</span>
           <input
             required
             type="password"
@@ -70,14 +72,14 @@ export default function Login() {
             onChange={(e) => setForm({ ...form, password: e.target.value })}
             className={input}
           />
-          {mode === 'register' && <span className="text-xs text-slate-400">At least 8 characters</span>}
+          {mode === 'register' && <span className="text-xs text-slate-400">{t('login.min')}</span>}
         </label>
         <button disabled={busy} className="w-full rounded-xl bg-primary py-3 font-semibold text-white hover:opacity-90 disabled:opacity-50">
-          {busy ? '…' : mode === 'register' ? 'Create account' : 'Log in'}
+          {busy ? '…' : mode === 'register' ? t('login.create') : t('login.login')}
         </button>
       </form>
       {mode === 'register' && (
-        <p className="mt-4 text-center text-xs text-slate-400">Your first hidden-spot unlock is free.</p>
+        <p className="mt-4 text-center text-xs text-slate-400">{t('login.free')}</p>
       )}
     </div>
   )

@@ -20,7 +20,7 @@ The ML analysis runs inside the API (`USE_CELERY=false`), so you don't need Redi
    - `API_SECRET_KEY`: the output of `openssl rand -hex 32`
    - `OPENAI_API_KEY`: optional
    - `AUTH_TOKEN_SECRET`: generated automatically by Render
-3. Deploy. On every start, `build.sh` runs `db_bootstrap.py`, which creates or upgrades the tables, then seeds the 65 Karnataka destinations.
+3. Deploy. On every start, `build.sh` runs `db_bootstrap.py`, which creates or upgrades the tables, then seeds the 65 Karnataka destinations and loads the OpenStreetMap spots.
 4. Check that `https://<your-service>.onrender.com/health` returns OK.
 
 ## 3. Frontend (Vercel)
@@ -39,7 +39,12 @@ The ML analysis runs inside the API (`USE_CELERY=false`), so you don't need Redi
 2. In the Render **Shell** tab, run:
    ```
    python make_admin.py you@example.com
-   python import_osm_cafes.py            # all 31 districts; retries if Overpass is busy
+   ```
+   The cafes and nature spots in `backend/data/*.json` load automatically on every deploy.
+   To refresh them from OpenStreetMap, run this locally, then commit the JSON files:
+   ```
+   python import_osm_spots.py fetch --kind cafe
+   python import_osm_spots.py fetch --kind nature --max-hidden 100
    ```
 3. Open `/admin/spots` to review submissions.
 

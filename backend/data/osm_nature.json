@@ -1,0 +1,2782 @@
+[
+ {
+  "osm_id": "node/2699617876",
+  "name": "Bachinagudda",
+  "category": "trek",
+  "latitude": 15.943502,
+  "longitude": 75.797514,
+  "district": "Bagalkot",
+  "extra": {
+   "name:kn": "ಬಾಚಿನಗುಡ್ಡ"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/2661160887",
+  "name": "Guledagudda",
+  "category": "trek",
+  "latitude": 16.050447,
+  "longitude": 75.777671,
+  "district": "Bagalkot",
+  "extra": {
+   "name:kn": "ಗುಳೇದಗುಡ್ಡ"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/2407231483",
+  "name": "Ballari Gudda",
+  "category": "trek",
+  "latitude": 15.149311,
+  "longitude": 76.911159,
+  "district": "Ballari",
+  "extra": {
+   "name:kn": "ಬಳ್ಳಾರಿ ಗುಡ್ಡ",
+   "ele": "602"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/3734078845",
+  "name": "Kenchanagudda",
+  "category": "trek",
+  "latitude": 15.617197,
+  "longitude": 76.841729,
+  "district": "Ballari",
+  "extra": {
+   "name:kn": "ಕೆಂಚನ ಗುಡ್ಡ"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/12484220880",
+  "name": "Krauncha Giri",
+  "category": "trek",
+  "latitude": 15.008443,
+  "longitude": 76.564922,
+  "district": "Ballari",
+  "extra": {
+   "name:kn": "ಕ್ರೌಂಚ ಗಿರಿ"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/1225917115",
+  "name": "Rajahamsagad",
+  "category": "trek",
+  "latitude": 15.757267,
+  "longitude": 74.526419,
+  "district": "Belagavi",
+  "extra": {
+   "name:kn": "ರಾಜಹಂಸಗಡ"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/13401324070",
+  "name": "Royatek Dongar",
+  "category": "trek",
+  "latitude": 15.726211,
+  "longitude": 74.197626,
+  "district": "Belagavi",
+  "extra": {},
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/11743418469",
+  "name": "Uland",
+  "category": "viewpoint",
+  "latitude": 15.730787,
+  "longitude": 74.214023,
+  "district": "Belagavi",
+  "extra": {},
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/11010706364",
+  "name": "Chikhale Waterfalls",
+  "category": "waterfall",
+  "latitude": 15.66131,
+  "longitude": 74.25435,
+  "district": "Belagavi",
+  "extra": {},
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/4813160324",
+  "name": "Kalasa Falls",
+  "category": "waterfall",
+  "latitude": 15.678911,
+  "longitude": 74.189675,
+  "district": "Belagavi",
+  "extra": {},
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/13372035504",
+  "name": "Achhalu Betta",
+  "category": "trek",
+  "latitude": 12.692499,
+  "longitude": 77.28928,
+  "district": "Bengaluru South",
+  "extra": {
+   "ele": "886"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/818837968",
+  "name": "Bhimana Kindi",
+  "category": "trek",
+  "latitude": 12.476716,
+  "longitude": 77.263363,
+  "district": "Bengaluru South",
+  "extra": {
+   "name:kn": "ಭೀಮನಕಿಂಡಿ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/819008637",
+  "name": "Bilikal Rangaswamy Betta",
+  "category": "trek",
+  "latitude": 12.554931,
+  "longitude": 77.511838,
+  "district": "Bengaluru South",
+  "extra": {
+   "name:kn": "ರಂಗಸ್ವಾಮಿ ಬೆಟ್ಟ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/12098238226",
+  "name": "Chikkabananthamari Betta",
+  "category": "trek",
+  "latitude": 12.560353,
+  "longitude": 77.374954,
+  "district": "Bengaluru South",
+  "extra": {
+   "ele": "1002"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/818937898",
+  "name": "Kabbalu",
+  "category": "trek",
+  "latitude": 12.498039,
+  "longitude": 77.294985,
+  "district": "Bengaluru South",
+  "extra": {
+   "name:kn": "ಕಬ್ಬಾಳು ದುರ್ಗ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/3251785217",
+  "name": "Kapala Betta",
+  "category": "trek",
+  "latitude": 12.418102,
+  "longitude": 77.422492,
+  "district": "Bengaluru South",
+  "extra": {
+   "name:kn": "ಕಪಾಲ ಬೆಟ್ಟ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/4415294530",
+  "name": "Thenginakallu Betta",
+  "category": "trek",
+  "latitude": 12.610676,
+  "longitude": 77.322767,
+  "district": "Bengaluru South",
+  "extra": {
+   "name:kn": "ತೆಂಗಿನಕಲ್ಲು ಬೆಟ್ಟ",
+   "ele": "983"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/8356542322",
+  "name": "Timmappana Betta",
+  "category": "trek",
+  "latitude": 12.779882,
+  "longitude": 77.234665,
+  "district": "Bengaluru South",
+  "extra": {
+   "name:kn": "ತಿಮ್ಮಪ್ಪನ ಬೆಟ್ಟ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/9466679818",
+  "name": "Bananthimari Betta",
+  "category": "viewpoint",
+  "latitude": 12.565326,
+  "longitude": 77.38254,
+  "district": "Bengaluru South",
+  "extra": {
+   "name:kn": "ಬಾಣಂತಿಮಾರಿ ಬೆಟ್ಟ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/8994102636",
+  "name": "Handigundi",
+  "category": "viewpoint",
+  "latitude": 12.726317,
+  "longitude": 77.315257,
+  "district": "Bengaluru South",
+  "extra": {
+   "name:kn": "ಹಂದಿಗುಂಡಿ",
+   "ele": "985"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/12098694555",
+  "name": "Kuduru Bhairavadurga Betta",
+  "category": "viewpoint",
+  "latitude": 13.093418,
+  "longitude": 77.174096,
+  "district": "Bengaluru South",
+  "extra": {
+   "name:kn": "ಕುದೂರು ಭೈರವದುರ್ಗ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/12098253210",
+  "name": "Kunagalu Betta",
+  "category": "viewpoint",
+  "latitude": 12.689758,
+  "longitude": 77.318262,
+  "district": "Bengaluru South",
+  "extra": {
+   "name:kn": "ಕುಣಗಲು ಬೆಟ್ಟ",
+   "ele": "867"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/8994102637",
+  "name": "Muthurayaswamy Betta",
+  "category": "viewpoint",
+  "latitude": 12.709157,
+  "longitude": 77.309632,
+  "district": "Bengaluru South",
+  "extra": {
+   "name:kn": "ಮುತ್ತುರಾಯಸ್ವಾಮಿ ಬೆಟ್ಟ",
+   "ele": "916"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/4086141945",
+  "name": "Ragihalli rock",
+  "category": "viewpoint",
+  "latitude": 12.770095,
+  "longitude": 77.586596,
+  "district": "Bengaluru South",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/8994102639",
+  "name": "Ramadevara Betta Vulture Sanctuary (Sholay Shooting spot)",
+  "category": "viewpoint",
+  "latitude": 12.753107,
+  "longitude": 77.303161,
+  "district": "Bengaluru South",
+  "extra": {
+   "name:kn": "ರಾಮದೇವರ ಬೆಟ್ಟ",
+   "ele": "912"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/10763170459",
+  "name": "Savanadurga",
+  "category": "viewpoint",
+  "latitude": 12.919419,
+  "longitude": 77.292089,
+  "district": "Bengaluru South",
+  "extra": {
+   "name:kn": "ಸಾವನದುರ್ಗ",
+   "ele": "1228"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/621497181",
+  "name": "Chunchi Falls",
+  "category": "waterfall",
+  "latitude": 12.351508,
+  "longitude": 77.445946,
+  "district": "Bengaluru South",
+  "extra": {
+   "name:kn": "ಚುಂಚಿ ಜಲಪಾತ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/4614721554",
+  "name": "Akkayyamma Betta Hill",
+  "category": "trek",
+  "latitude": 13.166353,
+  "longitude": 77.641801,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "name:kn": "ಅಕ್ಕಯ್ಯಮ್ಮ ಬೆಟ್ಟ"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/13954228064",
+  "name": "Annamma Betta",
+  "category": "trek",
+  "latitude": 12.918389,
+  "longitude": 77.537694,
+  "district": "Bengaluru Urban",
+  "extra": {},
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/11799833197",
+  "name": "Hare Krishna Hill",
+  "category": "trek",
+  "latitude": 13.009723,
+  "longitude": 77.55137,
+  "district": "Bengaluru Urban",
+  "extra": {},
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/1577761240",
+  "name": "Kaolin Hill",
+  "category": "trek",
+  "latitude": 12.975587,
+  "longitude": 77.749771,
+  "district": "Bengaluru Urban",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/10245038178",
+  "name": "Omkar Hill",
+  "category": "trek",
+  "latitude": 12.898478,
+  "longitude": 77.505235,
+  "district": "Bengaluru Urban",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/1577755422",
+  "name": "Vaikunta Hill",
+  "category": "trek",
+  "latitude": 12.89262,
+  "longitude": 77.548789,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "name:kn": "ವೈಕುಂಠ"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/11870935913",
+  "name": "Vivekananda Gudda",
+  "category": "trek",
+  "latitude": 12.867154,
+  "longitude": 77.60791,
+  "district": "Bengaluru Urban",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/5808823853",
+  "name": "City Viewpoint",
+  "category": "viewpoint",
+  "latitude": 12.905369,
+  "longitude": 77.532717,
+  "district": "Bengaluru Urban",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/5847789902",
+  "name": "Hill Top View",
+  "category": "viewpoint",
+  "latitude": 12.813998,
+  "longitude": 77.574835,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "addr:street": "Bannerghutta"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/11171627982",
+  "name": "BR Hills Peak",
+  "category": "trek",
+  "latitude": 11.891746,
+  "longitude": 77.172731,
+  "district": "Chamarajanagar",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/1712988513",
+  "name": "Biligiri Rangana Betta",
+  "category": "trek",
+  "latitude": 11.984397,
+  "longitude": 77.144107,
+  "district": "Chamarajanagar",
+  "extra": {
+   "name:kn": "ಬಿಳಿಗಿರಿ ರಂಗನ ಬೆಟ್ಟ",
+   "ele": "1005"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/11886218018",
+  "name": "Malki Betta",
+  "category": "trek",
+  "latitude": 11.952572,
+  "longitude": 77.135326,
+  "district": "Chamarajanagar",
+  "extra": {
+   "website": "https://peakvisor.com/peak/malki-betta.html",
+   "name:kn": "ಮಲ್ಕಿ ಬೆಟ್ಟ",
+   "ele": "1506"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/1727492951",
+  "name": "Bharachukki viewpoint",
+  "category": "viewpoint",
+  "latitude": 12.289409,
+  "longitude": 77.183152,
+  "district": "Chamarajanagar",
+  "extra": {
+   "name:kn": "ಭರಚುಕ್ಕಿ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/321417496",
+  "name": "Moyar Gorge",
+  "category": "viewpoint",
+  "latitude": 11.616112,
+  "longitude": 76.631118,
+  "district": "Chamarajanagar",
+  "extra": {},
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/62073189",
+  "name": "Barachukki Falls",
+  "category": "waterfall",
+  "latitude": 12.287651,
+  "longitude": 77.184807,
+  "district": "Chamarajanagar",
+  "extra": {
+   "name:kn": "ಭರಚುಕ್ಕಿ ಜಲಪಾತ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/5101636062",
+  "name": "Ambaji Durga",
+  "category": "trek",
+  "latitude": 13.393402,
+  "longitude": 78.016717,
+  "district": "Chikkaballapura",
+  "extra": {
+   "name:kn": "ಅಂಬಾಜಿದುರ್ಗ"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/3861883400",
+  "name": "Avalabetta",
+  "category": "trek",
+  "latitude": 13.57753,
+  "longitude": 77.672685,
+  "district": "Chikkaballapura",
+  "extra": {
+   "name:kn": "ಅವಲಬೆಟ್ಟ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/2619434371",
+  "name": "Channarayaswamy Betta",
+  "category": "trek",
+  "latitude": 13.386646,
+  "longitude": 77.667362,
+  "district": "Chikkaballapura",
+  "extra": {
+   "name:kn": "ಚನ್ನರಾಯಸ್ವಾಮಿ ಬೆಟ್ಟ"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/13371780300",
+  "name": "Gudibande Fort Top",
+  "category": "trek",
+  "latitude": 13.67663,
+  "longitude": 77.700868,
+  "district": "Chikkaballapura",
+  "extra": {
+   "ele": "1032"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/9401821785",
+  "name": "Harihara Betta (Kaurava Betta)",
+  "category": "trek",
+  "latitude": 13.477793,
+  "longitude": 77.717368,
+  "district": "Chikkaballapura",
+  "extra": {
+   "name:kn": "ಹರಹರ ಬೆಟ್ಟ",
+   "ele": "1252"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/13253929094",
+  "name": "Kaivara Betta",
+  "category": "trek",
+  "latitude": 13.348306,
+  "longitude": 77.991506,
+  "district": "Chikkaballapura",
+  "extra": {
+   "name:kn": "ಕೈವಾರ ಬೆಟ್ಟ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/447878377",
+  "name": "Kalawara Betta",
+  "category": "trek",
+  "latitude": 13.417256,
+  "longitude": 77.682669,
+  "district": "Chikkaballapura",
+  "extra": {
+   "name:kn": "ಕಳವಾರ ಬೆಟ್ಟ",
+   "ele": "1450"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/331759793",
+  "name": "Nandi Hill",
+  "category": "trek",
+  "latitude": 13.370006,
+  "longitude": 77.684785,
+  "district": "Chikkaballapura",
+  "extra": {
+   "name:kn": "ನಂದಿ ಬೆಟ್ಟ",
+   "ele": "1479"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/2559416703",
+  "name": "Varadadri Betta",
+  "category": "trek",
+  "latitude": 13.405489,
+  "longitude": 78.053011,
+  "district": "Chikkaballapura",
+  "extra": {
+   "name:kn": "ವರದಾದ್ರಿ ಬೆಟ್ಟ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/3185202654",
+  "name": "Varlakonda Betta",
+  "category": "trek",
+  "latitude": 13.63596,
+  "longitude": 77.780348,
+  "district": "Chikkaballapura",
+  "extra": {
+   "name:kn": "ವರ್ಲಕೊಂಡ ಬೆಟ್ಟ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/11050219838",
+  "name": "AdiYogi Viewpoint",
+  "category": "viewpoint",
+  "latitude": 13.479723,
+  "longitude": 77.717628,
+  "district": "Chikkaballapura",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/7301528063",
+  "name": "Gudibande Sunrise Viewpoint",
+  "category": "viewpoint",
+  "latitude": 13.676123,
+  "longitude": 77.701358,
+  "district": "Chikkaballapura",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/12098711886",
+  "name": "Horagina Betta",
+  "category": "viewpoint",
+  "latitude": 13.355412,
+  "longitude": 77.669047,
+  "district": "Chikkaballapura",
+  "extra": {
+   "name:kn": "ಹೊರಗಿನ ಬೆಟ್ಟ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/10738768972",
+  "name": "Kaiwara Betta",
+  "category": "viewpoint",
+  "latitude": 13.354974,
+  "longitude": 78.008819,
+  "district": "Chikkaballapura",
+  "extra": {
+   "ele": "1293"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/448092876",
+  "name": "Sunrise Point",
+  "category": "viewpoint",
+  "latitude": 13.41699,
+  "longitude": 77.683293,
+  "district": "Chikkaballapura",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/4827607330",
+  "name": "Sunrise Viewpoint",
+  "category": "viewpoint",
+  "latitude": 13.368087,
+  "longitude": 77.683168,
+  "district": "Chikkaballapura",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/1906512258",
+  "name": "Baba Budangiri",
+  "category": "trek",
+  "latitude": 13.421088,
+  "longitude": 75.7607,
+  "district": "Chikkamagaluru",
+  "extra": {
+   "name:kn": "ಬಾಬಾಬುಡನ್ ಗಿರಿ",
+   "ele": "1895"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/13420324200",
+  "name": "Gangadikal",
+  "category": "trek",
+  "latitude": 13.248781,
+  "longitude": 75.183545,
+  "district": "Chikkamagaluru",
+  "extra": {
+   "ele": "1465"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/11171587968",
+  "name": "Kemmangundi",
+  "category": "trek",
+  "latitude": 13.517052,
+  "longitude": 75.771372,
+  "district": "Chikkamagaluru",
+  "extra": {
+   "name:kn": "ಕೆಮ್ಮಣ್ಣಗುಂಡಿ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/3802160076",
+  "name": "Kurinjal",
+  "category": "trek",
+  "latitude": 13.202963,
+  "longitude": 75.166691,
+  "district": "Chikkamagaluru",
+  "extra": {
+   "name:kn": "ಕುರಿಂಜಲ್ ಗುಡ್ಡ",
+   "ele": "1159"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/13077633492",
+  "name": "Merthigudda",
+  "category": "trek",
+  "latitude": 13.292799,
+  "longitude": 75.374701,
+  "district": "Chikkamagaluru",
+  "extra": {
+   "name:kn": "ಮೇರ್ತಿಗುಡ್",
+   "ele": "1640"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/3802160080",
+  "name": "Narasimha Parvata",
+  "category": "trek",
+  "latitude": 13.426495,
+  "longitude": 75.153614,
+  "district": "Chikkamagaluru",
+  "extra": {
+   "name:kn": "ನರಸಿಂಹ ಪರ್ವತ",
+   "ele": "1159"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/3757027158",
+  "name": "Ratnagiri Bore",
+  "category": "trek",
+  "latitude": 13.341783,
+  "longitude": 75.771933,
+  "district": "Chikkamagaluru",
+  "extra": {
+   "name:kn": "ರತ್ನಗಿರಿ ಬೋರೆ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/3802169816",
+  "name": "Valikunja",
+  "category": "trek",
+  "latitude": 13.343046,
+  "longitude": 75.078858,
+  "district": "Chikkamagaluru",
+  "extra": {
+   "name:kn": "ವಾಲಿಕುಂಜ",
+   "ele": "1089"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/13100214248",
+  "name": "Z Point",
+  "category": "trek",
+  "latitude": 13.55567,
+  "longitude": 75.763114,
+  "district": "Chikkamagaluru",
+  "extra": {
+   "ele": "1449"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/9416356874",
+  "name": "Ballarayanadurga Fort Top View Point",
+  "category": "viewpoint",
+  "latitude": 13.132165,
+  "longitude": 75.41446,
+  "district": "Chikkamagaluru",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/9007950414",
+  "name": "Charmadi Ghati",
+  "category": "viewpoint",
+  "latitude": 13.100955,
+  "longitude": 75.482091,
+  "district": "Chikkamagaluru",
+  "extra": {
+   "name:kn": "ಚಾರ್ಮಾಡಿ ಘಾಟಿ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/13126767190",
+  "name": "Devaramane Viewpoint 1",
+  "category": "viewpoint",
+  "latitude": 13.056961,
+  "longitude": 75.538364,
+  "district": "Chikkamagaluru",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/1906509532",
+  "name": "Mullayyanagiri",
+  "category": "viewpoint",
+  "latitude": 13.390922,
+  "longitude": 75.721403,
+  "district": "Chikkamagaluru",
+  "extra": {
+   "name:kn": "ಮುಳ್ಳಯ್ಯನಗಿರಿ ಬೆಟ್ಟ",
+   "ele": "1930"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/3029492311",
+  "name": "Z Point",
+  "category": "viewpoint",
+  "latitude": 13.554056,
+  "longitude": 75.763539,
+  "district": "Chikkamagaluru",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/1704748250",
+  "name": "Kadambi Falls",
+  "category": "waterfall",
+  "latitude": 13.236423,
+  "longitude": 75.178264,
+  "district": "Chikkamagaluru",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/8084008606",
+  "name": "Kalhattigiri Hilltop Falls",
+  "category": "waterfall",
+  "latitude": 13.53483,
+  "longitude": 75.780945,
+  "district": "Chikkamagaluru",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/3029618315",
+  "name": "Kallathigiri Falls",
+  "category": "waterfall",
+  "latitude": 13.549259,
+  "longitude": 75.788897,
+  "district": "Chikkamagaluru",
+  "extra": {
+   "name:kn": "ಕಲ್ಲತ್ತಗಿರಿ ಜಲಪಾತ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/2261619342",
+  "name": "Manikyadhara Falls",
+  "category": "waterfall",
+  "latitude": 13.422196,
+  "longitude": 75.769802,
+  "district": "Chikkamagaluru",
+  "extra": {
+   "name:kn": "ಮಾಣಿಕ್ಯಧಾರಾ ಜಲಪಾತ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/4819525068",
+  "name": "Shanti falls",
+  "category": "waterfall",
+  "latitude": 13.550507,
+  "longitude": 75.765448,
+  "district": "Chikkamagaluru",
+  "extra": {
+   "name:kn": "ಶಾಂತಿ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/1611745805",
+  "name": "Sirimane Falls",
+  "category": "waterfall",
+  "latitude": 13.387478,
+  "longitude": 75.179683,
+  "district": "Chikkamagaluru",
+  "extra": {
+   "name:kn": "ಸಿರಿಮನೆ ಜಲಪಾತ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/10160518207",
+  "name": "Somavathi falls",
+  "category": "waterfall",
+  "latitude": 13.153394,
+  "longitude": 75.303571,
+  "district": "Chikkamagaluru",
+  "extra": {
+   "name:kn": "ಸೋಮವತಿ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/4868918822",
+  "name": "Soormane falls",
+  "category": "waterfall",
+  "latitude": 13.240487,
+  "longitude": 75.329196,
+  "district": "Chikkamagaluru",
+  "extra": {
+   "name:kn": "ಸೂರಮನೆ ಜಲಪಾತ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/11560267465",
+  "name": "Ukkada Waterfalls",
+  "category": "waterfall",
+  "latitude": 13.413572,
+  "longitude": 75.693244,
+  "district": "Chikkamagaluru",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/2905324755",
+  "name": "Brahmagiri Betta",
+  "category": "trek",
+  "latitude": 14.800117,
+  "longitude": 76.812591,
+  "district": "Chitradurga",
+  "extra": {
+   "name:kn": "ಬ್ರಹ್ಮಗಿರಿ ಬೆಟ್ಟ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/13057611186",
+  "name": "Nannivala Betta",
+  "category": "trek",
+  "latitude": 14.322355,
+  "longitude": 76.579868,
+  "district": "Chitradurga",
+  "extra": {
+   "name:kn": "ನನ್ನಿವಾಳ ಬೆಟ್ಟ"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/9477298694",
+  "name": "Nunke Bhairavana Betta",
+  "category": "trek",
+  "latitude": 14.728946,
+  "longitude": 76.746494,
+  "district": "Chitradurga",
+  "extra": {
+   "name:kn": "ನುಂಕೆ ಬೈರವನ ಬೆಟ್ಟ"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/9008195940",
+  "name": "Baale Kallu",
+  "category": "trek",
+  "latitude": 13.097466,
+  "longitude": 75.467904,
+  "district": "Dakshina Kannada",
+  "extra": {
+   "name:kn": "ಬಾಳೆಕಲ್ಲು",
+   "ele": "1160"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/4198870962",
+  "name": "Bantemale",
+  "category": "trek",
+  "latitude": 12.631364,
+  "longitude": 75.46726,
+  "district": "Dakshina Kannada",
+  "extra": {
+   "name:kn": "ಬಂಟಮಲೆ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/2619352465",
+  "name": "Gadaikallu",
+  "category": "trek",
+  "latitude": 13.026733,
+  "longitude": 75.295939,
+  "district": "Dakshina Kannada",
+  "extra": {
+   "name:kn": "ಗಡೈಕಲ್ಲು",
+   "ele": "518"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/9007972362",
+  "name": "Kannada Erikallu",
+  "category": "trek",
+  "latitude": 13.06635,
+  "longitude": 75.454125,
+  "district": "Dakshina Kannada",
+  "extra": {
+   "name:kn": "ಏರಿಕಲ್ಲು",
+   "ele": "1140"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/1422424823",
+  "name": "Kudremukha",
+  "category": "trek",
+  "latitude": 13.125569,
+  "longitude": 75.27482,
+  "district": "Dakshina Kannada",
+  "extra": {
+   "name:kn": "ಕುದ್ರೆಮುಖ",
+   "ele": "1892"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/9192177100",
+  "name": "Mogala Gudda (Mugila giri)",
+  "category": "trek",
+  "latitude": 12.85696,
+  "longitude": 75.5937,
+  "district": "Dakshina Kannada",
+  "extra": {
+   "ele": "1170"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/8356544384",
+  "name": "Narahari Betta",
+  "category": "trek",
+  "latitude": 12.852056,
+  "longitude": 75.055973,
+  "district": "Dakshina Kannada",
+  "extra": {
+   "name:kn": "ನರಹರಿ ಬೆಟ್ಟ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/10570936878",
+  "name": "Netravati",
+  "category": "trek",
+  "latitude": 13.128384,
+  "longitude": 75.330492,
+  "district": "Dakshina Kannada",
+  "extra": {
+   "addr:city": "Samse",
+   "name:kn": "ನೇತ್ರಾವತಿ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/14008183412",
+  "name": "vote peak point",
+  "category": "trek",
+  "latitude": 12.74974,
+  "longitude": 75.166935,
+  "district": "Dakshina Kannada",
+  "extra": {
+   "ele": "750m"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/1620368430",
+  "name": "Bandaje Arbi",
+  "category": "viewpoint",
+  "latitude": 13.105704,
+  "longitude": 75.415101,
+  "district": "Dakshina Kannada",
+  "extra": {
+   "name:kn": "ಬಂಡಾಜೆ ಅರ್ಬಿ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/2354398528",
+  "name": "Ghatikallu",
+  "category": "viewpoint",
+  "latitude": 13.164126,
+  "longitude": 75.397774,
+  "district": "Dakshina Kannada",
+  "extra": {
+   "name:kn": "ಘಾಟಿಕಲ್ಲು"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/9416402291",
+  "name": "Rani Jhari",
+  "category": "viewpoint",
+  "latitude": 13.149337,
+  "longitude": 75.40924,
+  "district": "Dakshina Kannada",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "way/103725239",
+  "name": "Sultan Battery",
+  "category": "viewpoint",
+  "latitude": 12.889571,
+  "longitude": 74.821253,
+  "district": "Dakshina Kannada",
+  "extra": {
+   "name:kn": "ಸುಲ್ತನ್ ಬತ್ತೆರಿ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/6368210937",
+  "name": "Adyar falls",
+  "category": "waterfall",
+  "latitude": 12.872651,
+  "longitude": 74.93431,
+  "district": "Dakshina Kannada",
+  "extra": {
+   "name:kn": "ಅಡ್ಯಾರ್ ಜಲಪಾತ"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "way/404535983",
+  "name": "Bandaje Abbi",
+  "category": "waterfall",
+  "latitude": 13.105439,
+  "longitude": 75.414699,
+  "district": "Dakshina Kannada",
+  "extra": {
+   "name:kn": "ಬಂಡಾಜೆ ಅಬ್ಬಿ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/10132509761",
+  "name": "Kumara Parvatha Waterfalls",
+  "category": "waterfall",
+  "latitude": 12.660554,
+  "longitude": 75.637762,
+  "district": "Dakshina Kannada",
+  "extra": {
+   "name:kn": "ಸಾತೋಡಿ ಜಲಪಾತ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/12596102254",
+  "name": "Jagalur Hill",
+  "category": "trek",
+  "latitude": 14.469637,
+  "longitude": 76.353824,
+  "district": "Davanagere",
+  "extra": {
+   "ele": "Approx 500m"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/2960537553",
+  "name": "Mailarlingeshwara Betta",
+  "category": "trek",
+  "latitude": 15.44156,
+  "longitude": 75.020593,
+  "district": "Dharwad",
+  "extra": {
+   "name:kn": "ಮೈಲಾರಲಿಂಗೇಶ್ವರ ಬೆಟ್ಟ"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/1377639754",
+  "name": "Nrupathunga Betta View Point",
+  "category": "viewpoint",
+  "latitude": 15.377543,
+  "longitude": 75.127875,
+  "district": "Dharwad",
+  "extra": {
+   "name:kn": "ನೃಪತುಂಗ ಬೆಟ್ಟ"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/10993661808",
+  "name": "Aremane Gudde",
+  "category": "trek",
+  "latitude": 12.855055,
+  "longitude": 75.621645,
+  "district": "Hassan",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/2875951816",
+  "name": "Balekallu Gudda",
+  "category": "trek",
+  "latitude": 12.70536,
+  "longitude": 75.663278,
+  "district": "Hassan",
+  "extra": {
+   "name:kn": "ಬಾಳೆಕಲ್ಲು ಗುಡ್ಡ"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/10993539086",
+  "name": "Devara Betta",
+  "category": "trek",
+  "latitude": 12.874943,
+  "longitude": 75.606021,
+  "district": "Hassan",
+  "extra": {
+   "name:kn": "ದೇವರ ಬೆಟ್ಟ"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/10993649261",
+  "name": "Dipadakallu",
+  "category": "trek",
+  "latitude": 12.95807,
+  "longitude": 75.608067,
+  "district": "Hassan",
+  "extra": {
+   "name:kn": "ದೀಪದಕಲ್ಲು"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/9383322030",
+  "name": "Garudanagiri Fort",
+  "category": "trek",
+  "latitude": 13.482189,
+  "longitude": 76.242978,
+  "district": "Hassan",
+  "extra": {
+   "name:kn": "ಗರುಡನಗಿರಿ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/3052093189",
+  "name": "Handralu Betta",
+  "category": "trek",
+  "latitude": 13.27075,
+  "longitude": 76.144542,
+  "district": "Hassan",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/10993458862",
+  "name": "Marankal Gudde",
+  "category": "trek",
+  "latitude": 12.892647,
+  "longitude": 75.561594,
+  "district": "Hassan",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/3919013176",
+  "name": "Mavinakere Betta",
+  "category": "trek",
+  "latitude": 12.853414,
+  "longitude": 76.181534,
+  "district": "Hassan",
+  "extra": {
+   "name:kn": "ಮಾವಿನಕೆರೆ ಬೆಟ್ಟ",
+   "ele": "1000"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/3919013181",
+  "name": "Munkunduru Betta",
+  "category": "trek",
+  "latitude": 12.854263,
+  "longitude": 76.143693,
+  "district": "Hassan",
+  "extra": {
+   "name:kn": "ಮುಕುಂದೂರು ಬೆಟ್ಟ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/370904196",
+  "name": "Ombaattu Gudde",
+  "category": "trek",
+  "latitude": 12.940848,
+  "longitude": 75.585141,
+  "district": "Hassan",
+  "extra": {
+   "name:kn": "ಒಂಬತ್ತು ಗುಡ್ಡ",
+   "ele": "971"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/8581315717",
+  "name": "Patla Betta",
+  "category": "trek",
+  "latitude": 12.719974,
+  "longitude": 75.717795,
+  "district": "Hassan",
+  "extra": {
+   "ele": "1085"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/3820501589",
+  "name": "Seege Gudda",
+  "category": "trek",
+  "latitude": 13.105421,
+  "longitude": 76.045376,
+  "district": "Hassan",
+  "extra": {
+   "name:kn": "ಸೀಗೆ ಗುಡ್ಡೆ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/11297561926",
+  "name": "Sompura Betta",
+  "category": "trek",
+  "latitude": 13.019119,
+  "longitude": 76.025036,
+  "district": "Hassan",
+  "extra": {
+   "name:kn": "ಸೋಂಪುರ ಬೆಟ್ಟ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/3055297146",
+  "name": "Theerthamala Betta",
+  "category": "trek",
+  "latitude": 13.332114,
+  "longitude": 76.151999,
+  "district": "Hassan",
+  "extra": {
+   "name:kn": "ಥೀರ್ಥಮಲ ಬೆಟ್ಟ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/9387161996",
+  "name": "Bisle Ghat View Point",
+  "category": "viewpoint",
+  "latitude": 12.710679,
+  "longitude": 75.69426,
+  "district": "Hassan",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/14071152921",
+  "name": "Guddada Rangaswamy Betta",
+  "category": "viewpoint",
+  "latitude": 12.795949,
+  "longitude": 75.723495,
+  "district": "Hassan",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/8378959681",
+  "name": "Halaya Betta",
+  "category": "trek",
+  "latitude": 16.975794,
+  "longitude": 77.316923,
+  "district": "Kalaburagi",
+  "extra": {},
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/674558699",
+  "name": "Brahmagiri",
+  "category": "trek",
+  "latitude": 12.386858,
+  "longitude": 75.490746,
+  "district": "Kodagu",
+  "extra": {
+   "name:kn": "ಬ್ರಹ್ಮಗಿರಿ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/10730971743",
+  "name": "Brahmagiri",
+  "category": "trek",
+  "latitude": 11.932133,
+  "longitude": 75.994349,
+  "district": "Kodagu",
+  "extra": {
+   "ele": "1613"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/11816775852",
+  "name": "Cave Hill",
+  "category": "trek",
+  "latitude": 12.618768,
+  "longitude": 75.878549,
+  "district": "Kodagu",
+  "extra": {
+   "ele": "1170"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/5117111012",
+  "name": "Kopatti",
+  "category": "trek",
+  "latitude": 12.404731,
+  "longitude": 75.594787,
+  "district": "Kodagu",
+  "extra": {
+   "name:kn": "ಕೋಪಟ್ಟಿ"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/3923441717",
+  "name": "Malambi Betta",
+  "category": "trek",
+  "latitude": 12.662454,
+  "longitude": 75.905384,
+  "district": "Kodagu",
+  "extra": {
+   "name:kn": "ಮಾಲಂಬಿ ಬೆಟ್ಟ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/2633689081",
+  "name": "Mandalapatti",
+  "category": "trek",
+  "latitude": 12.546055,
+  "longitude": 75.701917,
+  "district": "Kodagu",
+  "extra": {
+   "name:kn": "ಮಂದಲಪಟ್ಟಿ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/390866017",
+  "name": "Nishani Motte",
+  "category": "trek",
+  "latitude": 12.453665,
+  "longitude": 75.676406,
+  "district": "Kodagu",
+  "extra": {
+   "name:kn": "ನಿಶಾನಿ ಮೊಟ್ಟೆ",
+   "ele": "1270"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/5010051828",
+  "name": "Nishani Motte",
+  "category": "trek",
+  "latitude": 12.330862,
+  "longitude": 75.531521,
+  "district": "Kodagu",
+  "extra": {
+   "name:kn": "ನಿಶಾನಿ ಮೊಟ್ಟೆ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/1132556461",
+  "name": "Tadiandamol",
+  "category": "trek",
+  "latitude": 12.217564,
+  "longitude": 75.608815,
+  "district": "Kodagu",
+  "extra": {
+   "name:kn": "ತಡಿಯಂಡಮೋಳು",
+   "ele": "1748",
+   "wikidata": "Q8519448",
+   "wikipedia": "en:Tadiandamol"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/1079695712",
+  "name": "Raja Seat",
+  "category": "viewpoint",
+  "latitude": 12.413865,
+  "longitude": 75.737001,
+  "district": "Kodagu",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/3796478135",
+  "name": "Tadiyandmol Peak View Point",
+  "category": "viewpoint",
+  "latitude": 12.217451,
+  "longitude": 75.608927,
+  "district": "Kodagu",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/4590982491",
+  "name": "Chingaara Waterfall",
+  "category": "waterfall",
+  "latitude": 12.230891,
+  "longitude": 75.654493,
+  "district": "Kodagu",
+  "extra": {
+   "name:kn": "ಚಿಂಗಾರ ಜಲಪಾತ"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/4090604859",
+  "name": "Kote Abbe",
+  "category": "waterfall",
+  "latitude": 12.522176,
+  "longitude": 75.739093,
+  "district": "Kodagu",
+  "extra": {
+   "name:kn": "ಕೋಟೆ ಅಬ್ಬೆ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/4078446925",
+  "name": "Mallalli Falls",
+  "category": "waterfall",
+  "latitude": 12.681223,
+  "longitude": 75.723664,
+  "district": "Kodagu",
+  "extra": {
+   "name:kn": "ಮಲ್ಲಳ್ಳಿ ಜಲಪಾತ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/14112033523",
+  "name": "Nelji hills spring",
+  "category": "waterfall",
+  "latitude": 12.29715,
+  "longitude": 75.610115,
+  "district": "Kodagu",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/9491285168",
+  "name": "Avani Betta",
+  "category": "trek",
+  "latitude": 13.108284,
+  "longitude": 78.319732,
+  "district": "Kolar",
+  "extra": {
+   "name:kn": "ಅವಣಿ ಬೆಟ್ಟ"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/10741160602",
+  "name": "Bandahalli Betta",
+  "category": "trek",
+  "latitude": 13.077715,
+  "longitude": 78.347405,
+  "district": "Kolar",
+  "extra": {
+   "name:kn": "ಬಂಡಹಳ್ಳಿ ಬೆಟ್ಟ"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/9491250041",
+  "name": "Devarayasamudra Betta",
+  "category": "trek",
+  "latitude": 13.125837,
+  "longitude": 78.305137,
+  "district": "Kolar",
+  "extra": {
+   "name:kn": "ದೇವರಾಯಸಮುದ್ರ ಬೆಟ್ಟ"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/12083551556",
+  "name": "Hemadri",
+  "category": "trek",
+  "latitude": 12.992933,
+  "longitude": 78.083482,
+  "district": "Kolar",
+  "extra": {
+   "name:kn": "ಹೇಮಾದ್ರಿ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/12083551558",
+  "name": "Hemadri",
+  "category": "trek",
+  "latitude": 12.975613,
+  "longitude": 78.086405,
+  "district": "Kolar",
+  "extra": {
+   "name:kn": "ಹೇಮಾದ್ರಿ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/10741196626",
+  "name": "Kannamanahalli",
+  "category": "trek",
+  "latitude": 13.316409,
+  "longitude": 78.404835,
+  "district": "Kolar",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/5420503323",
+  "name": "Kurkibetta",
+  "category": "trek",
+  "latitude": 13.138582,
+  "longitude": 78.013849,
+  "district": "Kolar",
+  "extra": {
+   "name:kn": "ಕುರ್ಕಿ ಬೆಟ್ಟ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/9698301858",
+  "name": "Kurudumale Betta",
+  "category": "trek",
+  "latitude": 13.204523,
+  "longitude": 78.367139,
+  "district": "Kolar",
+  "extra": {
+   "name:kn": "ಕುರುಡುಮಲೆ ಬೆಟ್ಟ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/9491227361",
+  "name": "Mulbagal Betta",
+  "category": "trek",
+  "latitude": 13.170132,
+  "longitude": 78.380252,
+  "district": "Kolar",
+  "extra": {
+   "name:kn": "ಮುಳಬಾಗಿಲು ಬೆಟ್ಟ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/3199140268",
+  "name": "Talagunda",
+  "category": "trek",
+  "latitude": 13.178266,
+  "longitude": 78.062197,
+  "district": "Kolar",
+  "extra": {
+   "name:kn": "ತಲಗುಂದ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/9698301705",
+  "name": "Veerabhadrana betta",
+  "category": "trek",
+  "latitude": 13.177677,
+  "longitude": 78.403653,
+  "district": "Kolar",
+  "extra": {
+   "name:kn": "ವೀರಭದ್ರನ ಬೆಟ್ಟ",
+   "ele": "920"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/13002153281",
+  "name": "Hemagudda",
+  "category": "trek",
+  "latitude": 15.437866,
+  "longitude": 76.385931,
+  "district": "Koppal",
+  "extra": {
+   "name:kn": "ಹೇಮಗುಡ್ಡ"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/6271193386",
+  "name": "Anegundi Fort",
+  "category": "viewpoint",
+  "latitude": 15.353911,
+  "longitude": 76.482167,
+  "district": "Koppal",
+  "extra": {
+   "name:kn": "ಆನೆಗುಂಡಿ ಕೋಟೆ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/6926606386",
+  "name": "view on the lake",
+  "category": "viewpoint",
+  "latitude": 15.361028,
+  "longitude": 76.437029,
+  "district": "Koppal",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/4698913515",
+  "name": "Adichunchanagiri",
+  "category": "trek",
+  "latitude": 13.023974,
+  "longitude": 76.744012,
+  "district": "Mandya",
+  "extra": {
+   "name:kn": "ಆದಿಚುಂಚನಗಿರಿ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/3898777628",
+  "name": "Bebi Betta",
+  "category": "trek",
+  "latitude": 12.510235,
+  "longitude": 76.57619,
+  "district": "Mandya",
+  "extra": {
+   "name:kn": "ಬೇಬಿ ಬೆಟ್ಟ"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/14085440887",
+  "name": "Haddinakallu Betta",
+  "category": "trek",
+  "latitude": 12.994019,
+  "longitude": 76.788694,
+  "district": "Mandya",
+  "extra": {
+   "ele": "993"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/1712330763",
+  "name": "Karighatta",
+  "category": "trek",
+  "latitude": 12.425094,
+  "longitude": 76.7196,
+  "district": "Mandya",
+  "extra": {
+   "name:kn": "ಕರಿಘಟ್ಟ",
+   "ele": "822"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/1445579613",
+  "name": "Kundura Betta",
+  "category": "trek",
+  "latitude": 12.307603,
+  "longitude": 77.084882,
+  "district": "Mandya",
+  "extra": {
+   "name:kn": "ಕುಂದೂರು ಬೆಟ್ಟ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/3891509367",
+  "name": "Narayanadurga",
+  "category": "trek",
+  "latitude": 12.712524,
+  "longitude": 76.585884,
+  "district": "Mandya",
+  "extra": {
+   "name:kn": "ನಾರಾಯಣದುರ್ಗ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/1651387846",
+  "name": "Yadavagiri",
+  "category": "trek",
+  "latitude": 12.66257,
+  "longitude": 76.651973,
+  "district": "Mandya",
+  "extra": {
+   "name:kn": "ಬಸವನಕಲ್ ಬೆಟ್ಟ",
+   "ele": "1039"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/6031291200",
+  "name": "Basavana Betta",
+  "category": "viewpoint",
+  "latitude": 12.380913,
+  "longitude": 77.270977,
+  "district": "Mandya",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/4393815946",
+  "name": "Watch Tower of Gaganachukki",
+  "category": "viewpoint",
+  "latitude": 12.295983,
+  "longitude": 77.167727,
+  "district": "Mandya",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/6075120822",
+  "name": "Balamuri Waterfall",
+  "category": "waterfall",
+  "latitude": 12.413395,
+  "longitude": 76.605961,
+  "district": "Mandya",
+  "extra": {
+   "name:kn": "ಬಲಮುರಿ"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/818688243",
+  "name": "Shimshapura Falls",
+  "category": "waterfall",
+  "latitude": 12.348032,
+  "longitude": 77.197294,
+  "district": "Mandya",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/2767745401",
+  "name": "Malleshwarana Betta",
+  "category": "trek",
+  "latitude": 12.168624,
+  "longitude": 76.455831,
+  "district": "Mysuru",
+  "extra": {
+   "name:kn": "ಮಲ್ಲೇಶ್ವರನ ಬೆಟ್ಟ"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/1575083830",
+  "name": "Chamundi Hill",
+  "category": "viewpoint",
+  "latitude": 12.272402,
+  "longitude": 76.670394,
+  "district": "Mysuru",
+  "extra": {
+   "name:kn": "ಚಾಮುಂಡಿ ಬೆಟ್ಟ",
+   "ele": "1063"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/12756638545",
+  "name": "North Gate Palace View",
+  "category": "viewpoint",
+  "latitude": 12.307353,
+  "longitude": 76.655722,
+  "district": "Mysuru",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "way/1259067906",
+  "name": "View Tower",
+  "category": "viewpoint",
+  "latitude": 12.316193,
+  "longitude": 76.643774,
+  "district": "Mysuru",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/1159754787",
+  "name": "Raudakunda",
+  "category": "trek",
+  "latitude": 15.681615,
+  "longitude": 76.768667,
+  "district": "Raichur",
+  "extra": {
+   "name:kn": "ರೌಡಕುಂದ"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/3656682258",
+  "name": "Anandagiri Gudda",
+  "category": "trek",
+  "latitude": 13.699512,
+  "longitude": 75.258282,
+  "district": "Shivamogga",
+  "extra": {
+   "name:kn": "ಆನಂದಗಿರಿ ಗುಡ್ಡಕ್"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/2711185547",
+  "name": "Siddeshwara Betta",
+  "category": "trek",
+  "latitude": 13.687401,
+  "longitude": 75.224645,
+  "district": "Shivamogga",
+  "extra": {
+   "name:kn": "ಸಿದ್ದೇಶ್ವರ ಬೆಟ್ಟ"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/3006342921",
+  "name": "ಚಂದ್ರಗುತ್ತಿ ಬೆಟ್ಟ",
+  "category": "trek",
+  "latitude": 14.436004,
+  "longitude": 74.954059,
+  "district": "Shivamogga",
+  "extra": {
+   "name:kn": "ಚಂದ್ರಗುತ್ತಿ ಬೆಟ್ಟ"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/910399425",
+  "name": "Agumbe Sunset Point",
+  "category": "viewpoint",
+  "latitude": 13.496504,
+  "longitude": 75.080588,
+  "district": "Shivamogga",
+  "extra": {
+   "name:kn": "ಆಗುಂಬೆ ಸೂರ್ಯಸ್ತ ವೀಕ್ಷಣಾಲಯ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/5926683864",
+  "name": "Amteghatta",
+  "category": "viewpoint",
+  "latitude": 14.198528,
+  "longitude": 74.861551,
+  "district": "Shivamogga",
+  "extra": {},
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/459795469",
+  "name": "Jog Falls View ( British Bungalow )",
+  "category": "viewpoint",
+  "latitude": 14.23066,
+  "longitude": 74.811338,
+  "district": "Shivamogga",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/2481012737",
+  "name": "Raja Seat",
+  "category": "viewpoint",
+  "latitude": 14.222679,
+  "longitude": 74.796523,
+  "district": "Shivamogga",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/5926683863",
+  "name": "Sharavati River Viewpoint",
+  "category": "viewpoint",
+  "latitude": 14.183738,
+  "longitude": 74.875649,
+  "district": "Shivamogga",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/3147946532",
+  "name": "Bhasmangi",
+  "category": "trek",
+  "latitude": 13.747729,
+  "longitude": 77.034301,
+  "district": "Tumakuru",
+  "extra": {
+   "name:kn": "ಭಸ್ಮಂಗಿ ಬೆಟ್ಟ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/1134502259",
+  "name": "Chinnagara Betta",
+  "category": "trek",
+  "latitude": 13.399079,
+  "longitude": 77.169572,
+  "district": "Tumakuru",
+  "extra": {
+   "name:kn": "ಚಿಣ್ಣಗಾರ ಬೆಟ್ಟ",
+   "ele": "1225"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/3115168363",
+  "name": "Davadabetta",
+  "category": "trek",
+  "latitude": 14.082606,
+  "longitude": 77.189493,
+  "district": "Tumakuru",
+  "extra": {
+   "name:kn": "ದವಡಬೆಟ್ಟ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/1134502251",
+  "name": "Devarayanadurga",
+  "category": "trek",
+  "latitude": 13.374054,
+  "longitude": 77.214344,
+  "district": "Tumakuru",
+  "extra": {
+   "name:kn": "ದೇವರಾಯನ ದುರ್ಗ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/3347429143",
+  "name": "Hemagiri",
+  "category": "trek",
+  "latitude": 12.813244,
+  "longitude": 77.048844,
+  "district": "Tumakuru",
+  "extra": {
+   "name:kn": "ಹೇಮಗಿರಿ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/13371780299",
+  "name": "Hutridurga Fort Top",
+  "category": "trek",
+  "latitude": 12.962738,
+  "longitude": 77.12368,
+  "district": "Tumakuru",
+  "extra": {
+   "ele": "1133"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/2452162685",
+  "name": "Kamanadurga",
+  "category": "trek",
+  "latitude": 14.25129,
+  "longitude": 77.275596,
+  "district": "Tumakuru",
+  "extra": {
+   "name:kn": "ಕಾಮನದುರ್ಗ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/1134502250",
+  "name": "Kambati Kallu",
+  "category": "trek",
+  "latitude": 13.420432,
+  "longitude": 77.21671,
+  "district": "Tumakuru",
+  "extra": {
+   "name:kn": "ಕಂಬದ ಕಲ್ಲು"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/1132723675",
+  "name": "Kaulibetta",
+  "category": "trek",
+  "latitude": 13.620761,
+  "longitude": 77.167464,
+  "district": "Tumakuru",
+  "extra": {
+   "name:kn": "ಕವಳಿ ಬೆಟ್ಟ",
+   "ele": "1257"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/13064875659",
+  "name": "Krushnagiri",
+  "category": "trek",
+  "latitude": 14.044638,
+  "longitude": 77.223614,
+  "district": "Tumakuru",
+  "extra": {
+   "name:kn": "ಕೃಷ್ಣಗಿರಿ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/4397779592",
+  "name": "Maradigudda",
+  "category": "trek",
+  "latitude": 13.665647,
+  "longitude": 76.831566,
+  "district": "Tumakuru",
+  "extra": {
+   "name:kn": "ಮರಡಿಗುಡ್ಡ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/13112434181",
+  "name": "Mugadalebetta",
+  "category": "trek",
+  "latitude": 14.11211,
+  "longitude": 77.175237,
+  "district": "Tumakuru",
+  "extra": {
+   "name:kn": "ಮೂಗದಾಳೆಬೆಟ್ಟ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/2087677721",
+  "name": "Nidagallu",
+  "category": "trek",
+  "latitude": 14.158865,
+  "longitude": 77.082848,
+  "district": "Tumakuru",
+  "extra": {
+   "name:kn": "ನಿಡಗಲ್ಲು",
+   "ele": "1148"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/1489650827",
+  "name": "Pavagada",
+  "category": "trek",
+  "latitude": 14.105449,
+  "longitude": 77.275047,
+  "district": "Tumakuru",
+  "extra": {
+   "name:kn": "ಪಾವಗಡ",
+   "ele": "918"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/1134502255",
+  "name": "Ramadevara Betta",
+  "category": "trek",
+  "latitude": 13.323434,
+  "longitude": 77.164254,
+  "district": "Tumakuru",
+  "extra": {
+   "name:kn": "ರಾಮದೇವರ ಬೆಟ್ಟ",
+   "ele": "1177"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/3210380039",
+  "name": "Rangaswami Betta",
+  "category": "trek",
+  "latitude": 13.025511,
+  "longitude": 76.975408,
+  "district": "Tumakuru",
+  "extra": {
+   "name:kn": "ರಂಗಸ್ವಾಮಿ ಬೆಟ್ಟ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/1132723349",
+  "name": "Siddarabetta",
+  "category": "trek",
+  "latitude": 13.55324,
+  "longitude": 77.13111,
+  "district": "Tumakuru",
+  "extra": {
+   "name:kn": "ಸಿದ್ದರ ಬೆಟ್ಟ",
+   "ele": "1295"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/1134502252",
+  "name": "Sigekoppalu Betta",
+  "category": "trek",
+  "latitude": 13.373892,
+  "longitude": 77.166032,
+  "district": "Tumakuru",
+  "extra": {
+   "name:kn": "ಸೀಗೆಕೊಪ್ಪಲು ಬೆಟ್ಟ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/1134502262",
+  "name": "Talavara Betta",
+  "category": "trek",
+  "latitude": 13.360159,
+  "longitude": 77.168253,
+  "district": "Tumakuru",
+  "extra": {
+   "name:kn": "ತಲವಾರ ಬೆಟ್ಟ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/3941899754",
+  "name": "Battery Viewpoint",
+  "category": "viewpoint",
+  "latitude": 13.369521,
+  "longitude": 77.206406,
+  "district": "Tumakuru",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/1132561849",
+  "name": "Madhugiri Betta",
+  "category": "viewpoint",
+  "latitude": 13.651483,
+  "longitude": 77.199654,
+  "district": "Tumakuru",
+  "extra": {
+   "name:kn": "ಮಧುಗಿರಿ ಬೆಟ್ಟ",
+   "ele": "1196"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/12098221070",
+  "name": "Minchukallu Betta",
+  "category": "viewpoint",
+  "latitude": 13.458613,
+  "longitude": 77.197017,
+  "district": "Tumakuru",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/1632204450",
+  "name": "Bahubali Hill",
+  "category": "trek",
+  "latitude": 13.203484,
+  "longitude": 75.005641,
+  "district": "Udupi",
+  "extra": {
+   "name:kn": "ಬಾಹುಬಲಿ ಬೆಟ್ಟ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/6010975553",
+  "name": "Kappu Gudde",
+  "category": "trek",
+  "latitude": 13.352223,
+  "longitude": 74.77547,
+  "district": "Udupi",
+  "extra": {
+   "name:kn": "ಕಪ್ಪು ಗುಡ್ಡೆ"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/6082456085",
+  "name": "Ferry St. Mary's Island",
+  "category": "viewpoint",
+  "latitude": 13.347717,
+  "longitude": 74.696547,
+  "district": "Udupi",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/6481877487",
+  "name": "Kodi beach",
+  "category": "viewpoint",
+  "latitude": 13.630272,
+  "longitude": 74.666256,
+  "district": "Udupi",
+  "extra": {},
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/3824546661",
+  "name": "Maravanthe Beach",
+  "category": "viewpoint",
+  "latitude": 13.708854,
+  "longitude": 74.641865,
+  "district": "Udupi",
+  "extra": {
+   "name:kn": "ಮರವಂತೆ ಸಮುದ್ರ ತೀರ",
+   "wikidata": "Q6755087",
+   "wikipedia": "en:Maravanthe"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/1681305215",
+  "name": "Sunrise Point",
+  "category": "viewpoint",
+  "latitude": 13.855013,
+  "longitude": 74.870924,
+  "district": "Udupi",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/1811078336",
+  "name": "Vanake Abbi Waterfall View Point",
+  "category": "viewpoint",
+  "latitude": 13.513194,
+  "longitude": 75.074969,
+  "district": "Udupi",
+  "extra": {
+   "name:kn": "ವನಕೆ ಅಬ್ಬೆ ಜಲಪಾತ ವೀಕ್ಷಣ ಸ್ಥಳ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/6404008586",
+  "name": "Abbi Falls, Irki Gadde, Thombattu",
+  "category": "waterfall",
+  "latitude": 13.677334,
+  "longitude": 74.984355,
+  "district": "Udupi",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/13382740501",
+  "name": "Kanikal falls alooru",
+  "category": "waterfall",
+  "latitude": 13.753154,
+  "longitude": 74.716294,
+  "district": "Udupi",
+  "extra": {},
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/3150443028",
+  "name": "Kudluteertha Falls",
+  "category": "waterfall",
+  "latitude": 13.410386,
+  "longitude": 75.121893,
+  "district": "Udupi",
+  "extra": {
+   "name:kn": "ಕೂಡ್ಲುತೀರ್ಥ"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/2589482422",
+  "name": "Aganashini",
+  "category": "trek",
+  "latitude": 14.513238,
+  "longitude": 74.366958,
+  "district": "Uttara Kannada",
+  "extra": {
+   "name:kn": "ಅಘನಾಶಿನಿ",
+   "ele": "125"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/4491064225",
+  "name": "Balammana Gudda",
+  "category": "trek",
+  "latitude": 14.907505,
+  "longitude": 74.385198,
+  "district": "Uttara Kannada",
+  "extra": {
+   "name:kn": "ಬಾಲಮ್ಮನ ಗುಡ್ಡ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/10757900691",
+  "name": "Bomma Gudda",
+  "category": "trek",
+  "latitude": 14.91271,
+  "longitude": 74.161928,
+  "district": "Uttara Kannada",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/8972411448",
+  "name": "Kailasa Gudda",
+  "category": "trek",
+  "latitude": 14.678149,
+  "longitude": 74.832408,
+  "district": "Uttara Kannada",
+  "extra": {
+   "name:kn": "ಕೈಲಾಸ ಗುಡ್ಡ",
+   "ele": "683"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/13232996670",
+  "name": "Mitmati Maddi",
+  "category": "trek",
+  "latitude": 15.131311,
+  "longitude": 74.322188,
+  "district": "Uttara Kannada",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/1888467581",
+  "name": "Mohini Betta",
+  "category": "trek",
+  "latitude": 14.588649,
+  "longitude": 74.566451,
+  "district": "Uttara Kannada",
+  "extra": {
+   "name:kn": "ಮೋಹಿನಿ ಶಿಖರ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/5649762428",
+  "name": "Nishane Gudda",
+  "category": "trek",
+  "latitude": 14.75134,
+  "longitude": 74.678737,
+  "district": "Uttara Kannada",
+  "extra": {
+   "name:kn": "ನಿಶಾನೆ ಗುಡ್ಡ",
+   "ele": "780"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/13232996696",
+  "name": "Pate Gudda",
+  "category": "trek",
+  "latitude": 14.946029,
+  "longitude": 74.217796,
+  "district": "Uttara Kannada",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/4491077533",
+  "name": "Shirvegudda",
+  "category": "trek",
+  "latitude": 14.867275,
+  "longitude": 74.317093,
+  "district": "Uttara Kannada",
+  "extra": {
+   "name:kn": "ಶಿರ್ವೆ ಗುಡ್ಡ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/4418366477",
+  "name": "Apsarakonda Hilltop Viewpoint",
+  "category": "viewpoint",
+  "latitude": 14.230708,
+  "longitude": 74.445346,
+  "district": "Uttara Kannada",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/11876262028",
+  "name": "Bheemana Gudda Sunset Point",
+  "category": "viewpoint",
+  "latitude": 14.462469,
+  "longitude": 74.687351,
+  "district": "Uttara Kannada",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/5901301051",
+  "name": "Kali Tiger Reserve View Point",
+  "category": "viewpoint",
+  "latitude": 15.095475,
+  "longitude": 74.604531,
+  "district": "Uttara Kannada",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/11555964669",
+  "name": "Lake",
+  "category": "viewpoint",
+  "latitude": 14.541597,
+  "longitude": 74.32568,
+  "district": "Uttara Kannada",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/4566768059",
+  "name": "Magod Falls Viewpoint",
+  "category": "viewpoint",
+  "latitude": 14.848168,
+  "longitude": 74.750274,
+  "district": "Uttara Kannada",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/11533168669",
+  "name": "Road to mount",
+  "category": "viewpoint",
+  "latitude": 14.515896,
+  "longitude": 74.358789,
+  "district": "Uttara Kannada",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/2587883824",
+  "name": "Sadashivgad Esturay Viewpoint",
+  "category": "viewpoint",
+  "latitude": 14.846224,
+  "longitude": 74.131737,
+  "district": "Uttara Kannada",
+  "extra": {
+   "name:kn": "ಸದಾಶಿವಗಾಡ ಎಸ್ಟುರೆ ನೋಟದ ಕೋನ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/11427758969",
+  "name": "Sunset view",
+  "category": "viewpoint",
+  "latitude": 14.535213,
+  "longitude": 74.312169,
+  "district": "Uttara Kannada",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/3745342731",
+  "name": "Sykes point",
+  "category": "viewpoint",
+  "latitude": 15.082809,
+  "longitude": 74.648277,
+  "district": "Uttara Kannada",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/2277934850",
+  "name": "Thyaglemane Gudda",
+  "category": "viewpoint",
+  "latitude": 14.32378,
+  "longitude": 74.740001,
+  "district": "Uttara Kannada",
+  "extra": {
+   "name:kn": "ತ್ಯಾಗಲೆಮನೆ ಗುಡ್ಡ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/4418368082",
+  "name": "Apsarakonda Falls",
+  "category": "waterfall",
+  "latitude": 14.231199,
+  "longitude": 74.446433,
+  "district": "Uttara Kannada",
+  "extra": {
+   "name:kn": "ಅಪ್ಸರಕೊಂಡ ಜಲಪಾತ"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/14324688001",
+  "name": "Burude waterfalls",
+  "category": "waterfall",
+  "latitude": 14.396106,
+  "longitude": 74.750673,
+  "district": "Uttara Kannada",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/2140335892",
+  "name": "Magoda Falls",
+  "category": "waterfall",
+  "latitude": 14.850108,
+  "longitude": 74.752251,
+  "district": "Uttara Kannada",
+  "extra": {
+   "name:kn": "ಮಾಗೋಡು ಜಲಪಾತ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/14066173101",
+  "name": "Nagarmadi Waterfall",
+  "category": "waterfall",
+  "latitude": 14.777713,
+  "longitude": 74.179424,
+  "district": "Uttara Kannada",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/4461240133",
+  "name": "Vibhuti falls",
+  "category": "waterfall",
+  "latitude": 14.59835,
+  "longitude": 74.551366,
+  "district": "Uttara Kannada",
+  "extra": {
+   "name:kn": "ವಿಭೂತಿ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/6268174685",
+  "name": "Sunset viewpoint with temple and the river valley (for climbers)",
+  "category": "temple",
+  "latitude": 15.343185,
+  "longitude": 76.479706,
+  "district": "Vijayanagara",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/340354874",
+  "name": "Gandhamadana",
+  "category": "trek",
+  "latitude": 15.336862,
+  "longitude": 76.473903,
+  "district": "Vijayanagara",
+  "extra": {
+   "name:kn": "ಗಂಧಮಾದನ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/340354825",
+  "name": "Hemakuta",
+  "category": "trek",
+  "latitude": 15.332915,
+  "longitude": 76.460297,
+  "district": "Vijayanagara",
+  "extra": {
+   "name:kn": "ಹೇಮಕೂಟ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/12766061749",
+  "name": "Joladarashi Betta",
+  "category": "trek",
+  "latitude": 15.252675,
+  "longitude": 76.376189,
+  "district": "Vijayanagara",
+  "extra": {
+   "name:kn": "ಜೋಳದರಾಶಿ ಬೆಟ್ಟ"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/340355670",
+  "name": "Malayavanta",
+  "category": "trek",
+  "latitude": 15.324731,
+  "longitude": 76.488463,
+  "district": "Vijayanagara",
+  "extra": {
+   "name:kn": "ಮಲಯವಂತ ಬೆಟ್ಟ"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/2419123916",
+  "name": "Daroji Sloth Bear Sanctuary",
+  "category": "viewpoint",
+  "latitude": 15.275226,
+  "longitude": 76.563603,
+  "district": "Vijayanagara",
+  "extra": {
+   "name:kn": "ದರೋಜಿ ಕರಡಿಧಾಮ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/980400456",
+  "name": "Sunset Point",
+  "category": "viewpoint",
+  "latitude": 15.332676,
+  "longitude": 76.459409,
+  "district": "Vijayanagara",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/13390837137",
+  "name": "Big",
+  "category": "waterfall",
+  "latitude": 15.332667,
+  "longitude": 76.438475,
+  "district": "Vijayanagara",
+  "extra": {},
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/2544809436",
+  "name": "Nagarabetta",
+  "category": "trek",
+  "latitude": 16.288035,
+  "longitude": 76.258573,
+  "district": "Vijayapura",
+  "extra": {
+   "name:kn": "ನಾಗರಬೆಟ್ಟ"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "node/2371550696",
+  "name": "Yadgiri",
+  "category": "viewpoint",
+  "latitude": 16.764616,
+  "longitude": 77.139144,
+  "district": "Yadgir",
+  "extra": {
+   "name:kn": "ಯಾದಗಿರಿ"
+  },
+  "is_hidden": false
+ }
+]

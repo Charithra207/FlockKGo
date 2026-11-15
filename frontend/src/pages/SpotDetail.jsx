@@ -5,15 +5,16 @@ import { Link, useNavigate, useParams } from 'react-router-dom'
 import LoadingSpinner from '../components/common/LoadingSpinner'
 import SpotCard from '../components/spots/SpotCard'
 import SpotMap from '../components/spots/SpotMap'
-import { categoryLabel, directionsUrl, MONTHS, spotsApi } from '../services/spotsService'
+import { categoryLabel, catName, directionsUrl, monthNames, photoSrc, spotsApi, spotTitle } from '../services/spotsService'
 import useAuthStore from '../store/authStore'
+import { useT } from '../i18n'
 
 function MonthChips({ months }) {
   if (!months?.length) return null
   return (
     <div className="flex flex-wrap items-center gap-1.5">
       <CalendarDays className="h-4 w-4 text-slate-400" />
-      {MONTHS.map((m, i) => (
+      {monthNames().map((m, i) => (
         <span
           key={m}
           className={`rounded-md px-1.5 py-0.5 text-xs font-medium ${months.includes(i + 1) ? 'bg-success/15 text-success' : 'text-slate-300'}`}
@@ -26,6 +27,7 @@ function MonthChips({ months }) {
 }
 
 function Nearby({ spot }) {
+  const t = useT()
   const [cafes, setCafes] = useState([])
   const [others, setOthers] = useState([])
   const lat = spot.latitude ?? spot.approx_latitude
@@ -41,13 +43,13 @@ function Nearby({ spot }) {
     <>
       {cafes.length > 0 && (
         <section>
-          <h2 className="mb-3 text-lg font-bold text-slate-700">☕ Cafes nearby</h2>
+          <h2 className="mb-3 text-lg font-bold text-slate-700">{t('spot.cafesNearby')}</h2>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">{cafes.map((s) => <SpotCard key={s.id} spot={s} />)}</div>
         </section>
       )}
       {others.length > 0 && (
         <section>
-          <h2 className="mb-3 text-lg font-bold text-slate-700">🔒 More hidden gems around here</h2>
+          <h2 className="mb-3 text-lg font-bold text-slate-700">{t('spot.moreHidden')}</h2>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">{others.map((s) => <SpotCard key={s.id} spot={s} />)}</div>
         </section>
       )}
@@ -59,6 +61,7 @@ export default function SpotDetail() {
   const { spotId } = useParams()
   const navigate = useNavigate()
   const { token, user, setCredits } = useAuthStore()
+  const t = useT()
   const [spot, setSpot] = useState(null)
   const [error, setError] = useState(null)
   const [busy, setBusy] = useState(false)
@@ -120,7 +123,7 @@ export default function SpotDetail() {
   return (
     <div className="space-y-6">
       <button onClick={() => navigate(-1)} className="inline-flex items-center gap-1 text-sm font-medium text-slate-500 hover:text-primary">
-        <ArrowLeft className="h-4 w-4" /> Back
+        <ArrowLeft className="h-4 w-4" /> {t('spot.back')}
       </button>
 
       <div className="grid gap-6 lg:grid-cols-5">
@@ -133,31 +136,34 @@ export default function SpotDetail() {
               {spot.status !== 'approved' && (
                 <span className="rounded-full bg-warning/15 px-2 py-0.5 text-xs font-semibold capitalize text-warning">{spot.status}</span>
               )}
+              {(user?.is_admin || (spot.is_mine && spot.status === 'pending')) && (
+                <Link to={`/spots/${spot.id}/edit`} className="ml-auto text-xs font-semibold text-primary underline">{t('spot.edit')}</Link>
+              )}
             </div>
             <h1 className={`mt-2 text-3xl font-extrabold ${spot.locked ? 'italic text-slate-500' : 'text-primary'}`}>
               {spot.locked && <Lock className="mr-2 inline h-6 w-6 text-accent" />}
-              {spot.name}
+              {spotTitle(spot)}
             </h1>
 
             {spot.locked ? (
               <div className="mt-5 rounded-xl border-2 border-dashed border-accent/40 bg-accent/5 p-5">
-                <p className="font-semibold text-slate-700">A local shared this hidden {spot.category}.</p>
+                <p className="font-semibold text-slate-700">{t('spot.lockedTitle', { cat: catName(spot.category) })}</p>
                 <p className="mt-1 text-sm text-slate-500">
-                  Unlock it to see the name, exact location, photos and how to get there.
-                  {spot.vouch_count > 0 && ` ${spot.vouch_count} traveller${spot.vouch_count === 1 ? '' : 's'} confirmed it's real.`}
+                  {t('spot.lockedBody')}
+                  {spot.vouch_count > 0 && ` ${t('spot.confirmed', { n: spot.vouch_count })}`}
                 </p>
                 <div className="mt-4 flex flex-wrap items-center gap-3">
                   {token && credits > 0 ? (
                     <button disabled={busy} onClick={unlock} className="inline-flex items-center gap-2 rounded-xl bg-accent px-5 py-2.5 font-semibold text-white hover:opacity-90 disabled:opacity-50">
-                      <Unlock className="h-4 w-4" /> Unlock for 1 credit ({credits} left)
+                      <Unlock className="h-4 w-4" /> {t('spot.unlock', { n: credits })}
                     </button>
                   ) : token ? (
                     <Link to="/spots/share" className="inline-flex items-center gap-2 rounded-xl bg-accent px-5 py-2.5 font-semibold text-white hover:opacity-90">
-                      <Gift className="h-4 w-4" /> Share a spot to earn 3 unlocks
+                      <Gift className="h-4 w-4" /> {t('spot.earn')}
                     </Link>
                   ) : (
                     <Link to={`/login?next=/spots/${spotId}`} className="inline-flex items-center gap-2 rounded-xl bg-accent px-5 py-2.5 font-semibold text-white hover:opacity-90">
-                      Sign up: first unlock is free
+                      {t('spot.signup')}
                     </Link>
                   )}
                 </div>
@@ -165,21 +171,21 @@ export default function SpotDetail() {
             ) : (
               <div className="mt-4 space-y-4">
                 {spot.photo_url && (
-                  <img src={spot.photo_url} alt={spot.name} className="max-h-80 w-full rounded-xl object-cover" loading="lazy" />
+                  <img src={photoSrc(spot.photo_url)} alt={spot.name} className="max-h-80 w-full rounded-xl object-cover" loading="lazy" />
                 )}
                 {spot.description && <p className="whitespace-pre-line text-slate-600">{spot.description}</p>}
                 {spot.access_notes && (
                   <div className="rounded-xl bg-slate-50 p-4">
-                    <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">How to get there</p>
+                    <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">{t('spot.howTo')}</p>
                     <p className="mt-1 whitespace-pre-line text-sm text-slate-600">{spot.access_notes}</p>
                   </div>
                 )}
                 {spot.extra?.opening_hours && (
-                  <p className="text-sm text-slate-500"><span className="font-semibold">Hours:</span> {spot.extra.opening_hours}</p>
+                  <p className="text-sm text-slate-500"><span className="font-semibold">{t('spot.hours')}:</span> {spot.extra.opening_hours}</p>
                 )}
                 <div className="flex flex-wrap gap-3">
                   <a href={directionsUrl(spot.latitude, spot.longitude)} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2 text-sm font-semibold text-white hover:opacity-90">
-                    <Navigation className="h-4 w-4" /> Directions
+                    <Navigation className="h-4 w-4" /> {t('spot.directions')}
                   </a>
                   {user?.is_admin && (
                     <button
@@ -197,7 +203,7 @@ export default function SpotDetail() {
                   )}
                   {token && !spot.is_mine && (
                     <button disabled={busy || spot.vouched_by_me} onClick={vouch} className="inline-flex items-center gap-2 rounded-xl bg-white px-4 py-2 text-sm font-semibold text-success shadow-card disabled:opacity-60">
-                      <ShieldCheck className="h-4 w-4" /> {spot.vouched_by_me ? 'You vouched' : "I've been here"}
+                      <ShieldCheck className="h-4 w-4" /> {spot.vouched_by_me ? t('spot.vouched') : t('spot.vouch')}
                     </button>
                   )}
                 </div>
@@ -208,12 +214,12 @@ export default function SpotDetail() {
               <MonthChips months={spot.best_months} />
               {spot.permit_required && (
                 <p className="flex items-center gap-1.5 text-sm font-medium text-warning">
-                  <FileWarning className="h-4 w-4" /> Needs a forest / entry permit. Book before you go.
+                  <FileWarning className="h-4 w-4" /> {t('spot.permit')}
                 </p>
               )}
               {spot.vouch_count > 0 && (
                 <p className="flex items-center gap-1.5 text-sm text-slate-500">
-                  <ShieldCheck className="h-4 w-4 text-success" /> {spot.vouch_count} people confirmed this spot
+                  <ShieldCheck className="h-4 w-4 text-success" /> {t('spot.confirmedBy', { n: spot.vouch_count })}
                 </p>
               )}
               {spot.source === 'osm' && (
@@ -221,7 +227,7 @@ export default function SpotDetail() {
               )}
               {spot.is_hidden && !spot.locked && (
                 <p className="text-xs text-slate-400">
-                  🌱 This is a hidden spot. Please don't post the exact location publicly, carry your trash back, and respect the locals.
+                  {t('spot.respect')}
                 </p>
               )}
             </div>

@@ -12,7 +12,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import StaticPool
 
 import app.models  # noqa: F401
-from app.api import accounts, spots
+from app.api import accounts, photos, spots
 from app.api.trips import limiter
 from app.db.database import Base
 from app.dependencies import get_db
@@ -44,6 +44,7 @@ def ctx():
     limiter.enabled = False
     api.include_router(accounts.router, prefix="/v1")
     api.include_router(spots.router, prefix="/v1")
+    api.include_router(photos.router, prefix="/v1")
 
     def _db():
         s = Session()
@@ -222,3 +223,52 @@ def test_public_spots_are_visible_and_near_search(ctx):
     meta = client.get("/v1/spots/meta").json()
     assert meta["counts"]["cafe"] == 2
     assert meta["hubs"][0]["name"] == "Coorg"
+
+
+JPEG = bytes([0xFF, 0xD8, 0xFF, 0xE0]) + b"0" * 200
+
+
+def test_photo_upload_and_serve(ctx):
+    client, _ = ctx
+    h, _ = _signup(client, "p@example.com")
+    assert client.post("/v1/photos", files={"file": ("a.jpg", JPEG, "image/jpeg")}).status_code == 401
+    r = client.post("/v1/photos", files={"file": ("a.jpg", JPEG, "image/jpeg")}, headers=h)
+    assert r.status_code == 201
+    url = r.json()["url"]
+    got = client.get(url)
+    assert got.status_code == 200 and got.content == JPEG
+    assert got.headers["content-type"] == "image/jpeg"
+    # Not an image, even though it claims to be
+    bad = client.post("/v1/photos", files={"file": ("x.jpg", b"<script>", "image/jpeg")}, headers=h)
+    assert bad.status_code == 415
+    big = client.post("/v1/photos", files={"file": ("b.jpg", JPEG + b"0" * 1_600_000, "image/jpeg")}, headers=h)
+    assert big.status_code == 413
+    # Uploaded photo can be attached to a spot; random http links can't
+    assert client.post("/v1/spots", json=_spot(photo_url=url), headers=h).status_code == 201
+    assert client.post("/v1/spots", json=_spot(name="Z", latitude=13.0, photo_url="/v1/photos/../etc"), headers=h).status_code == 422
+
+
+def test_edit_rules(ctx):
+    client, Session = ctx
+    owner_h, _ = _signup(client, "o@example.com")
+    other_h, _ = _signup(client, "x@example.com")
+    admin_h, _ = _signup(client, "admin@example.com")
+    _make_admin(Session, "admin@example.com")
+    sid = client.post("/v1/spots", json=_spot(), headers=owner_h).json()["spot"]["id"]
+
+    # Owner can edit while pending; partial update keeps other fields
+    r = client.patch(f"/v1/spots/{sid}", json={"description": "Better words", "best_months": [12, 1]}, headers=owner_h)
+    assert r.status_code == 200
+    assert r.json()["description"] == "Better words" and r.json()["best_months"] == [1, 12]
+    assert r.json()["name"] == "Secret Coffee Estate Viewpoint"
+    # Others can't
+    assert client.patch(f"/v1/spots/{sid}", json={"name": "Mine now"}, headers=other_h).status_code == 403
+    # Validation still applies
+    assert client.patch(f"/v1/spots/{sid}", json={"latitude": 13.08, "longitude": 80.27}, headers=owner_h).status_code == 422
+    assert client.patch(f"/v1/spots/{sid}", json={"category": "nightclub"}, headers=owner_h).status_code == 422
+
+    client.post(f"/v1/admin/spots/{sid}/review", json={"action": "approve"}, headers=admin_h)
+    # After approval only admins can edit
+    assert client.patch(f"/v1/spots/{sid}", json={"name": "New"}, headers=owner_h).status_code == 403
+    r = client.patch(f"/v1/spots/{sid}", json={"name": "Renamed by admin", "photo_url": ""}, headers=admin_h)
+    assert r.status_code == 200 and r.json()["name"] == "Renamed by admin" and r.json()["photo_url"] is None

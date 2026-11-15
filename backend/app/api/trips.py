@@ -43,6 +43,22 @@ limiter = Limiter(key_func=lambda request: request.client.host if request.client
 router = APIRouter(prefix="/trips", tags=["trips"])
 
 
+def _dest_coords(dest) -> tuple[Optional[float], Optional[float]]:
+    """Destination coordinates: catalog columns first, then synced OSM metadata."""
+    if dest is None:
+        return None, None
+    if getattr(dest, "latitude", None) is not None and getattr(dest, "longitude", None) is not None:
+        return float(dest.latitude), float(dest.longitude)
+    meta = dest.tourism_metadata or {}
+    try:
+        lat = float(meta.get("lat") or meta.get("latitude") or 0) or None
+        lon = float(meta.get("lon") or meta.get("longitude") or 0) or None
+    except (TypeError, ValueError):
+        return None, None
+    return (lat, lon) if lat and lon else (None, None)
+
+
+
 # ── Helpers ───────────────────────────────────────────────────────────────────
 
 def _fallback_run_analysis(trip_id: uuid.UUID, celery_task_id: str) -> None:
@@ -698,16 +714,7 @@ def get_sos(
     top_rec, dest = _get_winning_destination(trip_id, db)
     destination_name = top_rec.destination_name if top_rec else trip.name
 
-    # Extract lat/lon from destination tourism_metadata if available
-    lat, lon = None, None
-    if dest and dest.tourism_metadata:
-        lat = dest.tourism_metadata.get("lat") or dest.tourism_metadata.get("latitude")
-        lon = dest.tourism_metadata.get("lon") or dest.tourism_metadata.get("longitude")
-    if lat:
-        try:
-            lat, lon = float(lat), float(lon)
-        except (TypeError, ValueError):
-            lat, lon = None, None
+    lat, lon = _dest_coords(dest)
 
     sos_block = get_sos_block(destination_name, lat=lat, lon=lon)
     sos_block["trip_id"] = str(trip_id)
@@ -740,7 +747,7 @@ def get_travel_options(
 
     top_rec, dest = _get_winning_destination(trip_id, db)
     destination_name = top_rec.destination_name if top_rec else trip.name
-    origin = trip.origin_city or "Mumbai"
+    origin = trip.origin_city or "Bengaluru"  # Karnataka-first default
 
     # Estimate per-person accommodation budget from the optimised plan
     from app.models.budget_plan import BudgetPlanRecord
@@ -760,15 +767,7 @@ def get_travel_options(
         per_person_budget_inr = per_night
 
     # Lat/lon for accommodation search
-    lat, lon = None, None
-    if dest and dest.tourism_metadata:
-        lat = dest.tourism_metadata.get("lat") or dest.tourism_metadata.get("latitude")
-        lon = dest.tourism_metadata.get("lon") or dest.tourism_metadata.get("longitude")
-    if lat:
-        try:
-            lat, lon = float(lat), float(lon)
-        except (TypeError, ValueError):
-            lat, lon = None, None
+    lat, lon = _dest_coords(dest)
 
     bus_data = fetch_bus_schedules(origin, destination_name, travel_date)
     accom_data = fetch_accommodations(
@@ -834,13 +833,7 @@ def get_trip_dashboard(
     )
 
     # SOS block
-    lat, lon = None, None
-    if dest and dest.tourism_metadata:
-        try:
-            lat = float(dest.tourism_metadata.get("lat") or dest.tourism_metadata.get("latitude") or 0) or None
-            lon = float(dest.tourism_metadata.get("lon") or dest.tourism_metadata.get("longitude") or 0) or None
-        except (TypeError, ValueError):
-            pass
+    lat, lon = _dest_coords(dest)
     sos = get_sos_block(destination_name, lat=lat, lon=lon)
 
     # Budget summary

@@ -30,6 +30,7 @@ POST   /v1/admin/spots/{id}/review  approve / reject / feature (admin)
 """
 
 import math
+import re
 import uuid
 from datetime import datetime, timezone
 from typing import Literal, Optional
@@ -60,6 +61,23 @@ TEASER_DECIMALS = 1         # ~11 km — the "somewhere around here" circle
 
 # ── Schemas ───────────────────────────────────────────────────────────────────
 
+def _norm_category(v: str) -> str:
+    v = v.strip().lower()
+    if v not in SPOT_CATEGORIES:
+        raise ValueError(f"category must be one of {SPOT_CATEGORIES}")
+    return v
+
+
+def _norm_months(v: list[int]) -> list[int]:
+    if any(m < 1 or m > 12 for m in v):
+        raise ValueError("months must be 1-12")
+    return sorted(set(v))
+
+
+def _norm_tags(v: list[str]) -> list[str]:
+    return [t.strip().lower()[:30] for t in v if t.strip()]
+
+
 class SpotSubmit(BaseModel):
     name: str = Field(min_length=2, max_length=200)
     category: str
@@ -77,29 +95,72 @@ class SpotSubmit(BaseModel):
     @field_validator("category")
     @classmethod
     def _category(cls, v: str) -> str:
-        v = v.strip().lower()
-        if v not in SPOT_CATEGORIES:
-            raise ValueError(f"category must be one of {SPOT_CATEGORIES}")
-        return v
+        return _norm_category(v)
 
     @field_validator("best_months")
     @classmethod
     def _months(cls, v: list[int]) -> list[int]:
-        if any(m < 1 or m > 12 for m in v):
-            raise ValueError("months must be 1-12")
-        return sorted(set(v))
+        return _norm_months(v)
 
     @field_validator("photo_url")
     @classmethod
     def _photo(cls, v: Optional[str]) -> Optional[str]:
-        if v and not v.startswith("https://"):
-            raise ValueError("photo_url must be an https:// link")
-        return v or None
+        return _check_photo_url(v)
 
     @field_validator("tags")
     @classmethod
     def _tags(cls, v: list[str]) -> list[str]:
-        return [t.strip().lower()[:30] for t in v if t.strip()]
+        return _norm_tags(v)
+
+
+PHOTO_PATH_RE = re.compile(r"^/v1/photos/[0-9a-fA-F-]{36}$")
+
+
+def _check_photo_url(v: Optional[str]) -> Optional[str]:
+    """An uploaded photo (/v1/photos/<id>) or an https:// link."""
+    if not v:
+        return None
+    v = v.strip()
+    if not (v.startswith("https://") or PHOTO_PATH_RE.match(v)):
+        raise ValueError("photo_url must be an uploaded photo or an https:// link")
+    return v
+
+
+class SpotEdit(BaseModel):
+    """Partial update. Owners can edit while pending; admins can edit anything."""
+    name: Optional[str] = Field(default=None, min_length=2, max_length=200)
+    category: Optional[str] = None
+    latitude: Optional[float] = None
+    longitude: Optional[float] = None
+    district: Optional[str] = None
+    description: Optional[str] = Field(default=None, max_length=3000)
+    is_hidden: Optional[bool] = None
+    best_months: Optional[list[int]] = None
+    access_notes: Optional[str] = Field(default=None, max_length=2000)
+    permit_required: Optional[bool] = None
+    photo_url: Optional[str] = Field(default=None, max_length=500)
+    tags: Optional[list[str]] = Field(default=None, max_length=10)
+
+    @field_validator("category")
+    @classmethod
+    def _category(cls, v: Optional[str]) -> Optional[str]:
+        return None if v is None else _norm_category(v)
+
+    @field_validator("best_months")
+    @classmethod
+    def _months(cls, v: Optional[list[int]]) -> Optional[list[int]]:
+        return None if v is None else _norm_months(v)
+
+    @field_validator("tags")
+    @classmethod
+    def _tags(cls, v: Optional[list[str]]) -> Optional[list[str]]:
+        return None if v is None else _norm_tags(v)
+
+    @field_validator("photo_url")
+    @classmethod
+    def _photo(cls, v: Optional[str]) -> Optional[str]:
+        # "" clears the photo
+        return "" if v == "" else _check_photo_url(v)
 
 
 class ReviewRequest(BaseModel):
@@ -183,6 +244,7 @@ def _serialize(
         "extra": spot.extra or {},
         "vouched_by_me": vouched,
         "is_mine": mine,
+        "is_hidden": spot.is_hidden,
     })
     if mine:
         base["review_note"] = spot.review_note
@@ -415,6 +477,46 @@ def submit_spot(
             f"Thanks! Once it's reviewed you'll earn {reward} unlock credit{'s' if reward != 1 else ''}."
         ),
     }
+
+
+@router.patch("/spots/{spot_id}")
+def edit_spot(
+    spot_id: uuid.UUID,
+    body: SpotEdit,
+    db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
+):
+    spot = _get_spot(db, spot_id)
+    is_owner = spot.submitted_by == user.id
+    if not (user.is_admin or (is_owner and spot.status == "pending")):
+        raise HTTPException(status_code=403, detail="You can only edit your own spots while they're waiting for review")
+
+    changes = body.model_dump(exclude_unset=True)
+    lat = changes.get("latitude", spot.latitude)
+    lng = changes.get("longitude", spot.longitude)
+    if not in_karnataka_bbox(lat, lng):
+        raise HTTPException(status_code=422, detail="That pin is outside Karnataka")
+    if "district" in changes:
+        district = normalize_district(changes["district"])
+        if not district:
+            raise HTTPException(status_code=422, detail="Pick one of Karnataka's districts")
+        changes["district"] = district
+    if "photo_url" in changes and changes["photo_url"] == "":
+        changes["photo_url"] = None
+    if "name" in changes:
+        changes["name"] = changes["name"].strip()
+
+    for key, value in changes.items():
+        setattr(spot, key, value)
+    if "latitude" in changes or "longitude" in changes:
+        hub = _nearest_hub(db, lat, lng)
+        spot.destination_id = hub.id if hub else None
+    if user.is_admin and spot.source == "osm":
+        # Stop the OSM loader from overwriting hand edits on the next deploy.
+        spot.extra = {**(spot.extra or {}), "curated": True}
+    db.commit()
+    db.refresh(spot)
+    return _serialize(spot, visible=True, hub_names=_hub_names(db, [spot]), mine=is_owner)
 
 
 @router.post("/spots/{spot_id}/unlock")

@@ -1,9 +1,12 @@
 import { Compass, Gift, Lock, UserRound } from 'lucide-react'
 import { Link, NavLink } from 'react-router-dom'
+import { useLang, useT } from '../../i18n'
 import useAuthStore from '../../store/authStore'
 
 export default function Navbar() {
   const { token, user } = useAuthStore()
+  const t = useT()
+  const { lang, setLang } = useLang()
   const link = ({ isActive }) =>
     `inline-flex items-center gap-1.5 rounded-lg px-2.5 py-2 text-sm font-semibold ${isActive ? 'text-primary' : 'text-slate-500 hover:text-primary'}`
 
@@ -13,10 +16,10 @@ export default function Navbar() {
         <Link to="/" className="text-xl font-bold text-primary">FlockGo</Link>
         <div className="flex items-center gap-1 sm:gap-2">
           <NavLink to="/explore" className={link}>
-            <Compass className="h-4 w-4" /> <span className="hidden sm:inline">Explore</span>
+            <Compass className="h-4 w-4" /> <span className="hidden sm:inline">{t('nav.explore')}</span>
           </NavLink>
           <NavLink to="/spots/share" className={link}>
-            <Gift className="h-4 w-4" /> <span className="hidden sm:inline">Share a spot</span>
+            <Gift className="h-4 w-4" /> <span className="hidden sm:inline">{t('nav.share')}</span>
           </NavLink>
           {token ? (
             <NavLink to="/me" className={link}>
@@ -26,10 +29,17 @@ export default function Navbar() {
               </span>
             </NavLink>
           ) : (
-            <NavLink to="/login" className={link}>Log in</NavLink>
+            <NavLink to="/login" className={link}>{t('nav.login')}</NavLink>
           )}
-          <Link to="/create" className="rounded-lg bg-primary px-3 py-2 text-sm font-semibold text-white hover:opacity-90 sm:px-4">
-            Plan a trip
+          <button
+            onClick={() => setLang(lang === 'kn' ? 'en' : 'kn')}
+            className="rounded-lg border border-slate-200 px-2 py-1.5 text-xs font-bold text-slate-600 hover:border-primary hover:text-primary"
+            aria-label="Switch language"
+          >
+            {lang === 'kn' ? 'EN' : 'ಕನ್ನಡ'}
+          </button>
+          <Link to="/create" className="hidden rounded-lg bg-primary px-3 py-2 text-sm font-semibold text-white hover:opacity-90 sm:inline-block sm:px-4">
+            {t('nav.plan')}
           </Link>
         </div>
       </nav>

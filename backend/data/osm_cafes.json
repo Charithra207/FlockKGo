@@ -1,0 +1,2741 @@
+[
+ {
+  "osm_id": "node/10743790325",
+  "name": "Engineer Ban Gaya Chaiwala",
+  "category": "cafe",
+  "latitude": 16.166499,
+  "longitude": 75.661727,
+  "district": "Bagalkot",
+  "extra": {
+   "opening_hours": "Mo-Su 06:00-21:00",
+   "addr:city": "Bagalkot"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/11286897691",
+  "name": "Alibaba",
+  "category": "cafe",
+  "latitude": 15.878814,
+  "longitude": 74.516472,
+  "district": "Belagavi",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/1473159553",
+  "name": "Arpan",
+  "category": "cafe",
+  "latitude": 15.837256,
+  "longitude": 74.502234,
+  "district": "Belagavi",
+  "extra": {
+   "name:kn": "ಅರ್ಪಣ್"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/11640354869",
+  "name": "Lalit Family Restaurant",
+  "category": "cafe",
+  "latitude": 15.695604,
+  "longitude": 74.369562,
+  "district": "Belagavi",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/13413924322",
+  "name": "Mandarthi Upahar Darshini",
+  "category": "cafe",
+  "latitude": 15.82471,
+  "longitude": 74.492312,
+  "district": "Belagavi",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/1304825515",
+  "name": "Jayaram Breakfast Point",
+  "category": "cafe",
+  "latitude": 12.677816,
+  "longitude": 77.474667,
+  "district": "Bengaluru South",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "way/1050547509",
+  "name": "Nueva Cafe",
+  "category": "cafe",
+  "latitude": 12.763273,
+  "longitude": 77.331342,
+  "district": "Bengaluru South",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/13984923831",
+  "name": "Suvarnamukhi Zoo Cafe",
+  "category": "cafe",
+  "latitude": 12.801521,
+  "longitude": 77.572627,
+  "district": "Bengaluru South",
+  "extra": {
+   "outdoor_seating": "yes"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/9858668196",
+  "name": "The Tandoori Chai",
+  "category": "cafe",
+  "latitude": 13.033531,
+  "longitude": 77.084214,
+  "district": "Bengaluru South",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/13228842899",
+  "name": "1966",
+  "category": "cafe",
+  "latitude": 12.952317,
+  "longitude": 77.715438,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "phone": "+91 83870 81111",
+   "cuisine": "indian;marathi",
+   "outdoor_seating": "no",
+   "internet_access": "no",
+   "diet:vegetarian": "yes"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/4841950721",
+  "name": "AR Tea Sagar",
+  "category": "cafe",
+  "latitude": 12.945377,
+  "longitude": 77.59506,
+  "district": "Bengaluru Urban",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/13649032591",
+  "name": "Adda by GoodEarth",
+  "category": "cafe",
+  "latitude": 12.881163,
+  "longitude": 77.463909,
+  "district": "Bengaluru Urban",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/9688311022",
+  "name": "Air Cafe",
+  "category": "cafe",
+  "latitude": 12.952924,
+  "longitude": 77.516244,
+  "district": "Bengaluru Urban",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/12531311306",
+  "name": "Ami Tea Stall",
+  "category": "cafe",
+  "latitude": 13.0267,
+  "longitude": 77.539299,
+  "district": "Bengaluru Urban",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "way/628598365",
+  "name": "Annapurna Bakery and Sweets",
+  "category": "cafe",
+  "latitude": 13.072317,
+  "longitude": 77.524428,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "cuisine": "chinese;regional",
+   "outdoor_seating": "yes",
+   "internet_access": "no"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/13403844133",
+  "name": "Araku",
+  "category": "cafe",
+  "latitude": 12.970666,
+  "longitude": 77.610457,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "cuisine": "coffee_shop"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/13881397284",
+  "name": "Araku",
+  "category": "cafe",
+  "latitude": 12.949926,
+  "longitude": 77.746395,
+  "district": "Bengaluru Urban",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/13371254015",
+  "name": "Arjuna Cafe",
+  "category": "cafe",
+  "latitude": 12.826258,
+  "longitude": 77.707044,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "cuisine": "coffee_shop;tea",
+   "addr:street": "Hilalige Road",
+   "addr:city": "Andapura",
+   "outdoor_seating": "no",
+   "internet_access": "no"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/13683993581",
+  "name": "Bakeyard: The Garden",
+  "category": "cafe",
+  "latitude": 12.9178,
+  "longitude": 77.734583,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "outdoor_seating": "yes"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/14100437719",
+  "name": "Beanlore",
+  "category": "cafe",
+  "latitude": 12.982102,
+  "longitude": 77.708968,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "cuisine": "coffee_shop"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/4928125521",
+  "name": "Biska",
+  "category": "cafe",
+  "latitude": 13.005537,
+  "longitude": 77.571118,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "addr:street": "15th Cross Road",
+   "name:kn": "ಬಿಸ್ಕ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/4130934098",
+  "name": "Bismillah Tea Hotel",
+  "category": "cafe",
+  "latitude": 12.960837,
+  "longitude": 77.548582,
+  "district": "Bengaluru Urban",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/11314428137",
+  "name": "Board 4 Bored",
+  "category": "cafe",
+  "latitude": 12.940469,
+  "longitude": 77.571364,
+  "district": "Bengaluru Urban",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "way/348121410",
+  "name": "Board 4 Bored",
+  "category": "cafe",
+  "latitude": 12.913783,
+  "longitude": 77.520906,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "website": "Board4Bored.in",
+   "cuisine": "sandwich;chinese;italian;indian;mexican",
+   "addr:street": "Jawaharlal Nehru Road",
+   "addr:city": "Bengaluru"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/13532133223",
+  "name": "Boba Bhai",
+  "category": "cafe",
+  "latitude": 13.083026,
+  "longitude": 77.643773,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "cuisine": "bubble_tea"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/13420703806",
+  "name": "BrewAir Haus",
+  "category": "cafe",
+  "latitude": 13.045509,
+  "longitude": 77.760658,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "phone": "+91 9008127716"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/5936153689",
+  "name": "Brindavan College Bakery",
+  "category": "cafe",
+  "latitude": 13.125352,
+  "longitude": 77.62013,
+  "district": "Bengaluru Urban",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/9649217040",
+  "name": "Cafe 64",
+  "category": "cafe",
+  "latitude": 13.101205,
+  "longitude": 77.571662,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "opening_hours": "Mo-Su 11:00-22:30"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/10744574005",
+  "name": "Cafe 83",
+  "category": "cafe",
+  "latitude": 12.833982,
+  "longitude": 77.565402,
+  "district": "Bengaluru Urban",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/7146770599",
+  "name": "Cafe 916 & Bake",
+  "category": "cafe",
+  "latitude": 12.997647,
+  "longitude": 77.552365,
+  "district": "Bengaluru Urban",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/13110965034",
+  "name": "Cafe Baha",
+  "category": "cafe",
+  "latitude": 12.873676,
+  "longitude": 77.611292,
+  "district": "Bengaluru Urban",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/1979053383",
+  "name": "Cafe Coffe Day",
+  "category": "cafe",
+  "latitude": 12.973409,
+  "longitude": 77.541766,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "name:kn": "ಕಫೆ ಕಾಫಿ ಡೇ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/2093290604",
+  "name": "Cafe Coffe Day Express",
+  "category": "cafe",
+  "latitude": 12.933584,
+  "longitude": 77.53448,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "website": "https://www.cafecoffeeday.com/",
+   "cuisine": "indian",
+   "addr:street": "Outer ring road",
+   "addr:city": "Bengaluru",
+   "name:kn": "ಕಫೆ ಕಾಫಿ ಡೇ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/14247233587",
+  "name": "Cafe Coffee Club",
+  "category": "cafe",
+  "latitude": 13.003672,
+  "longitude": 77.662791,
+  "district": "Bengaluru Urban",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/13949218096",
+  "name": "Cafe Graze",
+  "category": "cafe",
+  "latitude": 12.974276,
+  "longitude": 77.656716,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "website": "https://natureville.in/cafe-graze/",
+   "phone": "+91 72593 53733",
+   "addr:street": "1st Main Road"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "way/348106019",
+  "name": "Cafe Kiara",
+  "category": "cafe",
+  "latitude": 13.083705,
+  "longitude": 77.485124,
+  "district": "Bengaluru Urban",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "way/530606764",
+  "name": "Cafeteria",
+  "category": "cafe",
+  "latitude": 13.058111,
+  "longitude": 77.643427,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "outdoor_seating": "yes",
+   "internet_access": "yes"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/4550422492",
+  "name": "Chai",
+  "category": "cafe",
+  "latitude": 13.01903,
+  "longitude": 77.654556,
+  "district": "Bengaluru Urban",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/11449700099",
+  "name": "Chai Adda",
+  "category": "cafe",
+  "latitude": 13.129469,
+  "longitude": 77.595819,
+  "district": "Bengaluru Urban",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/12285108619",
+  "name": "Chai Adda",
+  "category": "cafe",
+  "latitude": 13.134832,
+  "longitude": 77.579543,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "cuisine": "tea;coffee_shop",
+   "internet_access": "no"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/11385511625",
+  "name": "Chai Fast",
+  "category": "cafe",
+  "latitude": 12.927133,
+  "longitude": 77.633203,
+  "district": "Bengaluru Urban",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/3726120743",
+  "name": "Chai Gali",
+  "category": "cafe",
+  "latitude": 12.981682,
+  "longitude": 77.639488,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "cuisine": "tea"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/14115128990",
+  "name": "Chai Galli",
+  "category": "cafe",
+  "latitude": 12.949862,
+  "longitude": 77.699159,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "outdoor_seating": "yes"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/11662811567",
+  "name": "Chai Kada",
+  "category": "cafe",
+  "latitude": 12.898535,
+  "longitude": 77.675395,
+  "district": "Bengaluru Urban",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/12972911346",
+  "name": "Chai Makhani",
+  "category": "cafe",
+  "latitude": 12.983677,
+  "longitude": 77.752003,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "cuisine": "tea"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/3019535004",
+  "name": "Chamundeshwari Coffee",
+  "category": "cafe",
+  "latitude": 12.965946,
+  "longitude": 77.592496,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "opening_hours": "05:00-19:30",
+   "cuisine": "coffee_shop",
+   "addr:street": "Chidananda Maharashi Ashram Road",
+   "addr:city": "Bangalore",
+   "name:kn": "ಚಾಮುಂಡೇಶ್ವರಿ ಕಾಫಿ",
+   "internet_access": "no"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/4023090618",
+  "name": "Chandana Bakery",
+  "category": "cafe",
+  "latitude": 12.983276,
+  "longitude": 77.768251,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "opening_hours": "06:00-23:00",
+   "internet_access": "no"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "way/1540933441",
+  "name": "Coffe Room",
+  "category": "cafe",
+  "latitude": 12.907259,
+  "longitude": 77.695977,
+  "district": "Bengaluru Urban",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/12069343569",
+  "name": "Coffee Stories",
+  "category": "cafe",
+  "latitude": 12.887022,
+  "longitude": 77.581979,
+  "district": "Bengaluru Urban",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "way/490481303",
+  "name": "College Cafeteria",
+  "category": "cafe",
+  "latitude": 13.159542,
+  "longitude": 77.63656,
+  "district": "Bengaluru Urban",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/1375978281",
+  "name": "Cuppa",
+  "category": "cafe",
+  "latitude": 12.933395,
+  "longitude": 77.615512,
+  "district": "Bengaluru Urban",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/12205299937",
+  "name": "Cuppa Redifined",
+  "category": "cafe",
+  "latitude": 12.911975,
+  "longitude": 77.632328,
+  "district": "Bengaluru Urban",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/4671577171",
+  "name": "Daily Bread",
+  "category": "cafe",
+  "latitude": 13.07101,
+  "longitude": 77.505417,
+  "district": "Bengaluru Urban",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "way/415452221",
+  "name": "Daily Bread",
+  "category": "cafe",
+  "latitude": 12.935829,
+  "longitude": 77.690622,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "cuisine": "coffee_shop",
+   "internet_access": "no"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/13588888214",
+  "name": "Dark Cafe",
+  "category": "cafe",
+  "latitude": 12.974282,
+  "longitude": 77.509342,
+  "district": "Bengaluru Urban",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/12766683182",
+  "name": "Delights",
+  "category": "cafe",
+  "latitude": 13.069492,
+  "longitude": 77.555085,
+  "district": "Bengaluru Urban",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/13399242072",
+  "name": "Diha",
+  "category": "cafe",
+  "latitude": 12.90613,
+  "longitude": 77.597106,
+  "district": "Bengaluru Urban",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/10685007738",
+  "name": "Gopal Jee Cafe",
+  "category": "cafe",
+  "latitude": 12.894728,
+  "longitude": 77.661448,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "cuisine": "indian",
+   "outdoor_seating": "no"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/12734401877",
+  "name": "Got Tea",
+  "category": "cafe",
+  "latitude": 13.023544,
+  "longitude": 77.639933,
+  "district": "Bengaluru Urban",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/3393485027",
+  "name": "H.S.M Iyengar",
+  "category": "cafe",
+  "latitude": 12.910505,
+  "longitude": 77.582081,
+  "district": "Bengaluru Urban",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/12979340852",
+  "name": "Happy Endings",
+  "category": "cafe",
+  "latitude": 12.927317,
+  "longitude": 77.669088,
+  "district": "Bengaluru Urban",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/6542893133",
+  "name": "Hatti Kaapi",
+  "category": "cafe",
+  "latitude": 13.01127,
+  "longitude": 77.555679,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "website": "www.hattikaapi.in",
+   "addr:street": "Dr. Rajkumar Road",
+   "addr:city": "Bangalore",
+   "name:kn": "ಹಟ್ಟಿ ಕಾಫಿ",
+   "outdoor_seating": "yes"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/6968692485",
+  "name": "Hatti Kaapi",
+  "category": "cafe",
+  "latitude": 12.928406,
+  "longitude": 77.581685,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "name:kn": "ಹಟ್ಟಿ ಕಾಫಿ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/12488316263",
+  "name": "Hug in a Mug",
+  "category": "cafe",
+  "latitude": 12.875562,
+  "longitude": 77.532839,
+  "district": "Bengaluru Urban",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/4586355538",
+  "name": "Ibaco",
+  "category": "cafe",
+  "latitude": 13.045057,
+  "longitude": 77.626579,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "opening_hours": "11:00 - 23:00",
+   "cuisine": "dessert",
+   "addr:street": "Thanisandra Main Road",
+   "addr:city": "Bangalore",
+   "name:kn": "ಐಬಾಕೊ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/13159616821",
+  "name": "Infant Cafe",
+  "category": "cafe",
+  "latitude": 12.998805,
+  "longitude": 77.640553,
+  "district": "Bengaluru Urban",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/13816579187",
+  "name": "Issimo",
+  "category": "cafe",
+  "latitude": 12.989844,
+  "longitude": 77.73269,
+  "district": "Bengaluru Urban",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/8012727677",
+  "name": "Iyengar Bakery",
+  "category": "cafe",
+  "latitude": 13.053557,
+  "longitude": 77.575222,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "name:kn": "ಐಯ್ಯಂಗಾರ್ ಬೇಕರಿ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "way/803034519",
+  "name": "JJ stall",
+  "category": "cafe",
+  "latitude": 12.863198,
+  "longitude": 77.437612,
+  "district": "Bengaluru Urban",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/4386500099",
+  "name": "Juba Cafe",
+  "category": "cafe",
+  "latitude": 13.025295,
+  "longitude": 77.603655,
+  "district": "Bengaluru Urban",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/3255146521",
+  "name": "Juice",
+  "category": "cafe",
+  "latitude": 12.914738,
+  "longitude": 77.676067,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "cuisine": "juice"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/2322728642",
+  "name": "Kalmane Koffees",
+  "category": "cafe",
+  "latitude": 12.875715,
+  "longitude": 77.595244,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "website": "http://kalmanekoffee.com/",
+   "cuisine": "coffee_shop",
+   "name:kn": "ಕಲ್ಮನೆ ಕಾಫೀಸ್"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/4463224992",
+  "name": "Kona Kafe",
+  "category": "cafe",
+  "latitude": 12.907009,
+  "longitude": 77.548811,
+  "district": "Bengaluru Urban",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/12452460994",
+  "name": "Lakehouse Cafe",
+  "category": "cafe",
+  "latitude": 13.062458,
+  "longitude": 77.610395,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "outdoor_seating": "yes"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/13956846705",
+  "name": "Lavonne Cafe",
+  "category": "cafe",
+  "latitude": 12.996511,
+  "longitude": 77.594858,
+  "district": "Bengaluru Urban",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/12860399929",
+  "name": "Lemon Krust",
+  "category": "cafe",
+  "latitude": 12.968375,
+  "longitude": 77.749485,
+  "district": "Bengaluru Urban",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/7178597284",
+  "name": "Loafer and Co.",
+  "category": "cafe",
+  "latitude": 13.049129,
+  "longitude": 77.601753,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "website": "https://loaferandco.com",
+   "addr:city": "Bengaluru"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/6677334945",
+  "name": "Magic Oven",
+  "category": "cafe",
+  "latitude": 12.87771,
+  "longitude": 77.638722,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "cuisine": "burger;sandwich",
+   "outdoor_seating": "no"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/10763481597",
+  "name": "Magnolia Bakery",
+  "category": "cafe",
+  "latitude": 12.888691,
+  "longitude": 77.563479,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "opening_hours": "11:00-22:00",
+   "phone": "+91 99026 42266",
+   "addr:street": "Kanakapura Road",
+   "addr:city": "Bengaluru"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/5922688924",
+  "name": "Malabar",
+  "category": "cafe",
+  "latitude": 12.847903,
+  "longitude": 77.671611,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "outdoor_seating": "no",
+   "internet_access": "no",
+   "ele": "0"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/11913147716",
+  "name": "Malgudi Amrutha Chaha",
+  "category": "cafe",
+  "latitude": 12.88167,
+  "longitude": 77.550645,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "opening_hours": "Mo-Su,PH 07:00-21:00; Tu off; 2025 Nov 01-2025 Dec 15 off",
+   "cuisine": "coffee_shop;noodle;sandwich;regional",
+   "addr:street": "Swamy Vivekanandha Road",
+   "addr:city": "Doddakallasandra",
+   "outdoor_seating": "yes",
+   "internet_access": "no"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/12985609357",
+  "name": "Malgudi Parampare Cafe",
+  "category": "cafe",
+  "latitude": 12.859918,
+  "longitude": 77.542403,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "phone": "8660959583"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/14182690901",
+  "name": "Mayura Bakery and Juice",
+  "category": "cafe",
+  "latitude": 13.081698,
+  "longitude": 77.73823,
+  "district": "Bengaluru Urban",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/12839749625",
+  "name": "Meltos",
+  "category": "cafe",
+  "latitude": 12.874788,
+  "longitude": 77.766665,
+  "district": "Bengaluru Urban",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/13093871380",
+  "name": "Murugan tea stall",
+  "category": "cafe",
+  "latitude": 13.083811,
+  "longitude": 77.560183,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "cuisine": "tea",
+   "outdoor_seating": "no"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/5133344122",
+  "name": "Myka",
+  "category": "cafe",
+  "latitude": 12.976894,
+  "longitude": 77.725476,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "website": "https://mykacafeandboutique.com/",
+   "phone": "+91 9740761664"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/1331929354",
+  "name": "NJAC",
+  "category": "cafe",
+  "latitude": 12.908914,
+  "longitude": 77.562522,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "cuisine": "coffee_shop"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/1420066592",
+  "name": "Nanav Cafe",
+  "category": "cafe",
+  "latitude": 12.96719,
+  "longitude": 77.642259,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "opening_hours": "Mo-Su 08:30-21:30",
+   "website": "https://nanavcafe.com/",
+   "addr:street": "14th A Main Road",
+   "addr:city": "Bangalore",
+   "name:kn": "ಆನ್ಟ್ಸ್ ಕಫೆ",
+   "outdoor_seating": "no",
+   "internet_access": "wlan"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/1474821647",
+  "name": "Nandini Milk Booth",
+  "category": "cafe",
+  "latitude": 12.924593,
+  "longitude": 77.564888,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "name:kn": "ನಂದಿನಿ ಹಾಲಿನ ಅಂಗಡಿ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/14171966365",
+  "name": "Nel's Coffee",
+  "category": "cafe",
+  "latitude": 12.931288,
+  "longitude": 77.74574,
+  "district": "Bengaluru Urban",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/13043324426",
+  "name": "Nidhaana",
+  "category": "cafe",
+  "latitude": 13.126782,
+  "longitude": 77.566529,
+  "district": "Bengaluru Urban",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/11005547716",
+  "name": "Olive Cafe",
+  "category": "cafe",
+  "latitude": 13.003687,
+  "longitude": 77.622597,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "name:kn": "ಆಲಿವ್ ಕಫ಼ೆ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/13269444090",
+  "name": "Onesta",
+  "category": "cafe",
+  "latitude": 12.930043,
+  "longitude": 77.514954,
+  "district": "Bengaluru Urban",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/13881163403",
+  "name": "Oota",
+  "category": "cafe",
+  "latitude": 12.841952,
+  "longitude": 77.77423,
+  "district": "Bengaluru Urban",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/14318372517",
+  "name": "Orbean",
+  "category": "cafe",
+  "latitude": 12.91375,
+  "longitude": 77.608703,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "outdoor_seating": "no"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/11305149280",
+  "name": "Perch",
+  "category": "cafe",
+  "latitude": 13.070988,
+  "longitude": 77.590893,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "addr:city": "Bengaluru"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/12980092657",
+  "name": "Piro",
+  "category": "cafe",
+  "latitude": 12.908878,
+  "longitude": 77.646112,
+  "district": "Bengaluru Urban",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/2486109003",
+  "name": "Polar Bear",
+  "category": "cafe",
+  "latitude": 12.960297,
+  "longitude": 77.53028,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "cuisine": "ice_cream",
+   "addr:city": "Bangalore"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/9128729911",
+  "name": "Pootham",
+  "category": "cafe",
+  "latitude": 12.868373,
+  "longitude": 77.653234,
+  "district": "Bengaluru Urban",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/11355621143",
+  "name": "Pro Teen Cafe",
+  "category": "cafe",
+  "latitude": 12.835334,
+  "longitude": 77.692333,
+  "district": "Bengaluru Urban",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/11285259384",
+  "name": "Qmin",
+  "category": "cafe",
+  "latitude": 12.981872,
+  "longitude": 77.563794,
+  "district": "Bengaluru Urban",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/12089839615",
+  "name": "Raj Cafe",
+  "category": "cafe",
+  "latitude": 12.907871,
+  "longitude": 77.476983,
+  "district": "Bengaluru Urban",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/12343885180",
+  "name": "Rambo Cafe",
+  "category": "cafe",
+  "latitude": 12.896774,
+  "longitude": 77.462061,
+  "district": "Bengaluru Urban",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/14162097292",
+  "name": "RevivalHour Coffee Roasters",
+  "category": "cafe",
+  "latitude": 13.024821,
+  "longitude": 77.76251,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "cuisine": "coffee_shop"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/8117913037",
+  "name": "Sash Cafe",
+  "category": "cafe",
+  "latitude": 13.069536,
+  "longitude": 77.651832,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "opening_hours": "Mo-Su 10:00-22:00",
+   "phone": "+91 8880622622",
+   "cuisine": "coffee_shop;Hookah_Cafe;cafe/diner;cafe;chinese;fast_food;breakfast",
+   "addr:street": "Hennur Bagalur Road",
+   "addr:city": "Bengaluru",
+   "outdoor_seating": "no",
+   "internet_access": "wlan"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/3513207640",
+  "name": "Sathkar Cafe",
+  "category": "cafe",
+  "latitude": 12.958974,
+  "longitude": 77.662858,
+  "district": "Bengaluru Urban",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "way/347484379",
+  "name": "Savoury - Sea Shell Restaurant",
+  "category": "cafe",
+  "latitude": 12.931038,
+  "longitude": 77.600947,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "opening_hours": "24/7",
+   "cuisine": "international",
+   "addr:street": "Bannerghatta Road",
+   "addr:city": "Bangalore",
+   "internet_access": "yes"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/13715721083",
+  "name": "Sendhoor Coffee",
+  "category": "cafe",
+  "latitude": 13.011429,
+  "longitude": 77.679949,
+  "district": "Bengaluru Urban",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/621235471",
+  "name": "Shanthi Sagar",
+  "category": "cafe",
+  "latitude": 13.036912,
+  "longitude": 77.565903,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "addr:street": "New BEL Road",
+   "addr:city": "Bangalore",
+   "name:kn": "ಶಾಂತಿ ಸಾಗರ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/7229958826",
+  "name": "Sip n Hog",
+  "category": "cafe",
+  "latitude": 12.925077,
+  "longitude": 77.498794,
+  "district": "Bengaluru Urban",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/10284845803",
+  "name": "Slay",
+  "category": "cafe",
+  "latitude": 12.956784,
+  "longitude": 77.732618,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "opening_hours": "Mo-Su 07:00-23:00",
+   "cuisine": "coffee_shop"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/12265450393",
+  "name": "Smart Cafe",
+  "category": "cafe",
+  "latitude": 13.104342,
+  "longitude": 77.595093,
+  "district": "Bengaluru Urban",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/12408853763",
+  "name": "Socialize",
+  "category": "cafe",
+  "latitude": 12.992611,
+  "longitude": 77.539193,
+  "district": "Bengaluru Urban",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/3226589031",
+  "name": "Sreeraj Lassi Bar",
+  "category": "cafe",
+  "latitude": 12.984417,
+  "longitude": 77.603341,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "name:kn": "ಶ್ರೀರಾಜ್ ಲಸ್ಸಿ ಬಾರ್"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/13008629750",
+  "name": "Suto Cafe",
+  "category": "cafe",
+  "latitude": 12.839419,
+  "longitude": 77.647389,
+  "district": "Bengaluru Urban",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/9654252411",
+  "name": "TEAGO Cafe",
+  "category": "cafe",
+  "latitude": 12.921299,
+  "longitude": 77.483858,
+  "district": "Bengaluru Urban",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/12987895383",
+  "name": "Tandoor Cafe",
+  "category": "cafe",
+  "latitude": 12.917731,
+  "longitude": 77.79598,
+  "district": "Bengaluru Urban",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/13131326934",
+  "name": "Tea & cigarette stall",
+  "category": "cafe",
+  "latitude": 12.87157,
+  "longitude": 77.569613,
+  "district": "Bengaluru Urban",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/12909331973",
+  "name": "Tea Cafe",
+  "category": "cafe",
+  "latitude": 13.093118,
+  "longitude": 77.584698,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "outdoor_seating": "no"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/3512417933",
+  "name": "Tea Coffee",
+  "category": "cafe",
+  "latitude": 12.899601,
+  "longitude": 77.49588,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "opening_hours": "Mo-Sa 09:00-17:00",
+   "name:kn": "ಟೀ ಕಾಫಿ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/11043864435",
+  "name": "Tea Time",
+  "category": "cafe",
+  "latitude": 12.999628,
+  "longitude": 77.488847,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "opening_hours": "Mo-Su 06:30-21:30",
+   "website": "https://bellurescafe.com/",
+   "phone": "7483700788",
+   "cuisine": "tea_shop;coffee_shop;pizza;burger;sandwich;veg_rolls",
+   "addr:street": "D Group Employee Layout, Andrahalli Main Road",
+   "addr:city": "Bengaluru",
+   "internet_access": "wlan"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/12050490648",
+  "name": "Teaday",
+  "category": "cafe",
+  "latitude": 12.965815,
+  "longitude": 77.714532,
+  "district": "Bengaluru Urban",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/595411387",
+  "name": "Temple of The Senses",
+  "category": "temple",
+  "latitude": 12.975103,
+  "longitude": 77.602844,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "addr:street": "Museum Road"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/9179389770",
+  "name": "The Cafe @ Saanchi",
+  "category": "cafe",
+  "latitude": 12.958365,
+  "longitude": 77.604285,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "cuisine": "persian",
+   "outdoor_seating": "yes"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/13012919960",
+  "name": "The Coffee Brewery",
+  "category": "cafe",
+  "latitude": 13.004567,
+  "longitude": 77.717666,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "cuisine": "coffee_shop"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/10212418992",
+  "name": "Theobroma",
+  "category": "cafe",
+  "latitude": 13.027665,
+  "longitude": 77.576287,
+  "district": "Bengaluru Urban",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/3713450648",
+  "name": "University Cafeteria",
+  "category": "cafe",
+  "latitude": 12.943302,
+  "longitude": 77.505582,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "addr:street": "University Road",
+   "addr:city": "Bengaluru"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/10979409747",
+  "name": "Urban Solace",
+  "category": "cafe",
+  "latitude": 12.985053,
+  "longitude": 77.618296,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "cuisine": "american",
+   "addr:street": "Annaswamy Mudaliar Road",
+   "addr:city": "Bengaluru",
+   "name:kn": "ಅರ್ಬನ್ ಸೊಲೇಸ್"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/4528143099",
+  "name": "Zarco",
+  "category": "cafe",
+  "latitude": 12.99917,
+  "longitude": 77.694615,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "opening_hours": "10:00 - 22:00",
+   "website": "www.aumzone.com",
+   "phone": "+91 1929891929",
+   "addr:street": "2nd Main Road",
+   "addr:city": "Bengaluru"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/13013588701",
+  "name": "Zenforest",
+  "category": "cafe",
+  "latitude": 13.057176,
+  "longitude": 77.588712,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "cuisine": "coffee_shop"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/14196176574",
+  "name": "Zoey's",
+  "category": "cafe",
+  "latitude": 12.897508,
+  "longitude": 77.717599,
+  "district": "Bengaluru Urban",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "way/1224937916",
+  "name": "by2coffee",
+  "category": "cafe",
+  "latitude": 12.955083,
+  "longitude": 77.565968,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "internet_access": "no"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/5304601923",
+  "name": "coffee bite",
+  "category": "cafe",
+  "latitude": 12.938666,
+  "longitude": 77.549057,
+  "district": "Bengaluru Urban",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/10073419802",
+  "name": "ner.lu",
+  "category": "cafe",
+  "latitude": 12.98519,
+  "longitude": 77.580671,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "cuisine": "coffee_shop",
+   "outdoor_seating": "yes",
+   "internet_access": "wlan"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "way/726177147",
+  "name": "Purple Grove",
+  "category": "cafe",
+  "latitude": 17.898066,
+  "longitude": 77.509504,
+  "district": "Bidar",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "way/1341834779",
+  "name": "Shaheen Cafe",
+  "category": "cafe",
+  "latitude": 17.92142,
+  "longitude": 77.529514,
+  "district": "Bidar",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/8187966513",
+  "name": "Sri Sai Foods Dhaba Cafe Bidar",
+  "category": "cafe",
+  "latitude": 17.917983,
+  "longitude": 77.50435,
+  "district": "Bidar",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/3615362250",
+  "name": "Palamrutha",
+  "category": "cafe",
+  "latitude": 11.928681,
+  "longitude": 76.937981,
+  "district": "Chamarajanagar",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/8917315456",
+  "name": "Gangadarappa Tea Stall",
+  "category": "cafe",
+  "latitude": 13.643233,
+  "longitude": 77.542171,
+  "district": "Chikkaballapura",
+  "extra": {
+   "cuisine": "regional;coffee_shop;tea;biscuit;snacks"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/9568620135",
+  "name": "Suresh Tea Stall",
+  "category": "cafe",
+  "latitude": 13.578916,
+  "longitude": 77.445879,
+  "district": "Chikkaballapura",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/4402380590",
+  "name": "Coffee Corner",
+  "category": "cafe",
+  "latitude": 13.401161,
+  "longitude": 75.368131,
+  "district": "Chikkamagaluru",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/10271376909",
+  "name": "Goomankhan Tea House",
+  "category": "cafe",
+  "latitude": 13.194968,
+  "longitude": 75.334578,
+  "district": "Chikkamagaluru",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/8187966468",
+  "name": "Ibbani Cafe",
+  "category": "cafe",
+  "latitude": 13.122745,
+  "longitude": 75.599022,
+  "district": "Chikkamagaluru",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/9853767414",
+  "name": "Kelagur Tea Point",
+  "category": "cafe",
+  "latitude": 13.165032,
+  "longitude": 75.45666,
+  "district": "Chikkamagaluru",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/4191566006",
+  "name": "Uday coffee",
+  "category": "cafe",
+  "latitude": 13.317286,
+  "longitude": 75.773876,
+  "district": "Chikkamagaluru",
+  "extra": {
+   "name:kn": "ಉದಯ್ ಕಾಫಿ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/11565025163",
+  "name": "Ukkada Cafeteria",
+  "category": "cafe",
+  "latitude": 13.424672,
+  "longitude": 75.684217,
+  "district": "Chikkamagaluru",
+  "extra": {
+   "cuisine": "regional",
+   "internet_access": "no"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/4535218379",
+  "name": "Nimmi",
+  "category": "cafe",
+  "latitude": 14.230157,
+  "longitude": 76.399541,
+  "district": "Chitradurga",
+  "extra": {
+   "opening_hours": "07:00-22:00",
+   "phone": "9964426000",
+   "cuisine": "regional",
+   "addr:street": "Medhehalli Road",
+   "addr:city": "chitradurga",
+   "internet_access": "yes"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/13324220498",
+  "name": "Sri Raghavendra Bhavan",
+  "category": "cafe",
+  "latitude": 14.04245,
+  "longitude": 76.189558,
+  "district": "Chitradurga",
+  "extra": {
+   "cuisine": "tea;pizza;indian"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/11656923709",
+  "name": "Cafe Udupi",
+  "category": "cafe",
+  "latitude": 13.14056,
+  "longitude": 74.773026,
+  "district": "Dakshina Kannada",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/4528858390",
+  "name": "Chattan coffee shop",
+  "category": "cafe",
+  "latitude": 12.821052,
+  "longitude": 75.456378,
+  "district": "Dakshina Kannada",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/9597052878",
+  "name": "Cooling Spot",
+  "category": "cafe",
+  "latitude": 12.422206,
+  "longitude": 75.021908,
+  "district": "Dakshina Kannada",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "way/561203248",
+  "name": "DRNK Lab",
+  "category": "cafe",
+  "latitude": 12.87034,
+  "longitude": 74.843689,
+  "district": "Dakshina Kannada",
+  "extra": {
+   "addr:street": "Hampankatta, Nalapad Residency Building, Light House Hill Road",
+   "addr:city": "Mangalore",
+   "outdoor_seating": "no"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "way/673944906",
+  "name": "Gujarati Canteen",
+  "category": "cafe",
+  "latitude": 12.875096,
+  "longitude": 74.939155,
+  "district": "Dakshina Kannada",
+  "extra": {
+   "cuisine": "regional;coffee_shop",
+   "diet:vegetarian": "yes"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/3211995239",
+  "name": "Ideal Ice cream",
+  "category": "cafe",
+  "latitude": 13.091036,
+  "longitude": 74.787363,
+  "district": "Dakshina Kannada",
+  "extra": {
+   "cuisine": "ice_cream"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/6032570343",
+  "name": "Naturals",
+  "category": "cafe",
+  "latitude": 12.885935,
+  "longitude": 74.832828,
+  "district": "Dakshina Kannada",
+  "extra": {
+   "cuisine": "ice_cream"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "way/1295975534",
+  "name": "Nescafe",
+  "category": "cafe",
+  "latitude": 13.011634,
+  "longitude": 74.79183,
+  "district": "Dakshina Kannada",
+  "extra": {
+   "cuisine": "coffee_shop;juice",
+   "outdoor_seating": "yes"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/6312941777",
+  "name": "Nuts & Foods",
+  "category": "cafe",
+  "latitude": 12.985256,
+  "longitude": 74.801519,
+  "district": "Dakshina Kannada",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/2881985484",
+  "name": "Padiwals",
+  "category": "cafe",
+  "latitude": 13.07099,
+  "longitude": 74.999851,
+  "district": "Dakshina Kannada",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "way/561184506",
+  "name": "Scoopz & Smilez",
+  "category": "cafe",
+  "latitude": 12.80955,
+  "longitude": 74.888456,
+  "district": "Dakshina Kannada",
+  "extra": {
+   "phone": "+91 7022106029",
+   "addr:street": "Deralakatte, Opposite K.S Hegde Hospital",
+   "addr:city": "Mangalore",
+   "outdoor_seating": "no"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/12370412741",
+  "name": "TLC Art Cafe",
+  "category": "cafe",
+  "latitude": 12.898761,
+  "longitude": 74.841411,
+  "district": "Dakshina Kannada",
+  "extra": {
+   "cuisine": "coffee_shop"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "way/561192518",
+  "name": "The Cafe Lounge",
+  "category": "cafe",
+  "latitude": 12.865591,
+  "longitude": 74.858735,
+  "district": "Dakshina Kannada",
+  "extra": {
+   "opening_hours": "Mo 09:00-23:00; Tu 09:00-23:00; We 09:00-23:00; Th 09:00-23:00; Fr 09:00-23:00; Sa 09:00-23:00; Su 09:00-23:00",
+   "phone": "0824-2432422",
+   "addr:street": "Kankanady, Valencia, Father Muller Road, Next To ICICI Bank Valencia, Upper Ground Floor, Hassan Heritage Building",
+   "addr:city": "Mangalore",
+   "outdoor_seating": "no"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/14013534291",
+  "name": "The Lassi Corner",
+  "category": "cafe",
+  "latitude": 12.911324,
+  "longitude": 74.899604,
+  "district": "Dakshina Kannada",
+  "extra": {
+   "outdoor_seating": "yes"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/8187966477",
+  "name": "The Sushi Cafe N Bistro",
+  "category": "cafe",
+  "latitude": 12.998565,
+  "longitude": 75.272111,
+  "district": "Dakshina Kannada",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/13027830271",
+  "name": "boba bhai",
+  "category": "cafe",
+  "latitude": 12.95097,
+  "longitude": 74.872358,
+  "district": "Dakshina Kannada",
+  "extra": {
+   "cuisine": "burger"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/9785735930",
+  "name": "orilla",
+  "category": "cafe",
+  "latitude": 12.362917,
+  "longitude": 75.063418,
+  "district": "Dakshina Kannada",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/4836193574",
+  "name": "Dhanush",
+  "category": "cafe",
+  "latitude": 14.456148,
+  "longitude": 75.913547,
+  "district": "Davanagere",
+  "extra": {
+   "name:kn": "ಧನುಶ್"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/12595597198",
+  "name": "Fruits shop",
+  "category": "cafe",
+  "latitude": 14.486003,
+  "longitude": 76.407724,
+  "district": "Davanagere",
+  "extra": {
+   "phone": "09611848697",
+   "cuisine": "salad",
+   "addr:street": "Donnehalli, 577528, Davangere, Karnataka, India",
+   "addr:city": "Donnehalli"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/6994198985",
+  "name": "Kamat",
+  "category": "cafe",
+  "latitude": 15.353161,
+  "longitude": 75.151435,
+  "district": "Dharwad",
+  "extra": {
+   "website": "http://www.kamatyatri.ir",
+   "phone": "08362461161",
+   "cuisine": "indian",
+   "addr:street": "Gadag Road",
+   "name:kn": "ಕಾಮತ್"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/4084391172",
+  "name": "LOL",
+  "category": "cafe",
+  "latitude": 15.417288,
+  "longitude": 75.043279,
+  "district": "Dharwad",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/4509937935",
+  "name": "Revival Street Social Cafe",
+  "category": "cafe",
+  "latitude": 15.452352,
+  "longitude": 75.009533,
+  "district": "Dharwad",
+  "extra": {
+   "cuisine": "international",
+   "name:kn": "ರಿವೈವಲ್  ಸ್ಟ್ರೀಟ್  ಸೋಸಿಯೇಲ್  ಕೆಫೆ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/2490594850",
+  "name": "Seven Beans",
+  "category": "cafe",
+  "latitude": 15.350144,
+  "longitude": 75.111092,
+  "district": "Dharwad",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/8187976635",
+  "name": "The Cue Cafe",
+  "category": "cafe",
+  "latitude": 15.365965,
+  "longitude": 75.130833,
+  "district": "Dharwad",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/1462162104",
+  "name": "Geetanjali residency",
+  "category": "cafe",
+  "latitude": 15.43575,
+  "longitude": 75.637465,
+  "district": "Gadag",
+  "extra": {
+   "addr:street": "Station Road",
+   "diet:vegetarian": "only"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "way/575554982",
+  "name": "Cafe 75",
+  "category": "cafe",
+  "latitude": 12.983661,
+  "longitude": 76.226844,
+  "district": "Hassan",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/12495956846",
+  "name": "Desi Tea Master",
+  "category": "cafe",
+  "latitude": 13.022211,
+  "longitude": 76.10042,
+  "district": "Hassan",
+  "extra": {
+   "opening_hours": "08:00-22:00",
+   "cuisine": "tea;coffee_shop",
+   "addr:street": "Salagame Road",
+   "addr:city": "Hassan",
+   "internet_access": "no"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/4658752394",
+  "name": "Neleh Nutrition Club",
+  "category": "cafe",
+  "latitude": 13.008592,
+  "longitude": 76.105296,
+  "district": "Hassan",
+  "extra": {
+   "opening_hours": "08:00-18:00",
+   "cuisine": "other",
+   "addr:street": "1st Cross, Behind Sandal Kote, KR Puram",
+   "addr:city": "Hassan",
+   "name:kn": "ನೆಲೆ ಪೌಷ್ಟಿಕ ಸಂಘ",
+   "outdoor_seating": "veranda",
+   "internet_access": "no",
+   "ele": "0"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/11875948235",
+  "name": "Sangameshwar Hotel",
+  "category": "cafe",
+  "latitude": 17.497947,
+  "longitude": 76.931575,
+  "district": "Kalaburagi",
+  "extra": {
+   "opening_hours": "Mo-Sa 06:00-22:00",
+   "cuisine": "indian",
+   "addr:street": "Kurkoti",
+   "outdoor_seating": "yes",
+   "internet_access": "no"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/8187976637",
+  "name": "Ainmane Cafe",
+  "category": "cafe",
+  "latitude": 12.424302,
+  "longitude": 75.737292,
+  "district": "Kodagu",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/7473329378",
+  "name": "Basheerka's cafe",
+  "category": "cafe",
+  "latitude": 12.022247,
+  "longitude": 75.261421,
+  "district": "Kodagu",
+  "extra": {
+   "opening_hours": "Mo-Su 09:00-21:00",
+   "cuisine": "coffee_shop",
+   "internet_access": "no"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/5043151422",
+  "name": "Capichino Cafe Pub",
+  "category": "cafe",
+  "latitude": 12.352432,
+  "longitude": 75.670307,
+  "district": "Kodagu",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/13131131311",
+  "name": "VB Bakery",
+  "category": "cafe",
+  "latitude": 12.136174,
+  "longitude": 76.053334,
+  "district": "Kodagu",
+  "extra": {
+   "opening_hours": "08:00-22:00",
+   "phone": "+91 9019863893",
+   "cuisine": "indian;coffee_shop;regional",
+   "addr:street": "Balele-Gonikoppa Road",
+   "addr:city": "Ponnampet Taluk",
+   "outdoor_seating": "yes"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/13204701988",
+  "name": "Canteen",
+  "category": "cafe",
+  "latitude": 12.990362,
+  "longitude": 78.182904,
+  "district": "Kolar",
+  "extra": {
+   "opening_hours": "Mo-Su 09:00-21:00",
+   "cuisine": "coffee_shop;sandwich",
+   "addr:street": "college road,KGF main road,",
+   "addr:city": "Kolar"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/4358597691",
+  "name": "Juice magic",
+  "category": "cafe",
+  "latitude": 13.129091,
+  "longitude": 78.132747,
+  "district": "Kolar",
+  "extra": {
+   "opening_hours": "Mo-Su 10:00-22:00",
+   "cuisine": "indian;ice_cream;tea;sandwich;pizza;noodles;local;coffee_shop;chicken;cake;burger",
+   "diet:vegetarian": "yes"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/9830435074",
+  "name": "Tea / Coffee Bakery",
+  "category": "cafe",
+  "latitude": 13.00766,
+  "longitude": 77.94515,
+  "district": "Kolar",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/11621726569",
+  "name": "Manju Hotel & Kirani Store",
+  "category": "cafe",
+  "latitude": 15.34858,
+  "longitude": 76.466352,
+  "district": "Koppal",
+  "extra": {
+   "phone": "+919481661825",
+   "internet_access": "wlan"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/4800354728",
+  "name": "Shri Vanadurga tea point",
+  "category": "cafe",
+  "latitude": 15.614772,
+  "longitude": 76.01515,
+  "district": "Koppal",
+  "extra": {
+   "opening_hours": "Mo-Su 05:00-05:00, 21:00-21:00",
+   "website": "http://Google.com",
+   "phone": "9845370738",
+   "addr:street": "Yalburga"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/13390806347",
+  "name": "Taste of Brahmins",
+  "category": "cafe",
+  "latitude": 15.335692,
+  "longitude": 76.460322,
+  "district": "Koppal",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/62069903",
+  "name": "Café",
+  "category": "cafe",
+  "latitude": 12.963743,
+  "longitude": 76.72667,
+  "district": "Mandya",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/14159341408",
+  "name": "Queens Coffee",
+  "category": "cafe",
+  "latitude": 12.403292,
+  "longitude": 76.64447,
+  "district": "Mandya",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/6779124737",
+  "name": "Sumukha Bakery",
+  "category": "cafe",
+  "latitude": 12.519055,
+  "longitude": 76.884652,
+  "district": "Mandya",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/13380386051",
+  "name": "Ananda",
+  "category": "cafe",
+  "latitude": 12.284558,
+  "longitude": 76.657641,
+  "district": "Mysuru",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/6768416890",
+  "name": "Cafe Bistro",
+  "category": "cafe",
+  "latitude": 12.346914,
+  "longitude": 76.582822,
+  "district": "Mysuru",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/4892840521",
+  "name": "Cafe County",
+  "category": "cafe",
+  "latitude": 12.308071,
+  "longitude": 76.306109,
+  "district": "Mysuru",
+  "extra": {
+   "opening_hours": "24/7",
+   "addr:street": "Hunsur to Heggadadevanakote main road",
+   "internet_access": "wlan"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/5411828822",
+  "name": "Chai Patthe",
+  "category": "cafe",
+  "latitude": 12.300356,
+  "longitude": 76.626096,
+  "district": "Mysuru",
+  "extra": {
+   "internet_access": "wlan"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/541318907",
+  "name": "Downs",
+  "category": "cafe",
+  "latitude": 12.313602,
+  "longitude": 76.616326,
+  "district": "Mysuru",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/5080844258",
+  "name": "Frosting",
+  "category": "cafe",
+  "latitude": 12.322689,
+  "longitude": 76.635041,
+  "district": "Mysuru",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/9534848317",
+  "name": "Holige Mane",
+  "category": "cafe",
+  "latitude": 12.286369,
+  "longitude": 76.625951,
+  "district": "Mysuru",
+  "extra": {
+   "name:kn": "ಹೊಲಿಗೆ ಮನೆ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/13978733165",
+  "name": "Kapoors Cafe",
+  "category": "cafe",
+  "latitude": 12.295233,
+  "longitude": 76.612807,
+  "district": "Mysuru",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/12876957233",
+  "name": "Minimal Roasters",
+  "category": "cafe",
+  "latitude": 12.311606,
+  "longitude": 76.643248,
+  "district": "Mysuru",
+  "extra": {
+   "name:kn": "ಮಿನಿಮಲ್ ರೊಸ್ಟರ್ಸ್",
+   "outdoor_seating": "yes"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/1575103358",
+  "name": "New Canteen",
+  "category": "cafe",
+  "latitude": 12.280451,
+  "longitude": 76.641464,
+  "district": "Mysuru",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/3632436385",
+  "name": "Siddhartha",
+  "category": "cafe",
+  "latitude": 12.308473,
+  "longitude": 76.660436,
+  "district": "Mysuru",
+  "extra": {
+   "name:kn": "ಸಿದ್ಧಾರ್ಥ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/4551213492",
+  "name": "Sip n snack",
+  "category": "cafe",
+  "latitude": 12.337666,
+  "longitude": 76.652163,
+  "district": "Mysuru",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/6117496118",
+  "name": "The Garden Café",
+  "category": "cafe",
+  "latitude": 12.419755,
+  "longitude": 76.573375,
+  "district": "Mysuru",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/13382554796",
+  "name": "Unwind",
+  "category": "cafe",
+  "latitude": 12.334415,
+  "longitude": 76.628176,
+  "district": "Mysuru",
+  "extra": {
+   "name:kn": "ಅನ್‌ವೈಂಡ್"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/14145471290",
+  "name": "Zhitsho Café",
+  "category": "cafe",
+  "latitude": 12.431912,
+  "longitude": 75.968244,
+  "district": "Mysuru",
+  "extra": {
+   "opening_hours": "Mon - Fri 10:30 am to 8:30 pm",
+   "website": "https://sites.google.com/view/zhitshocafe",
+   "cuisine": "pizza;burger;coffee_shop;sandwich;chinese;ice_cream;noodle;cake;tea;juice",
+   "addr:street": "Golden Temple Road",
+   "internet_access": "no"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/10677685077",
+  "name": "Jagadamba Cold-Drinks - Ice cream par;lour",
+  "category": "cafe",
+  "latitude": 16.15658,
+  "longitude": 76.525909,
+  "district": "Raichur",
+  "extra": {
+   "opening_hours": "Mo-Su 9:30-22:00",
+   "website": "https://jagadamba-cold-drinks.business.site/",
+   "phone": "7795508561",
+   "cuisine": "juice;ice_cream;chocolate",
+   "addr:street": "near new bus stand",
+   "addr:city": "Lingasugur",
+   "outdoor_seating": "yes",
+   "internet_access": "no"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/1818550794",
+  "name": "Padiyar Canteen",
+  "category": "cafe",
+  "latitude": 13.497328,
+  "longitude": 75.082436,
+  "district": "Shivamogga",
+  "extra": {
+   "name:kn": "ಪದಿಯಾರ್ ಕ್ಯಾಂಟೀನ್"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/6138235485",
+  "name": "Ananda hotel highway",
+  "category": "cafe",
+  "latitude": 13.294577,
+  "longitude": 77.173272,
+  "district": "Tumakuru",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/14205981167",
+  "name": "Cosmic Cafe",
+  "category": "cafe",
+  "latitude": 13.267193,
+  "longitude": 76.439436,
+  "district": "Tumakuru",
+  "extra": {
+   "phone": "07975220902",
+   "addr:street": "madhihalli",
+   "addr:city": "Tiptur",
+   "outdoor_seating": "yes"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/8935064760",
+  "name": "Couvana Chocolate",
+  "category": "cafe",
+  "latitude": 13.260269,
+  "longitude": 74.893459,
+  "district": "Udupi",
+  "extra": {
+   "opening_hours": "Mo-Su 09:00-18:00",
+   "website": "https://couvana.com",
+   "phone": "9916291525",
+   "cuisine": "chocolate;ice_cream;milk_products",
+   "addr:street": "Ranganapalke-Nakre-Karkala Road",
+   "addr:city": "Udupi",
+   "outdoor_seating": "yes",
+   "internet_access": "yes"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/11872152989",
+  "name": "Drink Hub",
+  "category": "cafe",
+  "latitude": 13.184246,
+  "longitude": 74.934599,
+  "district": "Udupi",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/13592037899",
+  "name": "Island cafe",
+  "category": "cafe",
+  "latitude": 13.37906,
+  "longitude": 74.673702,
+  "district": "Udupi",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/7679216297",
+  "name": "Mayura",
+  "category": "cafe",
+  "latitude": 13.198934,
+  "longitude": 75.071611,
+  "district": "Udupi",
+  "extra": {
+   "name:kn": "ಮಯೂರ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/13532680045",
+  "name": "Nandini Parlour Koppalangadi",
+  "category": "cafe",
+  "latitude": 13.219673,
+  "longitude": 74.748732,
+  "district": "Udupi",
+  "extra": {
+   "opening_hours": "Mo-Su 06:00-22:00",
+   "website": "https://nandiniparlourkoppalangadi.in/",
+   "phone": "+918277711271",
+   "cuisine": "ice_cream;juice;dairy_products;ghee;milk;milk_products;sweets",
+   "addr:street": "Koppalangadi",
+   "addr:city": "kaup",
+   "internet_access": "no"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/11876169127",
+  "name": "Teapot",
+  "category": "cafe",
+  "latitude": 13.348095,
+  "longitude": 74.782994,
+  "district": "Udupi",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/14134467012",
+  "name": "nofiltŕ (Art Café)",
+  "category": "cafe",
+  "latitude": 13.224959,
+  "longitude": 74.979526,
+  "district": "Udupi",
+  "extra": {
+   "opening_hours": "Tue-Sun 11:00AM - 10:00PM",
+   "phone": "+91 944851577",
+   "cuisine": "coffee_shop;burger;sandwich;tacos;wraps;coffee;herbal_tea;mocktails",
+   "addr:street": "Near Sarvajna Circle , Taluk Office Road",
+   "addr:city": "Karkala",
+   "outdoor_seating": "no",
+   "internet_access": "wlan"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/12178193687",
+  "name": "All Barkat's Cafe",
+  "category": "cafe",
+  "latitude": 15.261791,
+  "longitude": 74.61983,
+  "district": "Uttara Kannada",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/6228742985",
+  "name": "Bakery",
+  "category": "cafe",
+  "latitude": 15.01325,
+  "longitude": 74.022369,
+  "district": "Uttara Kannada",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/8007733599",
+  "name": "Cafe Downtown",
+  "category": "cafe",
+  "latitude": 13.998511,
+  "longitude": 74.538046,
+  "district": "Uttara Kannada",
+  "extra": {
+   "opening_hours": "Mo-Th, Sa, Su 11:00-00:00; Fr 05:00-00:00",
+   "website": "https://g.page/cafeDT2020",
+   "phone": "9148741437",
+   "addr:street": "Jali Road"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/12180670787",
+  "name": "Krishnappa Cafe",
+  "category": "cafe",
+  "latitude": 15.200161,
+  "longitude": 74.52468,
+  "district": "Uttara Kannada",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/11594873269",
+  "name": "Kushal",
+  "category": "cafe",
+  "latitude": 14.56252,
+  "longitude": 74.307531,
+  "district": "Uttara Kannada",
+  "extra": {
+   "internet_access": "wlan"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/13649398701",
+  "name": "Losel Café",
+  "category": "cafe",
+  "latitude": 15.028611,
+  "longitude": 75.00486,
+  "district": "Uttara Kannada",
+  "extra": {
+   "internet_access": "wlan"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/11018828734",
+  "name": "Seagate",
+  "category": "cafe",
+  "latitude": 14.525376,
+  "longitude": 74.315396,
+  "district": "Uttara Kannada",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/13348008698",
+  "name": "Sriee Shakti",
+  "category": "cafe",
+  "latitude": 14.543472,
+  "longitude": 74.31982,
+  "district": "Uttara Kannada",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/14077941358",
+  "name": "Happy Hampi Cafe",
+  "category": "cafe",
+  "latitude": 15.314949,
+  "longitude": 76.451281,
+  "district": "Vijayanagara",
+  "extra": {
+   "diet:vegetarian": "only"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/9582851917",
+  "name": "Italian Cafe",
+  "category": "cafe",
+  "latitude": 15.274701,
+  "longitude": 76.381209,
+  "district": "Vijayanagara",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/14081295808",
+  "name": "Jaggery Chai",
+  "category": "cafe",
+  "latitude": 15.262592,
+  "longitude": 76.36614,
+  "district": "Vijayanagara",
+  "extra": {},
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/4851050088",
+  "name": "MM Tea Stall",
+  "category": "cafe",
+  "latitude": 14.790364,
+  "longitude": 75.987793,
+  "district": "Vijayanagara",
+  "extra": {
+   "opening_hours": "06:00 - 10:00",
+   "addr:street": "Hospet-Harihar Road",
+   "addr:city": "Harapanahalli",
+   "internet_access": "no"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/8550396627",
+  "name": "Sandhya Cafe",
+  "category": "cafe",
+  "latitude": 16.827061,
+  "longitude": 75.730057,
+  "district": "Vijayapura",
+  "extra": {
+   "cuisine": "burger"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/14136607301",
+  "name": "The comunitii",
+  "category": "cafe",
+  "latitude": 16.808325,
+  "longitude": 75.723582,
+  "district": "Vijayapura",
+  "extra": {
+   "phone": "702217499",
+   "addr:street": "4TH FLOOR, KULKARNI ARCADE, BUS STOP, opp. AINAPUR HOUSE, Vijayapur, Jala Nagar, Vijayapura, Karnata"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "node/3071601186",
+  "name": "Chandranna's Canteen",
+  "category": "cafe",
+  "latitude": 16.763595,
+  "longitude": 77.132978,
+  "district": "Yadgir",
+  "extra": {
+   "cuisine": "regional",
+   "addr:street": "Balaji Temple Road",
+   "name:kn": "ಚಂದ್ರಣ್ಣ ಕ್ಯಾಂಟೀನ್"
+  },
+  "is_hidden": false
+ }
+]

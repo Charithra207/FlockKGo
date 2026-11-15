@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { Circle, CircleMarker, MapContainer, TileLayer, Tooltip, useMap, useMapEvents } from 'react-leaflet'
 import { useNavigate } from 'react-router-dom'
-import { CATEGORY_META } from '../../services/spotsService'
+import { CATEGORY_META, spotTitle } from '../../services/spotsService'
 
 export const KARNATAKA_CENTER = [14.6, 76.1]
 
@@ -82,7 +82,7 @@ export default function SpotMap({
                 pathOptions={{ color, dashArray: '6 6', weight: 2, fillOpacity: 0.12 }}
                 eventHandlers={{ click: () => navigate(`/spots/${s.id}`) }}
               >
-                <Tooltip>🔒 {s.name}</Tooltip>
+                <Tooltip>🔒 {spotTitle(s)}</Tooltip>
               </Circle>
             )
           }

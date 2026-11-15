@@ -1,4 +1,5 @@
 import api from './api'
+import { MONTHS_KN, translate, useLang } from '../i18n'
 
 export const authApi = {
   register: (body) => api.post('/auth/register', body).then((r) => r.data),
@@ -12,6 +13,12 @@ export const spotsApi = {
   get: (id) => api.get(`/spots/${id}`).then((r) => r.data),
   mine: () => api.get('/spots/mine').then((r) => r.data),
   submit: (body) => api.post('/spots', body).then((r) => r.data),
+  edit: (id, body) => api.patch(`/spots/${id}`, body).then((r) => r.data),
+  uploadPhoto: (blob) => {
+    const fd = new FormData()
+    fd.append('file', blob, 'photo.jpg')
+    return api.post('/photos', fd, { timeout: 60_000 }).then((r) => r.data)
+  },
   unlock: (id) => api.post(`/spots/${id}/unlock`).then((r) => r.data),
   vouch: (id) => api.post(`/spots/${id}/vouch`).then((r) => r.data),
   pending: () => api.get('/admin/spots/pending').then((r) => r.data),
@@ -36,11 +43,49 @@ export const CATEGORY_META = {
 
 export const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 
+const lang = () => useLang.getState().lang
+
+export function catName(c) {
+  return translate(lang(), `cat.${CATEGORY_META[c] ? c : 'other'}`)
+}
+
 export function categoryLabel(c) {
   const m = CATEGORY_META[c] || CATEGORY_META.other
-  return `${m.emoji} ${m.label}`
+  return `${m.emoji} ${catName(c)}`
+}
+
+export function monthNames() {
+  return lang() === 'kn' ? MONTHS_KN : MONTHS
+}
+
+/** Locked spots get a generic title; build it in the viewer's language. */
+export function spotTitle(spot) {
+  if (!spot.locked) return spot.name
+  return translate(lang(), 'card.hiddenName', { cat: catName(spot.category), place: spot.destination || spot.district })
 }
 
 export function directionsUrl(lat, lng) {
   return `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`
+}
+
+/** Uploaded photos are served by the API (/v1/photos/<id>); resolve against its origin. */
+export function photoSrc(url) {
+  if (!url) return null
+  if (!url.startsWith('/v1/')) return url
+  const base = import.meta.env.VITE_API_URL || ''
+  return base.startsWith('http') ? new URL(base).origin + url : url
+}
+
+/** Shrink a photo in the browser to max 1600px JPEG (~200 KB) before upload. */
+export async function resizeImage(file, maxSide = 1600, quality = 0.82) {
+  const bitmap = await createImageBitmap(file)
+  const scale = Math.min(1, maxSide / Math.max(bitmap.width, bitmap.height))
+  const canvas = document.createElement('canvas')
+  canvas.width = Math.round(bitmap.width * scale)
+  canvas.height = Math.round(bitmap.height * scale)
+  canvas.getContext('2d').drawImage(bitmap, 0, 0, canvas.width, canvas.height)
+  bitmap.close?.()
+  return new Promise((resolve, reject) =>
+    canvas.toBlob((b) => (b ? resolve(b) : reject(new Error('Could not read that image'))), 'image/jpeg', quality),
+  )
 }

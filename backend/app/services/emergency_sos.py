@@ -225,14 +225,20 @@ def _query_osm_emergency(lat: float, lon: float) -> dict[str, Any]:
 
         for el in elements:
             tags = el.get("tags", {})
-            name = tags.get("name") or tags.get("name:en") or "Unnamed"
-            phone = tags.get("phone") or tags.get("contact:phone") or "—"
+            name = tags.get("name:en") or tags.get("name")
+            if not name:
+                continue  # an unnamed pin isn't useful in an emergency
+            phone = tags.get("phone") or tags.get("contact:phone") or tags.get("emergency:phone")
             amenity = tags.get("amenity", "")
+            el_lat = el.get("lat") or (el.get("center") or {}).get("lat")
+            el_lon = el.get("lon") or (el.get("center") or {}).get("lon")
 
             entry = {
                 "name": name,
                 "phone": phone,
                 "address": tags.get("addr:full") or tags.get("addr:street") or "",
+                "lat": el_lat,
+                "lon": el_lon,
             }
 
             if amenity == "hospital":

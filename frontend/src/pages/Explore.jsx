@@ -6,17 +6,15 @@ import EmptyState from '../components/common/EmptyState'
 import LoadingSpinner from '../components/common/LoadingSpinner'
 import SpotCard from '../components/spots/SpotCard'
 import SpotMap from '../components/spots/SpotMap'
-import { authApi, CATEGORY_META, spotsApi } from '../services/spotsService'
+import { authApi, catName, CATEGORY_META, spotsApi } from '../services/spotsService'
 import useAuthStore from '../store/authStore'
+import { useT } from '../i18n'
 
-const VISIBILITY = [
-  { key: 'all', label: 'Everything' },
-  { key: 'hidden', label: '🔒 Hidden gems' },
-  { key: 'public', label: 'Open to all' },
-]
+const VISIBILITY = ['all', 'hidden', 'public']
 
 export default function Explore() {
   const { token, user, setUser } = useAuthStore()
+  const t = useT()
   const [meta, setMeta] = useState(null)
   const [data, setData] = useState({ total: 0, items: [] })
   const [loading, setLoading] = useState(true)
@@ -78,26 +76,25 @@ export default function Explore() {
     <div className="space-y-6">
       {/* Header */}
       <section className="rounded-3xl bg-gradient-to-br from-primary to-[#2f5d8a] p-6 text-white shadow-card sm:p-8">
-        <p className="text-sm font-semibold uppercase tracking-wider text-white/70">Explore Karnataka</p>
-        <h1 className="mt-1 text-3xl font-extrabold sm:text-4xl">Spots only locals know</h1>
+        <p className="text-sm font-semibold uppercase tracking-wider text-white/70">{t('explore.kicker')}</p>
+        <h1 className="mt-1 text-3xl font-extrabold sm:text-4xl">{t('explore.title')}</h1>
         <p className="mt-2 max-w-2xl text-white/80">
-          {meta?.hidden_count ? `${meta.hidden_count} hidden gems` : 'Hidden gems'} shared by people who've been there,
-          plus cafes, falls and viewpoints across all 31 districts.
+          {t('explore.body', { hidden: meta?.hidden_count ? t('explore.hiddenN', { n: meta.hidden_count }) : t('explore.hidden') })}
         </p>
         <div className="mt-5 flex flex-wrap items-center gap-3">
           <Link
             to="/spots/share"
             className="inline-flex items-center gap-2 rounded-xl bg-accent px-5 py-2.5 font-semibold text-white hover:opacity-90"
           >
-            <Gift className="h-4 w-4" /> Share a spot, unlock 3
+            <Gift className="h-4 w-4" /> {t('explore.shareCta')}
           </Link>
           {token ? (
             <span className="inline-flex items-center gap-1.5 rounded-xl bg-white/15 px-4 py-2.5 text-sm font-semibold">
-              <Lock className="h-4 w-4" /> {credits ?? '…'} unlock credit{credits === 1 ? '' : 's'}
+              <Lock className="h-4 w-4" /> {t('explore.credits', { n: credits ?? '…' })}
             </span>
           ) : (
             <Link to="/login?next=/explore" className="text-sm font-semibold underline underline-offset-4">
-              Sign up free: your first unlock is on us
+              {t('explore.signup')}
             </Link>
           )}
         </div>
@@ -110,7 +107,7 @@ export default function Explore() {
             onClick={() => setCategory('')}
             className={`rounded-full px-3 py-1.5 text-sm font-medium ${category === '' ? 'bg-primary text-white' : 'bg-white text-slate-600 shadow-card'}`}
           >
-            All
+            {t('explore.all')}
           </button>
           {(meta?.categories || Object.keys(CATEGORY_META)).map((c) => (
             <button
@@ -118,7 +115,7 @@ export default function Explore() {
               onClick={() => setCategory(c === category ? '' : c)}
               className={`rounded-full px-3 py-1.5 text-sm font-medium ${category === c ? 'bg-primary text-white' : 'bg-white text-slate-600 shadow-card'}`}
             >
-              {CATEGORY_META[c]?.emoji} {CATEGORY_META[c]?.label}
+              {CATEGORY_META[c]?.emoji} {catName(c)}
               {meta?.counts?.[c] ? <span className="ml-1 opacity-60">{meta.counts[c]}</span> : null}
             </button>
           ))}
@@ -137,7 +134,7 @@ export default function Explore() {
               value={q}
               onChange={(e) => setQ(e.target.value)}
               onBlur={() => setQuery(q.trim())}
-              placeholder="Search cafes, districts…"
+              placeholder={t('explore.search')}
               className="w-full rounded-xl border border-slate-200 bg-white py-2.5 pl-9 pr-3 text-sm focus:border-primary focus:outline-none"
             />
           </form>
@@ -146,17 +143,17 @@ export default function Explore() {
             onChange={(e) => chooseDistrict(e.target.value)}
             className="rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm"
           >
-            <option value="">All districts</option>
+            <option value="">{t('explore.allDistricts')}</option>
             {meta?.districts?.map((d) => <option key={d}>{d}</option>)}
           </select>
           <div className="flex rounded-xl bg-white p-1 shadow-card">
             {VISIBILITY.map((v) => (
               <button
-                key={v.key}
-                onClick={() => setVisibility(v.key)}
-                className={`rounded-lg px-3 py-1.5 text-sm font-medium ${visibility === v.key ? 'bg-primary text-white' : 'text-slate-600'}`}
+                key={v}
+                onClick={() => setVisibility(v)}
+                className={`rounded-lg px-3 py-1.5 text-sm font-medium ${visibility === v ? 'bg-primary text-white' : 'text-slate-600'}`}
               >
-                {v.label}
+                {t(`explore.vis.${v}`)}
               </button>
             ))}
           </div>
@@ -164,7 +161,7 @@ export default function Explore() {
             onClick={() => (near ? setNear(null) : locateMe())}
             className={`inline-flex items-center justify-center gap-1.5 rounded-xl px-3 py-2.5 text-sm font-medium shadow-card ${near ? 'bg-primary text-white' : 'bg-white text-slate-600'}`}
           >
-            <Crosshair className="h-4 w-4" /> {near ? 'Near me ✕' : 'Near me'}
+            <Crosshair className="h-4 w-4" /> {near ? `${t('explore.near')} ✕` : t('explore.near')}
           </button>
         </div>
       </section>
@@ -174,16 +171,16 @@ export default function Explore() {
       {/* Results */}
       <section>
         <p className="mb-3 text-sm text-slate-500">
-          {loading ? 'Loading…' : `${data.total} spot${data.total === 1 ? '' : 's'}${near ? ' within 60 km' : ''}`}
+          {loading ? '…' : `${t('explore.count', { n: data.total })}${near ? ` ${t('explore.within')}` : ''}`}
         </p>
         {loading ? (
-          <LoadingSpinner message="Finding spots…" />
+          <LoadingSpinner message={t('explore.loading')} />
         ) : data.items.length === 0 ? (
           <EmptyState
             emoji="🗺️"
-            title="Nothing here yet"
-            message="Know a place that should be on this map? Be the first to share it."
-            action={{ label: 'Share a spot', href: '/spots/share' }}
+            title={t('explore.emptyTitle')}
+            message={t('explore.emptyBody')}
+            action={{ label: t('nav.share'), href: '/spots/share' }}
           />
         ) : (
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">

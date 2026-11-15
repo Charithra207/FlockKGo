@@ -42,6 +42,7 @@ import app.models.checklist            # noqa: F401
 import app.models.expense              # noqa: F401
 import app.models.user                 # noqa: F401
 import app.models.spot                 # noqa: F401
+import app.models.photo                # noqa: F401
 
 target_metadata = Base.metadata
 

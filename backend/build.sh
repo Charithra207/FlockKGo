@@ -23,5 +23,11 @@ echo "--- Seeding destinations ---"
 python seed_destinations.py
 echo "Destinations seeded."
 
+# ── 3. Load OpenStreetMap spots (cafes + nature) from backend/data/*.json ──
+# Idempotent (matched on osm_id); never overwrites admin-edited rows.
+echo ""
+echo "--- Loading OSM spots ---"
+python import_osm_spots.py load
+
 echo ""
 echo "=== Deploy script complete. Starting server... ==="

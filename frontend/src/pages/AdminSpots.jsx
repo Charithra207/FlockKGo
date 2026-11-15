@@ -5,7 +5,7 @@ import { Navigate } from 'react-router-dom'
 import EmptyState from '../components/common/EmptyState'
 import LoadingSpinner from '../components/common/LoadingSpinner'
 import SpotMap from '../components/spots/SpotMap'
-import { categoryLabel, directionsUrl, MONTHS, spotsApi } from '../services/spotsService'
+import { categoryLabel, directionsUrl, MONTHS, photoSrc, spotsApi } from '../services/spotsService'
 import useAuthStore from '../store/authStore'
 
 export default function AdminSpots() {
@@ -51,7 +51,7 @@ export default function AdminSpots() {
             {s.description && <p className="whitespace-pre-line text-sm text-slate-600">{s.description}</p>}
             {s.access_notes && <p className="whitespace-pre-line text-sm text-slate-500"><b>Access:</b> {s.access_notes}</p>}
             {s.best_months?.length > 0 && <p className="text-sm text-slate-500"><b>Best:</b> {s.best_months.map((m) => MONTHS[m - 1]).join(', ')}</p>}
-            {s.photo_url && <img src={s.photo_url} alt="" className="max-h-48 rounded-xl object-cover" />}
+            {s.photo_url && <img src={photoSrc(s.photo_url)} alt="" className="max-h-48 rounded-xl object-cover" />}
             <a href={directionsUrl(s.latitude, s.longitude)} target="_blank" rel="noreferrer" className="text-sm font-semibold text-primary underline">
               Check on Google Maps
             </a>
