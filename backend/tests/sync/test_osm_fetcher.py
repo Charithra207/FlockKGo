@@ -20,9 +20,9 @@ from app.sync.osm_fetcher import (
 # build_overpass_query
 # ---------------------------------------------------------------------------
 
-def test_query_contains_india_bbox():
+def test_query_contains_karnataka_bbox():
     q = build_overpass_query(TAG_ALLOWLIST)
-    assert "6.5,68.0,37.5,97.5" in q
+    assert "11.5,74.0,18.5,78.6" in q
 
 
 def test_query_exclusion_tags_absent():

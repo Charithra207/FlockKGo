@@ -35,7 +35,7 @@ def _build_destination_text(destination) -> str:
         f"This destination is known for: {vibes}. "
         f"Climate: {destination.climate}. "
         f"Activity level: {destination.activity_level}. "
-        f"Typical budget: around ${destination.budget_midpoint} USD per person. "
+        f"Typical budget: around Rs {destination.budget_midpoint} (INR) per person. "
         f"Budget flexibility: {'high' if destination.budget_flexibility >= 0.7 else 'medium' if destination.budget_flexibility >= 0.5 else 'low'}."
     )
     quick_info = getattr(destination, "quick_info", None)

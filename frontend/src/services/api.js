@@ -1,4 +1,4 @@
-﻿/**
+/**
  * api.js — Axios instance for all PackVote+ API calls.
  *
  * AUTH HEADER INJECTION
@@ -18,6 +18,7 @@
  */
 
 import axios from 'axios'
+import useAuthStore from '../store/authStore'
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL || '/v1',
@@ -31,6 +32,11 @@ api.interceptors.request.use((config) => {
   const apiKey = import.meta.env.VITE_API_KEY
   if (apiKey) {
     config.headers['X-API-Key'] = apiKey
+  }
+  // Logged-in account (spots: share / unlock / vouch)
+  const token = useAuthStore.getState().token
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`
   }
 
   if (import.meta.env.DEV) {
@@ -66,12 +72,19 @@ api.interceptors.response.use(
       message = error.message || 'Request failed'
     }
 
-    // Surface auth failures clearly so developers know to check VITE_API_KEY
-    if (status === 401 || status === 403) {
+    const usedUserToken = Boolean(error?.config?.headers?.Authorization)
+    if ((status === 401 || status === 403) && /API key/i.test(message)) {
+      // Client API key problem (X-API-Key) — a deployment config issue.
       message = `Auth error (${status}): ${message}. Check VITE_API_KEY is set correctly.`
+    } else if (status === 401 && usedUserToken) {
+      // Expired / invalid login: drop it so the UI shows "Log in" again.
+      useAuthStore.getState().logout()
+      message = 'Your session expired. Please log in again.'
     }
 
-    return Promise.reject(new Error(message))
+    const err = new Error(message)
+    err.status = status
+    return Promise.reject(err)
   },
 )
 

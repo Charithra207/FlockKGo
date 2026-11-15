@@ -1,0 +1,2292 @@
+[
+ {
+  "osm_id": "wikidata:Q134880784",
+  "source": "wikidata",
+  "name": "Agastya lake",
+  "category": "lake",
+  "latitude": 15.920117,
+  "longitude": 75.686378,
+  "district": "Bagalkot",
+  "extra": {
+   "wikidata": "Q134880784",
+   "name:kn": "ಅಗಸ್ತ್ಯ ಸರೋವರ",
+   "wikipedia": "https://en.wikipedia.org/wiki/Agastya_Lake",
+   "description_en": "artificial lake in Karnataka"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q34882536",
+  "source": "wikidata",
+  "name": "Daroji Kere",
+  "category": "lake",
+  "latitude": 15.235833,
+  "longitude": 76.669444,
+  "district": "Ballari",
+  "extra": {
+   "wikidata": "Q34882536",
+   "name:kn": "ದರೋಜಿ ಕೆರೆ",
+   "description_en": "reservoir in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q4830523",
+  "source": "wikidata",
+  "name": "Sonsogor",
+  "category": "trek",
+  "latitude": 15.522778,
+  "longitude": 74.281389,
+  "district": "Belagavi",
+  "extra": {
+   "wikidata": "Q4830523",
+   "wikipedia": "https://en.wikipedia.org/wiki/Sonsogor",
+   "description_en": "highest peak in Goa, India",
+   "ele": "1166"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "wikidata:Q7377653",
+  "source": "wikidata",
+  "name": "Godchinamalaki Falls",
+  "category": "waterfall",
+  "latitude": 16.123419,
+  "longitude": 74.745656,
+  "district": "Belagavi",
+  "extra": {
+   "wikidata": "Q7377653",
+   "name:kn": "ಗೊಡಚಿನಮಲ್ಕಿ ಜಲಪಾತ",
+   "wikipedia": "https://en.wikipedia.org/wiki/Godchinamalaki_Falls",
+   "description_en": "waterfall on Markandeya river in Belgaum district, Gokak Taluk, Karnataka, India"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "wikidata:Q1708121",
+  "source": "wikidata",
+  "name": "Gokak Falls",
+  "category": "waterfall",
+  "latitude": 16.191667,
+  "longitude": 74.7765,
+  "district": "Belagavi",
+  "extra": {
+   "wikidata": "Q1708121",
+   "name:kn": "ಗೋಕಾಕ ಜಲಪಾತ",
+   "wikipedia": "https://en.wikipedia.org/wiki/Gokak_Falls",
+   "description_en": "waterfall in Karnataka, India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q7908950",
+  "source": "wikidata",
+  "name": "Vajrapoha Falls",
+  "category": "waterfall",
+  "latitude": 15.623889,
+  "longitude": 74.331944,
+  "district": "Belagavi",
+  "extra": {
+   "wikidata": "Q7908950",
+   "name:kn": "ವಜ್ರಪೋಹ ಜಲಪಾತ",
+   "wikipedia": "https://en.wikipedia.org/wiki/Vajrapoha_Falls",
+   "description_en": "waterfall in Karnataka, India"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "wikidata:Q6365696",
+  "source": "wikidata",
+  "name": "Kanva Reservoir",
+  "category": "lake",
+  "latitude": 12.729267,
+  "longitude": 77.198181,
+  "district": "Bengaluru South",
+  "extra": {
+   "wikidata": "Q6365696",
+   "name:kn": "ಕಣ್ವ ಜಲಾಶಯ",
+   "wikipedia": "https://en.wikipedia.org/wiki/Kanva_Reservoir",
+   "description_en": "lake in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q2723663",
+  "source": "wikidata",
+  "name": "Savandurga",
+  "category": "trek",
+  "latitude": 12.919654,
+  "longitude": 77.292881,
+  "district": "Bengaluru South",
+  "extra": {
+   "wikidata": "Q2723663",
+   "name:kn": "ಸಾವನದುರ್ಗ",
+   "wikipedia": "https://en.wikipedia.org/wiki/Savandurga",
+   "description_en": "hill in Bangalore Rural district, India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q37415",
+  "source": "wikidata",
+  "name": "Mekedaatu",
+  "category": "waterfall",
+  "latitude": 12.25818,
+  "longitude": 77.44866,
+  "district": "Bengaluru South",
+  "extra": {
+   "wikidata": "Q37415",
+   "name:kn": "ಮೇಕೆ ದಾಟು",
+   "wikipedia": "https://en.wikipedia.org/wiki/Mekedatu",
+   "description_en": "waterfall in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q28824239",
+  "source": "wikidata",
+  "name": "Agara Lake",
+  "category": "lake",
+  "latitude": 12.921,
+  "longitude": 77.641,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "wikidata": "Q28824239",
+   "wikipedia": "https://en.wikipedia.org/wiki/Agara_Lake",
+   "description_en": "lake"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q28154185",
+  "source": "wikidata",
+  "name": "Arekere Lake",
+  "category": "lake",
+  "latitude": 12.882988,
+  "longitude": 77.598108,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "wikidata": "Q28154185",
+   "wikipedia": "https://en.wikipedia.org/wiki/Arekere_Lake",
+   "description_en": "body of water"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q34878961",
+  "source": "wikidata",
+  "name": "Bagalur Kere",
+  "category": "lake",
+  "latitude": 13.139444,
+  "longitude": 77.661111,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "wikidata": "Q34878961",
+   "name:kn": "ಬಾಗಲೂರು ಕೆರೆ",
+   "description_en": "reservoir in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q106416239",
+  "source": "wikidata",
+  "name": "Begur Lake",
+  "category": "lake",
+  "latitude": 12.874717,
+  "longitude": 77.627994,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "wikidata": "Q106416239",
+   "wikipedia": "https://en.wikipedia.org/wiki/Begur_Lake",
+   "description_en": "lake in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q4883488",
+  "source": "wikidata",
+  "name": "Bellandur Lake",
+  "category": "lake",
+  "latitude": 12.935094,
+  "longitude": 77.668147,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "wikidata": "Q4883488",
+   "name:kn": "ಬೆಳ್ಳಂದೊರು ಕೆರೆ",
+   "wikipedia": "https://en.wikipedia.org/wiki/Bellandur_Lake",
+   "description_en": "lake in the southeast Bengaluru",
+   "ele": "921"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q34878412",
+  "source": "wikidata",
+  "name": "Bondakodigenhalli Kere",
+  "category": "lake",
+  "latitude": 13.1775,
+  "longitude": 77.6875,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "wikidata": "Q34878412",
+   "name:kn": "ಬೊಂಡಕೊಡಿಗೇನಹಳ್ಳಿ ಕೆರೆ",
+   "description_en": "reservoir in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q34883684",
+  "source": "wikidata",
+  "name": "Dod Jala Kere",
+  "category": "lake",
+  "latitude": 13.173056,
+  "longitude": 77.647222,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "wikidata": "Q34883684",
+   "name:kn": "ದೊಡ್ಡ ಜಾಲ ಕೆರೆ",
+   "description_en": "reservoir in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q141795259",
+  "source": "wikidata",
+  "name": "Doddakallasandra lake",
+  "category": "lake",
+  "latitude": 12.882044,
+  "longitude": 77.561581,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "wikidata": "Q141795259",
+   "name:kn": "ದೊಡ್ಡಕಲ್ಲಸಂದ್ರ ಕೆರೆ",
+   "description_en": "A lake in Bengaluru South, Karnataka"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q34889529",
+  "source": "wikidata",
+  "name": "Hebbal Kere",
+  "category": "lake",
+  "latitude": 13.045,
+  "longitude": 77.588889,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "wikidata": "Q34889529",
+   "name:kn": "ಹೆಬ್ಬಾಳ ಕೆರೆ",
+   "description_en": "reservoir in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q5745519",
+  "source": "wikidata",
+  "name": "Hesaraghatta Lake",
+  "category": "lake",
+  "latitude": 13.15,
+  "longitude": 77.49,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "wikidata": "Q5745519",
+   "name:kn": "ಹೆಸರಘಟ್ಟ ಕೆರೆ",
+   "wikipedia": "https://en.wikipedia.org/wiki/Hesaraghatta_Lake",
+   "description_en": "lake in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q34892258",
+  "source": "wikidata",
+  "name": "Jakkur Kere",
+  "category": "lake",
+  "latitude": 13.083889,
+  "longitude": 77.611944,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "wikidata": "Q34892258",
+   "name:kn": "ಜಕ್ಕೂರು ಕೆರೆ",
+   "description_en": "reservoir in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q34893555",
+  "source": "wikidata",
+  "name": "Kakolu Kere",
+  "category": "lake",
+  "latitude": 13.196944,
+  "longitude": 77.514167,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "wikidata": "Q34893555",
+   "name:kn": "ಕಾಕೋಲು ಕೆರೆ",
+   "description_en": "lake in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q34893654",
+  "source": "wikidata",
+  "name": "Kalkeri Kere",
+  "category": "lake",
+  "latitude": 13.045278,
+  "longitude": 77.664444,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "wikidata": "Q34893654",
+   "name:kn": "ಕಲ್ಕೆರೆ ಕೆರೆ",
+   "description_en": "lake in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q129102020",
+  "source": "wikidata",
+  "name": "Kelagiankare lake",
+  "category": "lake",
+  "latitude": 12.977278,
+  "longitude": 77.663644,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "wikidata": "Q129102020",
+   "name:kn": "ಕೆಳಗಿಯನ್ಕೆರೆ ಸರೋವರ",
+   "description_en": "lake in Bagmane Tech Park, C. V. Raman Nagar, Bengaluru, Karnataka"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q107639034",
+  "source": "wikidata",
+  "name": "Kempambudhi Lake",
+  "category": "lake",
+  "latitude": 12.951389,
+  "longitude": 77.560833,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "wikidata": "Q107639034",
+   "name:kn": "ಕೆಂಪಾಂಬುಧಿ ಕೆರೆ",
+   "wikipedia": "https://en.wikipedia.org/wiki/Kempambudhi_Lake",
+   "description_en": "lake in Bangalore"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q34895766",
+  "source": "wikidata",
+  "name": "Koltur Kere",
+  "category": "lake",
+  "latitude": 13.209722,
+  "longitude": 77.535556,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "wikidata": "Q34895766",
+   "name:kn": "ಕೊಳ್ತೂರು ಕೆರೆ",
+   "description_en": "reservoir in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q30621418",
+  "source": "wikidata",
+  "name": "Madiwala Lake",
+  "category": "lake",
+  "latitude": 12.907778,
+  "longitude": 77.616667,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "wikidata": "Q30621418",
+   "wikipedia": "https://en.wikipedia.org/wiki/Madiwala_Lake",
+   "description_en": "lake in Bengaluru"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q34906358",
+  "source": "wikidata",
+  "name": "Matti Kere",
+  "category": "lake",
+  "latitude": 13.035,
+  "longitude": 77.550556,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "wikidata": "Q34906358",
+   "name:kn": "ಮತ್ತಿಕೆರೆ",
+   "description_en": "reservoir in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q7262461",
+  "source": "wikidata",
+  "name": "Puttenahalli Lake Birds Conservation Reserve",
+  "category": "lake",
+  "latitude": 13.111111,
+  "longitude": 77.576111,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "wikidata": "Q7262461",
+   "name:kn": "ಪುಟ್ಟೇನಹಳ್ಳಿ ಸರೋವರ",
+   "wikipedia": "https://en.wikipedia.org/wiki/Puttenahalli_Lake_(Yelahanka)",
+   "description_en": "Lake in Yelahanka, India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q34920410",
+  "source": "wikidata",
+  "name": "Rajarhalli Kere",
+  "category": "lake",
+  "latitude": 13.062222,
+  "longitude": 77.615556,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "wikidata": "Q34920410",
+   "name:kn": "ರಾಜರಹಳ್ಳಿ ಕೆರೆ",
+   "description_en": "lake in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q7331115",
+  "source": "wikidata",
+  "name": "Sankey tank",
+  "category": "lake",
+  "latitude": 13.01,
+  "longitude": 77.57,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "wikidata": "Q7331115",
+   "wikipedia": "https://en.wikipedia.org/wiki/Sankey_tank",
+   "description_en": "Man-made lake/tank in Bangalore, India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q7423007",
+  "source": "wikidata",
+  "name": "Sarakki lake",
+  "category": "lake",
+  "latitude": 12.8983,
+  "longitude": 77.5778,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "wikidata": "Q7423007",
+   "name:kn": "ಸಾರಕ್ಕಿ ಕೆರೆ, ಬೆಂಗಳೂರು",
+   "wikipedia": "https://en.wikipedia.org/wiki/Sarakki_lake",
+   "description_en": "lake in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q34923243",
+  "source": "wikidata",
+  "name": "Shingnaikanhalli Kere",
+  "category": "lake",
+  "latitude": 13.1625,
+  "longitude": 77.571667,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "wikidata": "Q34923243",
+   "name:kn": "ಶಿಂಗ್ ನಾಯಕನಹಳ್ಳಿ ಕೆರೆ",
+   "description_en": "lake in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q30587793",
+  "source": "wikidata",
+  "name": "Ulsoor Lake",
+  "category": "lake",
+  "latitude": 12.981472,
+  "longitude": 77.619214,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "wikidata": "Q30587793",
+   "name:kn": "ಹಲಸೂರು ಸರೋವರ",
+   "wikipedia": "https://en.wikipedia.org/wiki/Ulsoor_Lake",
+   "description_en": "Ulsoor Lake' or Halasuru Lake, one of the biggest lakes in Bangalore, is located on the eastern side of the city",
+   "ele": "896"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q106416301",
+  "source": "wikidata",
+  "name": "Uttarahalli Lake",
+  "category": "lake",
+  "latitude": 12.907708,
+  "longitude": 77.541067,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "wikidata": "Q106416301",
+   "name:kn": "ಉತ್ತರಹಳ್ಳಿ ಕೆರೆ",
+   "description_en": "lake in Bangalore, India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q106416269",
+  "source": "wikidata",
+  "name": "Varthur Lake",
+  "category": "lake",
+  "latitude": 12.9525,
+  "longitude": 77.7425,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "wikidata": "Q106416269",
+   "wikipedia": "https://en.wikipedia.org/wiki/Varthur_Lake",
+   "description_en": "lake in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q7924608",
+  "source": "wikidata",
+  "name": "Vibhutipura Lake",
+  "category": "lake",
+  "latitude": 12.967644,
+  "longitude": 77.675567,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "wikidata": "Q7924608",
+   "name:kn": "ವಿಭೂತಿಪುರ ಕೆರೆ",
+   "wikipedia": "https://en.wikipedia.org/wiki/Vibhutipura_Lake",
+   "description_en": "lake in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q34936494",
+  "source": "wikidata",
+  "name": "Yedur Kere",
+  "category": "lake",
+  "latitude": 13.138056,
+  "longitude": 77.689722,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "wikidata": "Q34936494",
+   "name:kn": "ಯಡೂರು ಕೆರೆ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q34936517",
+  "source": "wikidata",
+  "name": "Yelahanka Kere",
+  "category": "lake",
+  "latitude": 13.111389,
+  "longitude": 77.595833,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "wikidata": "Q34936517",
+   "name:kn": "ಯಲಹಂಕ ಕೆರೆ",
+   "description_en": "lake in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q34936550",
+  "source": "wikidata",
+  "name": "Yellamallappchetti Lake",
+  "category": "lake",
+  "latitude": 13.023056,
+  "longitude": 77.728889,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "wikidata": "Q34936550",
+   "name:kn": "ಯೆಲ್ಲಮಲ್ಲಪ್ಪಚೆಟ್ಟಿ ಕೆರೆ",
+   "description_en": "lake in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q126710631",
+  "source": "wikidata",
+  "name": "Shrungagiri Sri Shanmukha Swamy Temple",
+  "category": "temple",
+  "latitude": 12.912631,
+  "longitude": 77.529089,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "wikidata": "Q126710631",
+   "name:kn": "ಶೃಂಗಗಿರಿ ಶ್ರೀ ಷಣ್ಮುಖ ಸ್ವಾಮಿ ದೇವಸ್ಥಾನ",
+   "description_en": "Temple tower dome featuring the six faces of Hindu deity Lord Shanmukha"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q6943914",
+  "source": "wikidata",
+  "name": "Muthyalamaduvu",
+  "category": "waterfall",
+  "latitude": 12.688097,
+  "longitude": 77.664486,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "wikidata": "Q6943914",
+   "name:kn": "ಮುತ್ಯಾಲಮಡುವು",
+   "wikipedia": "https://en.wikipedia.org/wiki/Muthyala_Maduvu",
+   "description_en": "tourist spot in Karnataka"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q7796940",
+  "source": "wikidata",
+  "name": "Thottikallu",
+  "category": "waterfall",
+  "latitude": 12.806,
+  "longitude": 77.538,
+  "district": "Bengaluru Urban",
+  "extra": {
+   "wikidata": "Q7796940",
+   "name:kn": "ತೊಟ್ಟಿಕಲ್ಲು",
+   "wikipedia": "https://en.wikipedia.org/wiki/Thottikallu",
+   "description_en": "Village in Karnataka, India"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "wikidata:Q11924488",
+  "source": "wikidata",
+  "name": "Himavad Gopalaswamy Betta",
+  "category": "trek",
+  "latitude": 11.7225,
+  "longitude": 76.5792,
+  "district": "Chamarajanagar",
+  "extra": {
+   "wikidata": "Q11924488",
+   "name:kn": "ಹಿಮವತ್ ಗೋಪಾಲ ಸ್ವಾಮಿ ಬೆಟ್ಟ",
+   "wikipedia": "https://en.wikipedia.org/wiki/Gopalaswamy_Hills",
+   "description_en": "hill in the Gundlupete Taluk, Karnataka, India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q37729",
+  "source": "wikidata",
+  "name": "Hogenakkal Falls",
+  "category": "waterfall",
+  "latitude": 12.1192,
+  "longitude": 77.774,
+  "district": "Chamarajanagar",
+  "extra": {
+   "wikidata": "Q37729",
+   "name:kn": "ಹೊಗೇನಕಲ್ ಜಲಪಾತ",
+   "wikipedia": "https://en.wikipedia.org/wiki/Hogenakkal_Falls",
+   "description_en": "waterfall"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q34927784",
+  "source": "wikidata",
+  "name": "Srinlvasasagar Kere",
+  "category": "lake",
+  "latitude": 13.448611,
+  "longitude": 77.629722,
+  "district": "Chikkaballapura",
+  "extra": {
+   "wikidata": "Q34927784",
+   "name:kn": "ಶ್ರೀನಿವಾಸಸಾಗರ ಕೆರೆ",
+   "description_en": "lake in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q34921476",
+  "source": "wikidata",
+  "name": "Samudra Tank",
+  "category": "lake",
+  "latitude": 13.459722,
+  "longitude": 76.143889,
+  "district": "Chikkamagaluru",
+  "extra": {
+   "wikidata": "Q34921476",
+   "name:kn": "ಸಮುದ್ರ ಟ್ಯಾಂಕ್",
+   "description_en": "lake in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q34923269",
+  "source": "wikidata",
+  "name": "Shiragola",
+  "category": "lake",
+  "latitude": 13.439722,
+  "longitude": 75.526389,
+  "district": "Chikkamagaluru",
+  "extra": {
+   "wikidata": "Q34923269",
+   "name:kn": "ಶಿರಗೋಳ",
+   "description_en": "lake in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q4837287",
+  "source": "wikidata",
+  "name": "Baba Budangiri",
+  "category": "trek",
+  "latitude": 13.52,
+  "longitude": 75.75,
+  "district": "Chikkamagaluru",
+  "extra": {
+   "wikidata": "Q4837287",
+   "name:kn": "ಬಾಬಾ ಬುಡನ್ ಗಿರಿ",
+   "wikipedia": "https://en.wikipedia.org/wiki/Baba_Budangiri",
+   "description_en": "mountain in India",
+   "ele": "1895"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q125956483",
+  "source": "wikidata",
+  "name": "Deviramma Hill",
+  "category": "trek",
+  "latitude": 13.428353,
+  "longitude": 75.773771,
+  "district": "Chikkamagaluru",
+  "extra": {
+   "wikidata": "Q125956483",
+   "name:kn": "ದೇವಿರಮ್ಮ ಬೆಟ್ಟ",
+   "description_en": "The temple nestles atop a 3,000 feet high hill named Deviramma hill and is open to devotees only on one day in the entire year."
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "wikidata:Q117481154",
+  "source": "wikidata",
+  "name": "Ettina Bhuja",
+  "category": "trek",
+  "latitude": 12.980262,
+  "longitude": 75.565452,
+  "district": "Chikkamagaluru",
+  "extra": {
+   "wikidata": "Q117481154",
+   "name:kn": "ಎತ್ತಿನ ಭುಜ",
+   "wikipedia": "https://en.wikipedia.org/wiki/Ettina_Bhuja",
+   "description_en": "mountain peak"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "wikidata:Q3695181",
+  "source": "wikidata",
+  "name": "Mullayanagiri",
+  "category": "trek",
+  "latitude": 13.391,
+  "longitude": 75.7214,
+  "district": "Chikkamagaluru",
+  "extra": {
+   "wikidata": "Q3695181",
+   "name:kn": "ಮುಳ್ಳಯ್ಯನಗಿರಿ",
+   "wikipedia": "https://en.wikipedia.org/wiki/Mullayyanagiri",
+   "description_en": "highest mountain in the Indian state of Karnataka",
+   "ele": "1925"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q15723117",
+  "source": "wikidata",
+  "name": "Hanumana Gundi Falls",
+  "category": "waterfall",
+  "latitude": 13.269505,
+  "longitude": 75.155384,
+  "district": "Chikkamagaluru",
+  "extra": {
+   "wikidata": "Q15723117",
+   "name:kn": "ಹನುಮಾನ್ ಗುಂಡಿ (ಸೂತನಬ್ಬಿ ಜಲಪಾತ)",
+   "wikipedia": "https://en.wikipedia.org/wiki/Hanumana_Gundi_Falls",
+   "description_en": "waterfall in Karnataka, India"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "wikidata:Q37304",
+  "source": "wikidata",
+  "name": "Hebbe Falls",
+  "category": "waterfall",
+  "latitude": 13.541389,
+  "longitude": 75.725,
+  "district": "Chikkamagaluru",
+  "extra": {
+   "wikidata": "Q37304",
+   "name:kn": "ಹೆಬ್ಬೆ ಜಲಪಾತ",
+   "wikipedia": "https://en.wikipedia.org/wiki/Hebbe_Falls",
+   "description_en": "waterfall"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q114712215",
+  "source": "wikidata",
+  "name": "Jhari Falls",
+  "category": "waterfall",
+  "latitude": 13.423611,
+  "longitude": 75.740972,
+  "district": "Chikkamagaluru",
+  "extra": {
+   "wikidata": "Q114712215",
+   "name:kn": "ಝರಿ ಜಲಪಾತ",
+   "wikipedia": "https://en.wikipedia.org/wiki/Jhari_Falls",
+   "description_en": "waterfall in Karnataka, India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q3696258",
+  "source": "wikidata",
+  "name": "Kalhatti Falls",
+  "category": "waterfall",
+  "latitude": 13.55,
+  "longitude": 75.75,
+  "district": "Chikkamagaluru",
+  "extra": {
+   "wikidata": "Q3696258",
+   "name:kn": "ಕಲ್ಹತ್ತಿಗಿರಿ ಜಲಪಾತ",
+   "wikipedia": "https://en.wikipedia.org/wiki/Kalhattigiri_Falls",
+   "description_en": "waterfall in Karnataka, India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q34920613",
+  "source": "wikidata",
+  "name": "Rani Kere",
+  "category": "lake",
+  "latitude": 14.321389,
+  "longitude": 76.723056,
+  "district": "Chitradurga",
+  "extra": {
+   "wikidata": "Q34920613",
+   "name:kn": "ರಾಣಿ ಕೆರೆ",
+   "description_en": "lake in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q34933703",
+  "source": "wikidata",
+  "name": "Vanivilasa Sagara",
+  "category": "lake",
+  "latitude": 13.866389,
+  "longitude": 76.465556,
+  "district": "Chitradurga",
+  "extra": {
+   "wikidata": "Q34933703",
+   "name:kn": "ವಾಣಿವಿಲಾಸ ಸಾಗರ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q16919384",
+  "source": "wikidata",
+  "name": "Devaragundi",
+  "category": "waterfall",
+  "latitude": 12.475,
+  "longitude": 75.479,
+  "district": "Dakshina Kannada",
+  "extra": {
+   "wikidata": "Q16919384",
+   "wikipedia": "https://en.wikipedia.org/wiki/Devaragundi",
+   "description_en": "waterfall in Karnataka, India"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "wikidata:Q24950906",
+  "source": "wikidata",
+  "name": "Kundavada Kere",
+  "category": "lake",
+  "latitude": 14.456,
+  "longitude": 75.89,
+  "district": "Davanagere",
+  "extra": {
+   "wikidata": "Q24950906",
+   "wikipedia": "https://en.wikipedia.org/wiki/Kundavada_Kere",
+   "description_en": "body of water"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q34929390",
+  "source": "wikidata",
+  "name": "Sule Kere",
+  "category": "lake",
+  "latitude": 14.133333,
+  "longitude": 75.904722,
+  "district": "Davanagere",
+  "extra": {
+   "wikidata": "Q34929390",
+   "name:kn": "ಸುಳೆ ಕೆರೆ",
+   "description_en": "lake in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q31200592",
+  "source": "wikidata",
+  "name": "Unkal Gudda",
+  "category": "trek",
+  "latitude": 15.376944,
+  "longitude": 75.128611,
+  "district": "Dharwad",
+  "extra": {
+   "wikidata": "Q31200592",
+   "name:kn": "ಉಣಕಲ್ ಗುಡ್ಡ",
+   "description_en": "Hill in Karnataka, India"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "wikidata:Q34879805",
+  "source": "wikidata",
+  "name": "Channapatna Tank",
+  "category": "lake",
+  "latitude": 12.99579,
+  "longitude": 76.10793,
+  "district": "Hassan",
+  "extra": {
+   "wikidata": "Q34879805",
+   "name:kn": "ಚನ್ನಪಟ್ಟಣ ಟ್ಯಾಂಕ್",
+   "description_en": "reservoir in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q34930654",
+  "source": "wikidata",
+  "name": "Timmappanayakan Kere",
+  "category": "lake",
+  "latitude": 13.350556,
+  "longitude": 76.248611,
+  "district": "Hassan",
+  "extra": {
+   "wikidata": "Q34930654",
+   "name:kn": "ತಿಮ್ಮಪ್ಪನಾಯಕನ ಕೆರೆ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q5071334",
+  "source": "wikidata",
+  "name": "Chandragiri Hill",
+  "category": "trek",
+  "latitude": 12.861944,
+  "longitude": 76.487222,
+  "district": "Hassan",
+  "extra": {
+   "wikidata": "Q5071334",
+   "name:kn": "ಚಂದ್ರಗಿರಿ (ಶ್ರವಣಬೆಳಗೊಳ)",
+   "wikipedia": "https://en.wikipedia.org/wiki/Chandragiri_Hill",
+   "description_en": "hill in Karnataka, India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q31583384",
+  "source": "wikidata",
+  "name": "Mallappana Betta",
+  "category": "trek",
+  "latitude": 12.918056,
+  "longitude": 76.287778,
+  "district": "Hassan",
+  "extra": {
+   "wikidata": "Q31583384",
+   "name:kn": "ಮಲ್ಲಪ್ಪನ ಬೆಟ್ಟ",
+   "description_en": "mountain in India"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "wikidata:Q34894662",
+  "source": "wikidata",
+  "name": "Kere Bhosga",
+  "category": "lake",
+  "latitude": 17.395,
+  "longitude": 76.768056,
+  "district": "Kalaburagi",
+  "extra": {
+   "wikidata": "Q34894662",
+   "name:kn": "ಕೆರೆ ಭೋಸ್ಗ",
+   "description_en": "reservoir in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q34876667",
+  "source": "wikidata",
+  "name": "Arasina Kere",
+  "category": "lake",
+  "latitude": 12.538333,
+  "longitude": 75.903889,
+  "district": "Kodagu",
+  "extra": {
+   "wikidata": "Q34876667",
+   "name:kn": "ಅರಸಿನ ಕೆರೆ",
+   "description_en": "lake in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q34880253",
+  "source": "wikidata",
+  "name": "Chickaimotte Kere",
+  "category": "lake",
+  "latitude": 12.365833,
+  "longitude": 75.922222,
+  "district": "Kodagu",
+  "extra": {
+   "wikidata": "Q34880253",
+   "name:kn": "ಚಿಕ್ಕಾಯಿಮೊಟ್ಟೆ ಕೆರೆ",
+   "description_en": "reservoir in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q34880470",
+  "source": "wikidata",
+  "name": "Cholana Kere",
+  "category": "lake",
+  "latitude": 12.495556,
+  "longitude": 75.934722,
+  "district": "Kodagu",
+  "extra": {
+   "wikidata": "Q34880470",
+   "name:kn": "ಚೋಳನ ಕೆರೆ",
+   "description_en": "reservoir in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q34882424",
+  "source": "wikidata",
+  "name": "Dandenamana Kere",
+  "category": "lake",
+  "latitude": 12.507778,
+  "longitude": 75.9575,
+  "district": "Kodagu",
+  "extra": {
+   "wikidata": "Q34882424",
+   "name:kn": "ದಂಡೇನಅಮ್ಮನ ಕೆರೆ",
+   "description_en": "reservoir in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q34883166",
+  "source": "wikidata",
+  "name": "Devamachi Kere",
+  "category": "lake",
+  "latitude": 12.294444,
+  "longitude": 75.977778,
+  "district": "Kodagu",
+  "extra": {
+   "wikidata": "Q34883166",
+   "name:kn": "ದೇವಮಾಚಿ ಕೆರೆ",
+   "description_en": "reservoir in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q34888578",
+  "source": "wikidata",
+  "name": "Halagote Dod Kere",
+  "category": "lake",
+  "latitude": 12.546111,
+  "longitude": 75.963889,
+  "district": "Kodagu",
+  "extra": {
+   "wikidata": "Q34888578",
+   "name:kn": "ಹಳಗೋಟೆ ದೊಡ್ ಕೆರೆ",
+   "description_en": "reservoir in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q3630928",
+  "source": "wikidata",
+  "name": "Honnamana Kere",
+  "category": "lake",
+  "latitude": 12.621,
+  "longitude": 75.8802,
+  "district": "Kodagu",
+  "extra": {
+   "wikidata": "Q3630928",
+   "name:kn": "ಹೊನ್ನಮ್ಮನ ಕೆರೆ",
+   "wikipedia": "https://en.wikipedia.org/wiki/Honnamana_Kere",
+   "description_en": "lake in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q34893973",
+  "source": "wikidata",
+  "name": "Kappalu Kere",
+  "category": "lake",
+  "latitude": 12.603611,
+  "longitude": 75.903056,
+  "district": "Kodagu",
+  "extra": {
+   "wikidata": "Q34893973",
+   "name:kn": "ಕಪ್ಪಲು ಕೆರೆ",
+   "description_en": "lake in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q34896037",
+  "source": "wikidata",
+  "name": "Koteherur Kere",
+  "category": "lake",
+  "latitude": 12.480833,
+  "longitude": 75.890556,
+  "district": "Kodagu",
+  "extra": {
+   "wikidata": "Q34896037",
+   "name:kn": "ಕೋಟೆಹೆರೂರು ಕೆರೆ",
+   "description_en": "reservoir in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q34929909",
+  "source": "wikidata",
+  "name": "Tati Kere",
+  "category": "lake",
+  "latitude": 12.460833,
+  "longitude": 75.890556,
+  "district": "Kodagu",
+  "extra": {
+   "wikidata": "Q34929909",
+   "name:kn": "ತಾಟಿ ಕೆರೆ",
+   "description_en": "lake in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q31583859",
+  "source": "wikidata",
+  "name": "Kote Betta",
+  "category": "trek",
+  "latitude": 12.5392,
+  "longitude": 75.7563,
+  "district": "Kodagu",
+  "extra": {
+   "wikidata": "Q31583859",
+   "name:kn": "ಕೋಟೆ ಬೆಟ್ಟ",
+   "description_en": "mountain in India"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "wikidata:Q3696262",
+  "source": "wikidata",
+  "name": "Pushpagiri",
+  "category": "trek",
+  "latitude": 12.666667,
+  "longitude": 75.683333,
+  "district": "Kodagu",
+  "extra": {
+   "wikidata": "Q3696262",
+   "name:kn": "ಪುಷ್ಪಗಿರಿ ಬೆಟ್ಟ",
+   "wikipedia": "https://en.wikipedia.org/wiki/Pushpagiri_(mountain)",
+   "description_en": "one of the highest peaks in Western Ghats, Karnataka",
+   "ele": "1748"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q8519448",
+  "source": "wikidata",
+  "name": "Tadiandamol",
+  "category": "trek",
+  "latitude": 12.216667,
+  "longitude": 75.666667,
+  "district": "Kodagu",
+  "extra": {
+   "wikidata": "Q8519448",
+   "name:kn": "ತಡಿಯಾಂಡಮೋಲ್ ಬೆಟ್ಟ",
+   "wikipedia": "https://en.wikipedia.org/wiki/Tadiandamol",
+   "description_en": "third highest peak in Karnataka, India",
+   "ele": "1748"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q673060",
+  "source": "wikidata",
+  "name": "Abbey Falls",
+  "category": "waterfall",
+  "latitude": 12.4581,
+  "longitude": 75.7166,
+  "district": "Kodagu",
+  "extra": {
+   "wikidata": "Q673060",
+   "name:kn": "ಅಬ್ಬೆ ಜಲಪಾತ",
+   "wikipedia": "https://en.wikipedia.org/wiki/Abbey_Falls",
+   "description_en": "waterfall in Kodagu District of the Indian state of Karnataka"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q20719707",
+  "source": "wikidata",
+  "name": "Chelavara Falls",
+  "category": "waterfall",
+  "latitude": 12.206111,
+  "longitude": 75.673611,
+  "district": "Kodagu",
+  "extra": {
+   "wikidata": "Q20719707",
+   "wikipedia": "https://en.wikipedia.org/wiki/Chelavara_Falls",
+   "description_en": "waterfall near Cheyyandane, Kodagu district, Karnataka, India"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "wikidata:Q38091",
+  "source": "wikidata",
+  "name": "Irupu Falls",
+  "category": "waterfall",
+  "latitude": 11.967283,
+  "longitude": 75.983767,
+  "district": "Kodagu",
+  "extra": {
+   "wikidata": "Q38091",
+   "name:kn": "ಇರ್ಪು ಜಲಪಾತ",
+   "wikipedia": "https://en.wikipedia.org/wiki/Irupu_Falls",
+   "description_en": "waterfall in Kodagu District of Karnataka, India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q6744050",
+  "source": "wikidata",
+  "name": "Mallalli Falls",
+  "category": "waterfall",
+  "latitude": 12.6,
+  "longitude": 75.87,
+  "district": "Kodagu",
+  "extra": {
+   "wikidata": "Q6744050",
+   "name:kn": "ಮಲ್ಲಳ್ಳಿ ಜಲಪಾತ",
+   "wikipedia": "https://en.wikipedia.org/wiki/Mallalli_Falls",
+   "description_en": "water fall in Karnataka, India",
+   "ele": "840"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q34877769",
+  "source": "wikidata",
+  "name": "Bhairandhalli Kere",
+  "category": "lake",
+  "latitude": 13.240833,
+  "longitude": 77.994444,
+  "district": "Kolar",
+  "extra": {
+   "wikidata": "Q34877769",
+   "name:kn": "ಭೈರಂದಹಳ್ಳಿ ಕೆರೆ",
+   "description_en": "reservoir in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q116259971",
+  "source": "wikidata",
+  "name": "Cascading Tank Ecosystem Of Karnataka",
+  "category": "lake",
+  "latitude": 13.062164,
+  "longitude": 78.346111,
+  "district": "Kolar",
+  "extra": {
+   "wikidata": "Q116259971",
+   "name:kn": "ಕರ್ನಾಟಕದ ಕ್ಯಾಸ್ಕೇಡಿಂಗ್ ಟ್ಯಾಂಕ್ ಪರಿಸರ ವ್ಯವಸ್ಥೆ"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q34883724",
+  "source": "wikidata",
+  "name": "Dod-Vallabi Kere",
+  "category": "lake",
+  "latitude": 13.158056,
+  "longitude": 77.995,
+  "district": "Kolar",
+  "extra": {
+   "wikidata": "Q34883724",
+   "name:kn": "ದೊಡ್-ವಲ್ಲಬಿ ಕೆರೆ",
+   "description_en": "reservoir in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q34891280",
+  "source": "wikidata",
+  "name": "Harjenhalli Kere",
+  "category": "lake",
+  "latitude": 13.207778,
+  "longitude": 77.994167,
+  "district": "Kolar",
+  "extra": {
+   "wikidata": "Q34891280",
+   "name:kn": "ಹರ್ಜೇನಹಳ್ಳಿ ಕೆರೆ",
+   "description_en": "reservoir in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q34896869",
+  "source": "wikidata",
+  "name": "Kamandhalli Kere",
+  "category": "lake",
+  "latitude": 13.219167,
+  "longitude": 77.979722,
+  "district": "Kolar",
+  "extra": {
+   "wikidata": "Q34896869",
+   "name:kn": "ಕಮಂಡಹಳ್ಳಿ ಕೆರೆ",
+   "description_en": "reservoir in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q34896606",
+  "source": "wikidata",
+  "name": "Kurgal Kere",
+  "category": "lake",
+  "latitude": 13.186667,
+  "longitude": 77.994167,
+  "district": "Kolar",
+  "extra": {
+   "wikidata": "Q34896606",
+   "name:kn": "ಕುರ್ಗಲ್ ಕೆರೆ",
+   "description_en": "reservoir in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q34905396",
+  "source": "wikidata",
+  "name": "Maliappanhalli Kere",
+  "category": "lake",
+  "latitude": 13.205,
+  "longitude": 77.968889,
+  "district": "Kolar",
+  "extra": {
+   "wikidata": "Q34905396",
+   "name:kn": "ಮಲಿಯಪ್ಪನಹಳ್ಳಿ ಕೆರೆ",
+   "description_en": "reservoir in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q34910271",
+  "source": "wikidata",
+  "name": "Narsapur Kere",
+  "category": "lake",
+  "latitude": 13.133889,
+  "longitude": 77.998333,
+  "district": "Kolar",
+  "extra": {
+   "wikidata": "Q34910271",
+   "name:kn": "ನರಸಾಪುರ ಕೆರೆ",
+   "description_en": "lake in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q4770973",
+  "source": "wikidata",
+  "name": "Antara Gange",
+  "category": "trek",
+  "latitude": 13.142425,
+  "longitude": 78.100561,
+  "district": "Kolar",
+  "extra": {
+   "wikidata": "Q4770973",
+   "name:kn": "ಅಂತರಗಂಗೆ ಬೆಟ್ಟ",
+   "wikipedia": "https://en.wikipedia.org/wiki/Antara_Gange",
+   "description_en": "Mountain in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q2763469",
+  "source": "wikidata",
+  "name": "Pampa Sarovar",
+  "category": "lake",
+  "latitude": 15.353764,
+  "longitude": 76.477375,
+  "district": "Koppal",
+  "extra": {
+   "wikidata": "Q2763469",
+   "name:kn": "ಪಂಪಾ ಸರೋವರ",
+   "wikipedia": "https://en.wikipedia.org/wiki/Pampa_Sarovar",
+   "description_en": "lake in India in karnatka"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q28169337",
+  "source": "wikidata",
+  "name": "Ayyanakere",
+  "category": "lake",
+  "latitude": 13.033842,
+  "longitude": 76.740958,
+  "district": "Mandya",
+  "extra": {
+   "wikidata": "Q28169337",
+   "wikipedia": "https://en.wikipedia.org/wiki/Ayyanakere",
+   "description_en": "lake in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q34884486",
+  "source": "wikidata",
+  "name": "Dasana Kere",
+  "category": "lake",
+  "latitude": 12.988611,
+  "longitude": 76.713889,
+  "district": "Mandya",
+  "extra": {
+   "wikidata": "Q34884486",
+   "name:kn": "ದಾಸನ ಕೆರೆ",
+   "description_en": "reservoir in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q34908658",
+  "source": "wikidata",
+  "name": "Moti Talab",
+  "category": "lake",
+  "latitude": 12.565278,
+  "longitude": 76.634444,
+  "district": "Mandya",
+  "extra": {
+   "wikidata": "Q34908658",
+   "name:kn": "ಮೋತಿ ಕೊಳ",
+   "description_en": "reservoir in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q133855198",
+  "source": "wikidata",
+  "name": "Kunti Betta",
+  "category": "trek",
+  "latitude": 12.5078,
+  "longitude": 76.6978,
+  "district": "Mandya",
+  "extra": {
+   "wikidata": "Q133855198",
+   "wikipedia": "https://en.wikipedia.org/wiki/Kunti_Betta",
+   "description_en": "set of hills in Karnataka, India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q33155231",
+  "source": "wikidata",
+  "name": "Shimsha Falls",
+  "category": "waterfall",
+  "latitude": 12.3,
+  "longitude": 77.3,
+  "district": "Mandya",
+  "extra": {
+   "wikidata": "Q33155231"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "wikidata:Q38397",
+  "source": "wikidata",
+  "name": "Shivanasamudra Falls",
+  "category": "waterfall",
+  "latitude": 12.294,
+  "longitude": 77.168,
+  "district": "Mandya",
+  "extra": {
+   "wikidata": "Q38397",
+   "name:kn": "ಶಿವನ ಸಮುದ್ರ",
+   "wikipedia": "https://en.wikipedia.org/wiki/Shivanasamudra_Falls",
+   "description_en": "waterfalls on the Kaveri River in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q34876655",
+  "source": "wikidata",
+  "name": "Arasanakere Tank",
+  "category": "lake",
+  "latitude": 12.086389,
+  "longitude": 76.711389,
+  "district": "Mysuru",
+  "extra": {
+   "wikidata": "Q34876655",
+   "name:kn": "ಅರಸನಕೆರೆ ಟ್ಯಾಂಕ್",
+   "description_en": "lake in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q34876936",
+  "source": "wikidata",
+  "name": "Bale Katte",
+  "category": "lake",
+  "latitude": 12.441667,
+  "longitude": 75.944444,
+  "district": "Mysuru",
+  "extra": {
+   "wikidata": "Q34876936",
+   "name:kn": "ಬಾಳೆ ಕಟ್ಟೆ",
+   "description_en": "reservoir in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q34877078",
+  "source": "wikidata",
+  "name": "Bannur Tank",
+  "category": "lake",
+  "latitude": 12.350278,
+  "longitude": 76.861111,
+  "district": "Mysuru",
+  "extra": {
+   "wikidata": "Q34877078",
+   "name:kn": "ಬನ್ನೂರು ಟ್ಯಾಂಕ್",
+   "description_en": "reservoir in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q34879898",
+  "source": "wikidata",
+  "name": "Chaudi Kere",
+  "category": "lake",
+  "latitude": 12.471944,
+  "longitude": 75.975278,
+  "district": "Mysuru",
+  "extra": {
+   "wikidata": "Q34879898",
+   "name:kn": "ಚೌಡಿ ಕೆರೆ",
+   "description_en": "reservoir in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q34883188",
+  "source": "wikidata",
+  "name": "Devee Kere",
+  "category": "lake",
+  "latitude": 12.3775,
+  "longitude": 75.993333,
+  "district": "Mysuru",
+  "extra": {
+   "wikidata": "Q34883188",
+   "name:kn": "ದೇವೀ ಕೆರೆ",
+   "description_en": "reservoir in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q106238322",
+  "source": "wikidata",
+  "name": "Hebbal Lake",
+  "category": "lake",
+  "latitude": 12.358389,
+  "longitude": 76.610472,
+  "district": "Mysuru",
+  "extra": {
+   "wikidata": "Q106238322",
+   "wikipedia": "https://en.wikipedia.org/wiki/Hebbal_Lake,_Mysore",
+   "description_en": "body of water"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q34890702",
+  "source": "wikidata",
+  "name": "Hosa Kere",
+  "category": "lake",
+  "latitude": 12.419444,
+  "longitude": 75.989444,
+  "district": "Mysuru",
+  "extra": {
+   "wikidata": "Q34890702",
+   "name:kn": "ಹೊಸಕೆರೆ",
+   "description_en": "reservoir in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q31793505",
+  "source": "wikidata",
+  "name": "Kabini Reservoir",
+  "category": "lake",
+  "latitude": 11.973526,
+  "longitude": 76.352756,
+  "district": "Mysuru",
+  "extra": {
+   "wikidata": "Q31793505",
+   "name:kn": "ಕಬಿನಿ ಜಲಾಶಯ",
+   "description_en": "reservoir in the south west of Karnataka, India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q6368492",
+  "source": "wikidata",
+  "name": "Karanji Lake",
+  "category": "lake",
+  "latitude": 12.302778,
+  "longitude": 76.673611,
+  "district": "Mysuru",
+  "extra": {
+   "wikidata": "Q6368492",
+   "name:kn": "ಕಾರಂಜಿ ಕೆರೆ",
+   "wikipedia": "https://en.wikipedia.org/wiki/Karanji_Lake",
+   "description_en": "lake in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q3536528",
+  "source": "wikidata",
+  "name": "Krishna Raja Sagara",
+  "category": "lake",
+  "latitude": 12.452778,
+  "longitude": 76.506111,
+  "district": "Mysuru",
+  "extra": {
+   "wikidata": "Q3536528",
+   "name:kn": "ಕೃಷ್ಣರಾಜಸಾಗರ",
+   "wikipedia": "https://en.wikipedia.org/wiki/Krishna_Raja_Sagara",
+   "description_en": "reservoir in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q6442499",
+  "source": "wikidata",
+  "name": "Kukkarahalli lake",
+  "category": "lake",
+  "latitude": 12.3,
+  "longitude": 76.63,
+  "district": "Mysuru",
+  "extra": {
+   "wikidata": "Q6442499",
+   "name:kn": "ಕುಕ್ಕರಹಳ್ಳಿ ಕೆರೆ",
+   "wikipedia": "https://en.wikipedia.org/wiki/Kukkarahalli_Lake",
+   "description_en": "lake in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q6553754",
+  "source": "wikidata",
+  "name": "Lingambudhi Lake",
+  "category": "lake",
+  "latitude": 12.269372,
+  "longitude": 76.611978,
+  "district": "Mysuru",
+  "extra": {
+   "wikidata": "Q6553754",
+   "name:kn": "ಲಿಂಗಾಂಬುಧಿ ಕೆರೆ",
+   "wikipedia": "https://en.wikipedia.org/wiki/Lingambudhi_Lake",
+   "description_en": "lake in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q34909276",
+  "source": "wikidata",
+  "name": "Munchadevar Kere",
+  "category": "lake",
+  "latitude": 12.344167,
+  "longitude": 75.9975,
+  "district": "Mysuru",
+  "extra": {
+   "wikidata": "Q34909276",
+   "name:kn": "ಮುಂಚದೇವರ ಕೆರೆ",
+   "description_en": "reservoir in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q34928834",
+  "source": "wikidata",
+  "name": "Sunkal Kere",
+  "category": "lake",
+  "latitude": 12.451389,
+  "longitude": 75.983611,
+  "district": "Mysuru",
+  "extra": {
+   "wikidata": "Q34928834",
+   "name:kn": "ಸುಂಕಲ್ ಕೆರೆ",
+   "description_en": "lake in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q5070260",
+  "source": "wikidata",
+  "name": "Chamundi Hills",
+  "category": "trek",
+  "latitude": 12.273,
+  "longitude": 76.67,
+  "district": "Mysuru",
+  "extra": {
+   "wikidata": "Q5070260",
+   "name:kn": "ಚಾಮುಂಡಿ ಬೆಟ್ಟ",
+   "wikipedia": "https://en.wikipedia.org/wiki/Chamundi_Hills",
+   "description_en": "hills east of Mysore in Karnataka, India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q3696249",
+  "source": "wikidata",
+  "name": "Chunchanakatte Falls",
+  "category": "waterfall",
+  "latitude": 12.506624,
+  "longitude": 76.290672,
+  "district": "Mysuru",
+  "extra": {
+   "wikidata": "Q3696249",
+   "name:kn": "ಚುಂಚನಕಟ್ಟೆ ಜಲಪಾತ",
+   "wikipedia": "https://en.wikipedia.org/wiki/Chunchanakatte_Falls",
+   "description_en": "waterfall in Karnataka, India"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "wikidata:Q34890942",
+  "source": "wikidata",
+  "name": "Huligudda Tank",
+  "category": "lake",
+  "latitude": 16.288333,
+  "longitude": 76.824444,
+  "district": "Raichur",
+  "extra": {
+   "wikidata": "Q34890942",
+   "name:kn": "ಹುಲಿಗುಡ್ಡ ಟ್ಯಾಂಕ್",
+   "description_en": "reservoir in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q5896581",
+  "source": "wikidata",
+  "name": "Honnemaradu",
+  "category": "lake",
+  "latitude": 14.1781,
+  "longitude": 74.8763,
+  "district": "Shivamogga",
+  "extra": {
+   "wikidata": "Q5896581",
+   "name:kn": "ಹೊನ್ನೇಮರಡು",
+   "wikipedia": "https://en.wikipedia.org/wiki/Honnemaradu",
+   "description_en": "lake in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q34902992",
+  "source": "wikidata",
+  "name": "Linganamakki Reservoir",
+  "category": "lake",
+  "latitude": 14.101389,
+  "longitude": 74.880556,
+  "district": "Shivamogga",
+  "extra": {
+   "wikidata": "Q34902992",
+   "name:kn": "ಲಿಂಗನಮಕ್ಕಿ ಜಲಾಶಯ",
+   "description_en": "reservoir in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q130600385",
+  "source": "wikidata",
+  "name": "Mani Reservoir",
+  "category": "lake",
+  "latitude": 13.65915,
+  "longitude": 75.089556,
+  "district": "Shivamogga",
+  "extra": {
+   "wikidata": "Q130600385",
+   "name:kn": "ಮಾಣಿ ಜಲಾಶಯ",
+   "description_en": "reservoir in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q34922103",
+  "source": "wikidata",
+  "name": "Savalanga Kere",
+  "category": "lake",
+  "latitude": 14.092778,
+  "longitude": 75.522222,
+  "district": "Shivamogga",
+  "extra": {
+   "wikidata": "Q34922103",
+   "name:kn": "ಸವಳಂಗ ಕೆರೆ",
+   "description_en": "lake in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q4742015",
+  "source": "wikidata",
+  "name": "Ambuthirtha",
+  "category": "trek",
+  "latitude": 13.792222,
+  "longitude": 75.176667,
+  "district": "Shivamogga",
+  "extra": {
+   "wikidata": "Q4742015",
+   "name:kn": "ಅಂಬುತೀರ್ಥ",
+   "wikipedia": "https://en.wikipedia.org/wiki/Ambuthirtha",
+   "description_en": "mountain in India"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "wikidata:Q8535825",
+  "source": "wikidata",
+  "name": "Gudde Mardi",
+  "category": "trek",
+  "latitude": 13.900556,
+  "longitude": 75.573611,
+  "district": "Shivamogga",
+  "extra": {
+   "wikidata": "Q8535825",
+   "wikipedia": "https://en.wikipedia.org/wiki/Gudde_Mardi"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "wikidata:Q3595688",
+  "source": "wikidata",
+  "name": "Kodachadri",
+  "category": "trek",
+  "latitude": 13.860833,
+  "longitude": 74.874722,
+  "district": "Shivamogga",
+  "extra": {
+   "wikidata": "Q3595688",
+   "name:kn": "ಕೊಡಚಾದ್ರಿ",
+   "wikipedia": "https://en.wikipedia.org/wiki/Kodachadri",
+   "description_en": "mountain in India",
+   "ele": "1343"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q6444254",
+  "source": "wikidata",
+  "name": "Kundadri",
+  "category": "trek",
+  "latitude": 13.5575,
+  "longitude": 75.170278,
+  "district": "Shivamogga",
+  "extra": {
+   "wikidata": "Q6444254",
+   "name:kn": "ಕುಂದಾದ್ರಿ ಬೆಟ್ಟ",
+   "wikipedia": "https://en.wikipedia.org/wiki/Kundadri",
+   "description_en": "hill in India",
+   "ele": "826"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "wikidata:Q672241",
+  "source": "wikidata",
+  "name": "Jog Falls",
+  "category": "waterfall",
+  "latitude": 14.23,
+  "longitude": 74.812778,
+  "district": "Shivamogga",
+  "extra": {
+   "wikidata": "Q672241",
+   "name:kn": "ಜೋಗ ಜಲಪಾತ",
+   "wikipedia": "https://en.wikipedia.org/wiki/Jog_Falls",
+   "description_en": "second largest plunge falls located in Karnataka"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q34877460",
+  "source": "wikidata",
+  "name": "Begur Kere",
+  "category": "lake",
+  "latitude": 13.012222,
+  "longitude": 77.051944,
+  "district": "Tumakuru",
+  "extra": {
+   "wikidata": "Q34877460",
+   "name:kn": "ಬೇಗೂರು ಕೆರೆ",
+   "description_en": "lake in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q34896514",
+  "source": "wikidata",
+  "name": "Kunigal Kere",
+  "category": "lake",
+  "latitude": 13.036667,
+  "longitude": 77.0325,
+  "district": "Tumakuru",
+  "extra": {
+   "wikidata": "Q34896514",
+   "name:kn": "ಕುಣಿಗಲ್ ಕೆರೆ",
+   "description_en": "reservoir in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q34868923",
+  "source": "wikidata",
+  "name": "Ane Kere",
+  "category": "lake",
+  "latitude": 13.2075,
+  "longitude": 74.997222,
+  "district": "Udupi",
+  "extra": {
+   "wikidata": "Q34868923",
+   "name:kn": "ಅನೆ ಕೆರೆ",
+   "description_en": "lake in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q34895741",
+  "source": "wikidata",
+  "name": "Kolin Kere",
+  "category": "lake",
+  "latitude": 13.728333,
+  "longitude": 74.905,
+  "district": "Udupi",
+  "extra": {
+   "wikidata": "Q34895741",
+   "name:kn": "ಕೋಲಿನ್ ಕೆರೆ",
+   "description_en": "reservoir in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q34905220",
+  "source": "wikidata",
+  "name": "Majalere Kere",
+  "category": "lake",
+  "latitude": 13.179167,
+  "longitude": 74.8925,
+  "district": "Udupi",
+  "extra": {
+   "wikidata": "Q34905220",
+   "name:kn": "ಮಜಲೇರೆ ಕೆರೆ",
+   "description_en": "reservoir in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q34906296",
+  "source": "wikidata",
+  "name": "Mathahada Kere",
+  "category": "lake",
+  "latitude": 13.195,
+  "longitude": 74.989722,
+  "district": "Udupi",
+  "extra": {
+   "wikidata": "Q34906296",
+   "name:kn": "ಮಠಹದ ಕೆರೆ",
+   "description_en": "reservoir in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q5521046",
+  "source": "wikidata",
+  "name": "Gangamoola",
+  "category": "trek",
+  "latitude": 13.249,
+  "longitude": 75.156,
+  "district": "Udupi",
+  "extra": {
+   "wikidata": "Q5521046",
+   "name:kn": "ಗಂಗಾ ಮೂಲ",
+   "wikipedia": "https://en.wikipedia.org/wiki/Gangamoola",
+   "description_en": "hill in Karnataka, India"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "wikidata:Q131154842",
+  "source": "wikidata",
+  "name": "Arasinagundi Falls",
+  "category": "waterfall",
+  "latitude": 13.866667,
+  "longitude": 74.883333,
+  "district": "Udupi",
+  "extra": {
+   "wikidata": "Q131154842",
+   "description_en": "waterfall in Karnataka India"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "wikidata:Q16976126",
+  "source": "wikidata",
+  "name": "Koosalli Water Falls",
+  "category": "waterfall",
+  "latitude": 13.964167,
+  "longitude": 74.681944,
+  "district": "Udupi",
+  "extra": {
+   "wikidata": "Q16976126",
+   "name:kn": "ಕೋಸಳ್ಳಿ ಜಲಪಾತ",
+   "wikipedia": "https://en.wikipedia.org/wiki/Koosalli_Waterfalls",
+   "description_en": "waterfall in India"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "wikidata:Q38816",
+  "source": "wikidata",
+  "name": "Kunchikal Falls",
+  "category": "waterfall",
+  "latitude": 13.6947,
+  "longitude": 75.018131,
+  "district": "Udupi",
+  "extra": {
+   "wikidata": "Q38816",
+   "name:kn": "ಕುಂಚಿಕಲ್ ಜಲಪಾತ",
+   "wikipedia": "https://en.wikipedia.org/wiki/Kunchikal_Falls",
+   "description_en": "waterfall in Karnataka, India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q115575096",
+  "source": "wikidata",
+  "name": "Benne Hole Falls",
+  "category": "waterfall",
+  "latitude": 14.504442,
+  "longitude": 74.624403,
+  "district": "Uttara Kannada",
+  "extra": {
+   "wikidata": "Q115575096",
+   "wikipedia": "https://en.wikipedia.org/wiki/Benne_Hole_Falls",
+   "description_en": "tourist destination near Sirsi, Karnataka"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "wikidata:Q19457928",
+  "source": "wikidata",
+  "name": "Dabbe Falls, Sagara",
+  "category": "waterfall",
+  "latitude": 14.147778,
+  "longitude": 74.745,
+  "district": "Uttara Kannada",
+  "extra": {
+   "wikidata": "Q19457928",
+   "wikipedia": "https://en.wikipedia.org/wiki/Dabbe_Falls_(Sagara)",
+   "description_en": "waterfall in Karnataka, India"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "wikidata:Q7426161",
+  "source": "wikidata",
+  "name": "Sathodi Falls",
+  "category": "waterfall",
+  "latitude": 14.948,
+  "longitude": 74.586,
+  "district": "Uttara Kannada",
+  "extra": {
+   "wikidata": "Q7426161",
+   "name:kn": "ಸಾತೋಡಿ ಜಲಪಾತ",
+   "wikipedia": "https://en.wikipedia.org/wiki/Sathodi_Falls",
+   "description_en": "waterfalls near Sirsi, Karnataka"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q115575095",
+  "source": "wikidata",
+  "name": "Shivaganga Falls",
+  "category": "waterfall",
+  "latitude": 14.797218,
+  "longitude": 74.756987,
+  "district": "Uttara Kannada",
+  "extra": {
+   "wikidata": "Q115575095",
+   "name:kn": "ಶಿವಗಂಗಾ ಜಲಪಾತ",
+   "wikipedia": "https://en.wikipedia.org/wiki/Shivaganga_Falls",
+   "description_en": "tourist destination near Sirsi, Karnataka"
+  },
+  "is_hidden": true
+ },
+ {
+  "osm_id": "wikidata:Q37303",
+  "source": "wikidata",
+  "name": "Unchalli Falls",
+  "category": "waterfall",
+  "latitude": 14.409444,
+  "longitude": 74.7475,
+  "district": "Uttara Kannada",
+  "extra": {
+   "wikidata": "Q37303",
+   "name:kn": "ಉಂಚಳ್ಳಿ ಜಲಪಾತ",
+   "wikipedia": "https://en.wikipedia.org/wiki/Unchalli_Falls",
+   "description_en": "waterfall on the Aghanashini River in Karnataka, India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q34878126",
+  "source": "wikidata",
+  "name": "Bhima Kere",
+  "category": "lake",
+  "latitude": 14.786667,
+  "longitude": 76.334722,
+  "district": "Vijayanagara",
+  "extra": {
+   "wikidata": "Q34878126",
+   "name:kn": "ಭೀಮಾ ಕೆರೆ",
+   "description_en": "reservoir in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q123416595",
+  "source": "wikidata",
+  "name": "Matanga Hill",
+  "category": "trek",
+  "latitude": 15.316667,
+  "longitude": 76.466667,
+  "district": "Vijayanagara",
+  "extra": {
+   "wikidata": "Q123416595",
+   "name:kn": "ಮಾತಂಗ ಬೆಟ್ಟ",
+   "wikipedia": "https://en.wikipedia.org/wiki/Matanga_Hill",
+   "description_en": "hill in Karnataka, India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q34937609",
+  "source": "wikidata",
+  "name": "Areshankar Reservoir",
+  "category": "lake",
+  "latitude": 16.416944,
+  "longitude": 76.020278,
+  "district": "Vijayapura",
+  "extra": {
+   "wikidata": "Q34937609",
+   "name:kn": "ಅರೆಶಂಕರ ಜಲಾಶಯ",
+   "description_en": "lake in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q34888237",
+  "source": "wikidata",
+  "name": "Gundakarjagi Tank",
+  "category": "lake",
+  "latitude": 16.421944,
+  "longitude": 76.055278,
+  "district": "Vijayapura",
+  "extra": {
+   "wikidata": "Q34888237",
+   "name:kn": "ಗುಂಡಕರ್ಜಗಿ ಟ್ಯಾಂಕ್",
+   "description_en": "reservoir in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q34890326",
+  "source": "wikidata",
+  "name": "Hokrani Tank",
+  "category": "lake",
+  "latitude": 16.353889,
+  "longitude": 76.203889,
+  "district": "Vijayapura",
+  "extra": {
+   "wikidata": "Q34890326",
+   "name:kn": "ಹೊಕ್ರಾಣಿ ಟ್ಯಾಂಕ್",
+   "description_en": "reservoir in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q34890991",
+  "source": "wikidata",
+  "name": "Hunashihal Kere",
+  "category": "lake",
+  "latitude": 16.689444,
+  "longitude": 76.325833,
+  "district": "Vijayapura",
+  "extra": {
+   "wikidata": "Q34890991",
+   "name:kn": "ಹುಣಶಿಹಳ್ಳಿ ಕೆರೆ",
+   "description_en": "reservoir in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q34896361",
+  "source": "wikidata",
+  "name": "Kudaragunda Kere",
+  "category": "lake",
+  "latitude": 16.702222,
+  "longitude": 76.302222,
+  "district": "Vijayapura",
+  "extra": {
+   "wikidata": "Q34896361",
+   "name:kn": "ಕುದರಗುಂದ ಕೆರೆ",
+   "description_en": "reservoir in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q34882411",
+  "source": "wikidata",
+  "name": "Danda Cheruvu",
+  "category": "lake",
+  "latitude": 16.891111,
+  "longitude": 77.275556,
+  "district": "Yadgir",
+  "extra": {
+   "wikidata": "Q34882411",
+   "name:kn": "ದಂಡ ಚೆರುವು",
+   "description_en": "reservoir in India"
+  },
+  "is_hidden": false
+ },
+ {
+  "osm_id": "wikidata:Q34913492",
+  "source": "wikidata",
+  "name": "Parameshwar Tank",
+  "category": "lake",
+  "latitude": 16.801944,
+  "longitude": 77.411667,
+  "district": "Yadgir",
+  "extra": {
+   "wikidata": "Q34913492",
+   "name:kn": "ಪರಮೇಶ್ವರ್ ಟ್ಯಾಂಕ್",
+   "description_en": "reservoir in India"
+  },
+  "is_hidden": false
+ }
+]

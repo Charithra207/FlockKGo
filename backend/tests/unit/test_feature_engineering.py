@@ -29,8 +29,9 @@ def test_vector_has_correct_length():
 
 def test_budget_normalization_correct():
     vector = build_feature_vector(make_response(budget_min=1000, budget_max=3000))
-    assert vector[0] == 0.2
-    assert vector[1] == 0.2
+    # midpoint 2000 / 20000 and range 2000 / 20000 (BUDGET_SCALE_INR)
+    assert vector[0] == 0.1
+    assert vector[1] == 0.1
 
 
 def test_vibe_one_hot_encoding():

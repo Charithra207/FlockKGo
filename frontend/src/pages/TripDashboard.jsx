@@ -38,7 +38,7 @@ export default function TripDashboard() {
   const navigate = useNavigate()
   const { trip, participants, loading, error, refetch } = useTrip(tripId)
 
-  // Live survey progress â€” polls every 5s, stops once all submitted
+  // Live survey progress — polls every 5s, stops once all submitted
   const { submittedCount, totalCount, allSubmitted, submittedMap } = useSurveyStatus(
     trip ? tripId : null,
   )
@@ -68,7 +68,7 @@ export default function TripDashboard() {
   if (error) {
     return (
       <div className="rounded-2xl bg-white p-8 text-center shadow-card">
-        <p className="text-2xl">ðŸ˜•</p>
+        <p className="text-2xl">😕</p>
         <h2 className="mt-2 text-lg font-bold text-red-600">Failed to load trip</h2>
         <p className="mt-1 text-sm text-slate-500">{error}</p>
         <button
@@ -84,7 +84,7 @@ export default function TripDashboard() {
   if (!trip) {
     return (
       <div className="rounded-2xl bg-white p-8 text-center shadow-card">
-        <p className="text-4xl">ðŸ¦</p>
+        <p className="text-4xl">🐦</p>
         <h2 className="mt-2 text-xl font-bold text-primary">Trip not found</h2>
         <p className="mt-1 text-sm text-slate-500">
           This trip doesn't exist or the link has expired.
@@ -153,7 +153,7 @@ export default function TripDashboard() {
         <ProgressBar value={pct} />
         {total === 0 && (
           <p className="mt-3 text-sm text-slate-400">
-            No participants yet â€” add some from the Create page.
+            No participants yet — add some from the Create page.
           </p>
         )}
       </div>
@@ -175,7 +175,7 @@ export default function TripDashboard() {
             </button>
           ) : (
             <p className="rounded-xl bg-slate-100 px-4 py-2 text-sm text-slate-500">
-              Waiting for all {total} surveysâ€¦
+              Waiting for all {total} surveys…
             </p>
           )
         )}
@@ -194,9 +194,16 @@ export default function TripDashboard() {
             to={`/trip/${trip.id}/results`}
             className="rounded-xl bg-emerald-600 px-4 py-2 font-semibold text-white hover:opacity-90"
           >
-            See Results ðŸŽ‰
+            See Results 🎉
           </Link>
         )}
+
+        <Link
+          to={`/trip/${trip.id}/plan`}
+          className="rounded-xl bg-white px-4 py-2 font-semibold text-primary shadow-card hover:shadow-md"
+        >
+          🎒 Packing, expenses &amp; SOS
+        </Link>
       </div>
     </div>
   )

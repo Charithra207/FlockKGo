@@ -3,12 +3,19 @@ import { Route, Routes, useLocation } from 'react-router-dom'
 import ErrorBoundary from './components/common/ErrorBoundary'
 import Footer from './components/layout/Footer'
 import Navbar from './components/layout/Navbar'
+import AdminSpots from './pages/AdminSpots'
 import CreateTrip from './pages/CreateTrip'
+import Explore from './pages/Explore'
 import Home from './pages/Home'
+import Login from './pages/Login'
+import MySpots from './pages/MySpots'
 import NotFound from './pages/NotFound'
 import Recommendations from './pages/Recommendations'
 import Results from './pages/Results'
+import ShareSpot from './pages/ShareSpot'
+import SpotDetail from './pages/SpotDetail'
 import Survey from './pages/Survey'
+import TripCompanion from './pages/TripCompanion'
 import TripDashboard from './pages/TripDashboard'
 import Voting from './pages/Voting'
 
@@ -45,6 +52,14 @@ export default function App() {
                 <Route path="/trip/:tripId/recs"    element={<Page><Recommendations /></Page>} />
                 <Route path="/trip/:tripId/vote"    element={<Page><Voting /></Page>} />
                 <Route path="/trip/:tripId/results" element={<Page><Results /></Page>} />
+                <Route path="/trip/:tripId/plan"    element={<Page><TripCompanion /></Page>} />
+                <Route path="/explore"              element={<Page><Explore /></Page>} />
+                <Route path="/spots/share"          element={<Page><ShareSpot /></Page>} />
+                <Route path="/spots/:spotId"        element={<Page><SpotDetail /></Page>} />
+                <Route path="/spots/:spotId/edit"   element={<Page><ShareSpot /></Page>} />
+                <Route path="/login"                element={<Page><Login /></Page>} />
+                <Route path="/me"                   element={<Page><MySpots /></Page>} />
+                <Route path="/admin/spots"          element={<Page><AdminSpots /></Page>} />
                 <Route path="*"                     element={<NotFound />} />
               </Routes>
             </motion.div>

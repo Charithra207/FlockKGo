@@ -138,7 +138,7 @@ def test_property_1_overpass_query_contains_allowlist(tag_subset):
     """
     subset = list(tag_subset)
     query = build_overpass_query(subset)
-    assert "6.5,68.0,37.5,97.5" in query
+    assert "11.5,74.0,18.5,78.6" in query  # Karnataka bbox
     for key, value in subset:
         if value == "*":
             assert f'["{key}"]' in query

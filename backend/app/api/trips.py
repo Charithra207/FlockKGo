@@ -13,6 +13,9 @@ On-Trip Concierge endpoints (added in Trip Lifecycle phase):
 """
 
 import uuid
+from typing import Optional
+
+from app.config import get_settings
 
 from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, Request
 from slowapi import Limiter
@@ -38,6 +41,22 @@ from app.services.voting_service import RankedChoiceVoting
 
 limiter = Limiter(key_func=lambda request: request.client.host if request.client else "unknown")
 router = APIRouter(prefix="/trips", tags=["trips"])
+
+
+def _dest_coords(dest) -> tuple[Optional[float], Optional[float]]:
+    """Destination coordinates: catalog columns first, then synced OSM metadata."""
+    if dest is None:
+        return None, None
+    if getattr(dest, "latitude", None) is not None and getattr(dest, "longitude", None) is not None:
+        return float(dest.latitude), float(dest.longitude)
+    meta = dest.tourism_metadata or {}
+    try:
+        lat = float(meta.get("lat") or meta.get("latitude") or 0) or None
+        lon = float(meta.get("lon") or meta.get("longitude") or 0) or None
+    except (TypeError, ValueError):
+        return None, None
+    return (lat, lon) if lat and lon else (None, None)
+
 
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
@@ -173,9 +192,13 @@ def run_analysis(
     db.commit()
     db.refresh(task_run)
 
-    # Try Celery first — fall back to in-process if Redis is down
+    # Celery only when a worker is actually deployed (USE_CELERY=true).
+    # Otherwise a reachable Redis with no worker would accept the task and the
+    # trip would sit in "running_ml" forever. Falls back in-process on error.
     dispatched_via = "celery"
     try:
+        if not get_settings().use_celery:
+            raise RuntimeError("celery disabled")
         from app.workers.tasks import run_ml_pipeline
 
         celery_result = run_ml_pipeline.apply_async(
@@ -185,8 +208,8 @@ def run_analysis(
         task_run.celery_task_id = celery_result.id
         db.commit()
 
-    except Exception as e:
-        # Redis unavailable — fall back to BackgroundTasks
+    except Exception:
+        # Celery disabled or Redis unavailable — run in-process
         dispatched_via = "background_task_fallback"
         task_run.celery_task_id = str(task_run.id)
         db.commit()
@@ -691,16 +714,7 @@ def get_sos(
     top_rec, dest = _get_winning_destination(trip_id, db)
     destination_name = top_rec.destination_name if top_rec else trip.name
 
-    # Extract lat/lon from destination tourism_metadata if available
-    lat, lon = None, None
-    if dest and dest.tourism_metadata:
-        lat = dest.tourism_metadata.get("lat") or dest.tourism_metadata.get("latitude")
-        lon = dest.tourism_metadata.get("lon") or dest.tourism_metadata.get("longitude")
-    if lat:
-        try:
-            lat, lon = float(lat), float(lon)
-        except (TypeError, ValueError):
-            lat, lon = None, None
+    lat, lon = _dest_coords(dest)
 
     sos_block = get_sos_block(destination_name, lat=lat, lon=lon)
     sos_block["trip_id"] = str(trip_id)
@@ -713,7 +727,7 @@ def get_sos(
 def get_travel_options(
     request: Request,
     trip_id: uuid.UUID,
-    travel_date: str | None = None,
+    travel_date: Optional[str] = None,
     db: Session = Depends(get_db),
     _api_key=Depends(get_current_api_key),
 ):
@@ -733,7 +747,7 @@ def get_travel_options(
 
     top_rec, dest = _get_winning_destination(trip_id, db)
     destination_name = top_rec.destination_name if top_rec else trip.name
-    origin = trip.origin_city or "Mumbai"
+    origin = trip.origin_city or "Bengaluru"  # Karnataka-first default
 
     # Estimate per-person accommodation budget from the optimised plan
     from app.models.budget_plan import BudgetPlanRecord
@@ -753,15 +767,7 @@ def get_travel_options(
         per_person_budget_inr = per_night
 
     # Lat/lon for accommodation search
-    lat, lon = None, None
-    if dest and dest.tourism_metadata:
-        lat = dest.tourism_metadata.get("lat") or dest.tourism_metadata.get("latitude")
-        lon = dest.tourism_metadata.get("lon") or dest.tourism_metadata.get("longitude")
-    if lat:
-        try:
-            lat, lon = float(lat), float(lon)
-        except (TypeError, ValueError):
-            lat, lon = None, None
+    lat, lon = _dest_coords(dest)
 
     bus_data = fetch_bus_schedules(origin, destination_name, travel_date)
     accom_data = fetch_accommodations(
@@ -827,13 +833,7 @@ def get_trip_dashboard(
     )
 
     # SOS block
-    lat, lon = None, None
-    if dest and dest.tourism_metadata:
-        try:
-            lat = float(dest.tourism_metadata.get("lat") or dest.tourism_metadata.get("latitude") or 0) or None
-            lon = float(dest.tourism_metadata.get("lon") or dest.tourism_metadata.get("longitude") or 0) or None
-        except (TypeError, ValueError):
-            pass
+    lat, lon = _dest_coords(dest)
     sos = get_sos_block(destination_name, lat=lat, lon=lon)
 
     # Budget summary

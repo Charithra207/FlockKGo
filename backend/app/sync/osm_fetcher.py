@@ -27,7 +27,8 @@ log = get_logger(__name__)
 # ---------------------------------------------------------------------------
 # India bounding box — south,west,north,east (Overpass format)
 # ---------------------------------------------------------------------------
-INDIA_BBOX = "6.5,68.0,37.5,97.5"
+INDIA_BBOX = "6.5,68.0,37.5,97.5"  # kept for reference; queries use Karnataka
+from app.core.karnataka import KARNATAKA_BBOX_OVERPASS  # noqa: E402
 
 # ---------------------------------------------------------------------------
 # Tag Allowlist — only these tags are queried from Overpass
@@ -78,10 +79,10 @@ def build_overpass_query(tag_allowlist: list[tuple[str, str]]) -> str:
     Wildcard tags (value == "*") use the ``["key"]`` syntax (no value filter).
     Non-wildcard tags use the ``[key=value]`` syntax.
 
-    The returned string is guaranteed to contain the literal
-    ``"6.5,68.0,37.5,97.5"`` so tests can verify the bounding box.
+    The product is Karnataka-only, so the query uses the Karnataka bounding
+    box (``KARNATAKA_BBOX_OVERPASS`` = "11.5,74.0,18.5,78.6").
     """
-    bbox = INDIA_BBOX  # "6.5,68.0,37.5,97.5"
+    bbox = KARNATAKA_BBOX_OVERPASS
 
     union_parts: list[str] = []
     for key, value in tag_allowlist:

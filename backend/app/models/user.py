@@ -1,0 +1,25 @@
+import uuid
+
+from sqlalchemy import Boolean, Column, DateTime, Integer, String, Uuid
+from sqlalchemy.sql import func
+
+from app.db.database import Base
+
+
+class User(Base):
+    """
+    A persistent account (separate from per-trip Participants).
+
+    unlock_credits — the "give a spot, get a spot" currency.
+                     Earned when a submitted spot is approved, spent to
+                     unlock the exact location of a hidden spot.
+    """
+    __tablename__ = "users"
+
+    id = Column(Uuid, primary_key=True, default=uuid.uuid4)
+    email = Column(String(255), nullable=False, unique=True, index=True)
+    display_name = Column(String(80), nullable=False)
+    password_hash = Column(String(255), nullable=False)
+    unlock_credits = Column(Integer, nullable=False, default=0)
+    is_admin = Column(Boolean, nullable=False, default=False)
+    created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)

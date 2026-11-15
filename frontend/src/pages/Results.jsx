@@ -128,6 +128,12 @@ export default function Results() {
 
       <div className="flex flex-wrap gap-3">
         <Link
+          to={`/trip/${tripId}/plan`}
+          className="rounded-xl bg-primary px-5 py-3 font-semibold text-white hover:opacity-90"
+        >
+          🎒 Start packing &amp; plan the days
+        </Link>
+        <Link
           to="/create"
           className="rounded-xl bg-accent px-5 py-3 font-semibold text-white hover:opacity-90"
         >

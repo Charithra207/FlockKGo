@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import { Bird, ListTodo, Sparkles, ArrowRight } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
+import { useT } from '../i18n'
 
 const STORAGE_KEY = 'flockgo_recent_trips'
 
@@ -51,6 +52,7 @@ function RecentTrips() {
 
 export default function Home() {
   const navigate = useNavigate()
+  const t = useT()
 
   const steps = [
     { icon: <Bird className="h-6 w-6" />, title: 'Create your trip & invite your flock' },
@@ -90,6 +92,29 @@ export default function Home() {
             How it works
           </a>
         </div>
+      </section>
+
+      {/* Karnataka hidden spots */}
+      <section className="grid items-center gap-6 rounded-3xl bg-gradient-to-br from-primary to-[#2f5d8a] p-8 text-white shadow-card md:grid-cols-2">
+        <div>
+          <p className="text-sm font-semibold uppercase tracking-wider text-white/70">{t('home.kicker')}</p>
+          <h2 className="mt-1 text-3xl font-extrabold">{t('home.title')}</h2>
+          <p className="mt-2 text-white/80">{t('home.body')}</p>
+          <div className="mt-5 flex flex-wrap gap-3">
+            <Link to="/explore" className="rounded-xl bg-white px-5 py-2.5 font-semibold text-primary hover:opacity-90">{t('home.explore')}</Link>
+            <Link to="/spots/share" className="rounded-xl bg-accent px-5 py-2.5 font-semibold text-white hover:opacity-90">{t('home.share')}</Link>
+          </div>
+        </div>
+        <ul className="space-y-3 text-sm">
+          {[
+            ['🎁', t('home.step1')],
+            ['📍', t('home.step2')],
+            ['🔒', t('home.step3')],
+            ['✅', t('home.step4')],
+          ].map(([e, t]) => (
+            <li key={t} className="flex items-start gap-3 rounded-xl bg-white/10 p-3"><span className="text-xl">{e}</span>{t}</li>
+          ))}
+        </ul>
       </section>
 
       {/* Recent trips — only visible if localStorage has data */}

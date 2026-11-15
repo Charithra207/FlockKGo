@@ -1,62 +1,59 @@
+# Render blueprint — free-tier friendly.
+#
+# * One web service runs the API. ML analysis runs in-process
+#   (USE_CELERY=false), so no paid background worker or Redis is needed.
+# * Database: use a free Postgres that doesn't expire (Neon or Supabase) and
+#   paste its connection string into DATABASE_URL in the Render dashboard.
+#   (Render's own free Postgres is deleted after 30 days.)
+# * See DEPLOY.md for the step-by-step.
 services:
-  # ── FastAPI API ────────────────────────────────────────────────────────────
   - type: web
     name: packvote-api
     runtime: python
     rootDir: backend
+    plan: free
     buildCommand: pip install -r requirements.txt
-    startCommand: bash build.sh && uvicorn app.main:app --host 0.0.0.0 --port $PORT --workers 2
+    # build.sh: create/upgrade schema + seed the Karnataka catalog (idempotent).
+    # One worker: the free instance has 512 MB and the ML stack is heavy.
+    startCommand: bash build.sh && uvicorn app.main:app --host 0.0.0.0 --port $PORT --workers 1
     healthCheckPath: /health
     envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.8
       - key: DATABASE_URL
-        fromDatabase:
-          name: packvote-db
-          property: connectionString
-      - key: REDIS_URL
-        fromService:
-          name: packvote-redis
-          type: redis
-          property: connectionString
-      - key: OPENAI_API_KEY
-        sync: false          # set manually in Render dashboard
+        sync: false          # Neon / Supabase connection string
       - key: FRONTEND_BASE_URL
-        sync: false          # set to Vercel URL after friend deploys
+        sync: false          # your Vercel URL, e.g. https://yourapp.vercel.app
+      - key: AUTH_TOKEN_SECRET
+        generateValue: true  # signs user login tokens
       - key: API_SECRET_KEY
-        sync: false          # set manually: openssl rand -hex 32
-      - key: ENVIRONMENT
-        value: production
-
-  # ── Celery Worker ──────────────────────────────────────────────────────────
-  - type: worker
-    name: packvote-worker
-    runtime: python
-    rootDir: backend
-    buildCommand: pip install -r requirements.txt
-    startCommand: celery -A app.workers.celery_app:celery_app worker --loglevel=info --concurrency=2
-    envVars:
-      - key: DATABASE_URL
-        fromDatabase:
-          name: packvote-db
-          property: connectionString
-      - key: REDIS_URL
-        fromService:
-          name: packvote-redis
-          type: redis
-          property: connectionString
+        sync: false          # admin secret: openssl rand -hex 32
       - key: OPENAI_API_KEY
-        sync: false
+        sync: false          # optional: better descriptions + embeddings
+      - key: USE_CELERY
+        value: "false"
       - key: ENVIRONMENT
         value: production
 
-# ── PostgreSQL ─────────────────────────────────────────────────────────────
-databases:
-  - name: packvote-db
-    databaseName: flockgo
-    user: flockgo
-    plan: free
-
-# ── Redis ──────────────────────────────────────────────────────────────────
-  - type: redis
-    name: packvote-redis
-    plan: free
-    maxmemoryPolicy: allkeys-lru
+  # ── Optional (paid): Celery worker + Redis for heavy/background jobs ──────
+  # Uncomment both, and set USE_CELERY=true + REDIS_URL on the web service.
+  #
+  # - type: worker
+  #   name: packvote-worker
+  #   runtime: python
+  #   rootDir: backend
+  #   plan: starter
+  #   buildCommand: pip install -r requirements.txt
+  #   startCommand: celery -A app.workers.celery_app:celery_app worker --loglevel=info --concurrency=2
+  #   envVars:
+  #     - key: DATABASE_URL
+  #       sync: false
+  #     - key: REDIS_URL
+  #       fromService: { name: packvote-redis, type: keyvalue, property: connectionString }
+  #     - key: ENVIRONMENT
+  #       value: production
+  #
+  # - type: keyvalue
+  #   name: packvote-redis
+  #   plan: starter
+  #   ipAllowList: []

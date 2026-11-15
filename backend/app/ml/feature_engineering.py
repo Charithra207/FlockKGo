@@ -11,12 +11,21 @@ VIBES_ORDER = [
     "city",
 ]
 CLIMATE_ORDER = ["warm", "cold", "any"]
+
+# Per-person trip budgets (INR) are scaled by this value into [0, 1].
+# Participants AND destinations must use the same scale, otherwise cosine
+# similarity compares numbers on different scales.
+BUDGET_SCALE_INR = 20000.0
+
+
+def normalize_budget_inr(amount: float) -> float:
+    return max(0.0, min(1.0, float(amount) / BUDGET_SCALE_INR))
 ACTIVITY_MAP = {"relaxed": 0.0, "moderate": 0.5, "intense": 1.0}
 
 
 def build_feature_vector(response) -> list[float]:
-    budget_midpoint = ((response.budget_min + response.budget_max) / 2.0) / 10000.0
-    budget_range_size = (response.budget_max - response.budget_min) / 10000.0
+    budget_midpoint = ((response.budget_min + response.budget_max) / 2.0) / BUDGET_SCALE_INR
+    budget_range_size = (response.budget_max - response.budget_min) / BUDGET_SCALE_INR
     vibe_one_hot = [1.0 if vibe in (response.vibes or []) else 0.0 for vibe in VIBES_ORDER]
     climate_one_hot = [1.0 if response.climate_pref == climate else 0.0 for climate in CLIMATE_ORDER]
     activity_level = ACTIVITY_MAP.get(response.activity_level, 0.5)
