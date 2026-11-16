@@ -1,0 +1,16 @@
+# Pings the free Render API every 10 minutes so it doesn't fall asleep
+# (a sleeping server takes ~50 s to answer the first request).
+# /health doesn't touch the database, so Neon can still sleep normally.
+name: Keep API awake
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping /health
+        run: curl -fsS --max-time 90 https://packvote-api-nmz2.onrender.com/health || true

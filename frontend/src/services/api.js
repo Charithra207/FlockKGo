@@ -20,11 +20,23 @@
 import axios from 'axios'
 import useAuthStore from '../store/authStore'
 
+const API_BASE = import.meta.env.VITE_API_URL || '/v1'
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || '/v1',
-  // Timeout after 30 s — prevents hung requests during ML pipeline polling
-  timeout: 30_000,
+  baseURL: API_BASE,
+  // The free Render server sleeps when idle and needs ~50 s to wake up,
+  // so allow 90 s before giving up.
+  timeout: 90_000,
 })
+
+/**
+ * Wake the API as soon as the site opens, so it's awake by the time the
+ * user clicks anything. /health doesn't touch the database.
+ */
+export function wakeApi() {
+  const healthUrl = API_BASE.replace(/\/v1\/?$/, '') + '/health'
+  fetch(healthUrl, { cache: 'no-store' }).catch(() => {})
+}
 
 // ── Request interceptor: inject auth + debug logging ─────────────────────────
 api.interceptors.request.use((config) => {
@@ -68,6 +80,10 @@ api.interceptors.response.use(
         .join(', ')
     } else if (detail && typeof detail === 'object') {
       message = JSON.stringify(detail)
+    } else if (error?.code === 'ECONNABORTED' || /timeout/i.test(error?.message || '')) {
+      message = 'The server is waking up (free hosting sleeps when idle). Please try again in a few seconds.'
+    } else if (!error?.response) {
+      message = 'Could not reach the server. Check your internet and try again.'
     } else {
       message = error.message || 'Request failed'
     }

@@ -6,6 +6,9 @@ import 'leaflet/dist/leaflet.css'
 import './index.css'
 import App from './App.jsx'
 import { useLang } from './i18n'
+import { wakeApi } from './services/api'
+
+wakeApi()
 
 try { document.documentElement.lang = useLang.getState().lang } catch { /* ignore */ }
 
