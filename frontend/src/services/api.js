@@ -1,5 +1,5 @@
 /**
- * api.js — Axios instance for all PackVote+ API calls.
+ * api.js — Axios instance for all FlockGo API calls.
  *
  * AUTH HEADER INJECTION
  * ---------------------

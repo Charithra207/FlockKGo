@@ -1,5 +1,5 @@
 ﻿"""
-metrics.py — Prometheus metrics for PackVote+.
+metrics.py — Prometheus metrics for FlockGo.
 
 All metrics are module-level singletons — Prometheus requires this.
 Import and increment from anywhere in the app.

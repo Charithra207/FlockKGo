@@ -1,5 +1,5 @@
 ﻿"""
-tasks.py — Celery tasks for PackVote+.
+tasks.py — Celery tasks for FlockGo.
 
 run_ml_pipeline
   The main heavy task. Runs the full ML + LLM pipeline for a trip.

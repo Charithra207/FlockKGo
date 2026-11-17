@@ -21,7 +21,7 @@ from app.monitoring.metrics import llm_circuit_breaker_state, ws_active_connecti
 configure_logging()
 log = get_logger(__name__)
 
-app = FastAPI(title="PackVote+ API", version="1.0.0")
+app = FastAPI(title="FlockGo API", version="1.0.0")
 app.state.limiter = trips.limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
@@ -78,7 +78,7 @@ app.include_router(photos.router, prefix="/v1")
 
 @app.get("/")
 def root():
-    return {"message": "PackVote+ API", "docs": "/docs"}
+    return {"message": "FlockGo API", "docs": "/docs"}
 
 
 @app.get("/ws/connections")

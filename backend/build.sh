@@ -3,7 +3,7 @@
 # Handles schema migrations and initial data seeding.
 set -e
 
-echo "=== PackVote+ deploy script ==="
+echo "=== FlockGo deploy script ==="
 echo "Environment: ${ENVIRONMENT:-development}"
 echo "Database URL prefix: ${DATABASE_URL:0:20}..."
 

@@ -1,5 +1,5 @@
 """
-seed.py — Demo data for PackVote+
+seed.py — Demo data for FlockGo
 
 Creates a complete trip end-to-end:
   1 trip → 5 participants → 5 survey responses → ML pipeline → votes
@@ -270,7 +270,7 @@ def seed(db: Session) -> None:
 # ── Entry point ───────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Seed PackVote+ demo data")
+    parser = argparse.ArgumentParser(description="Seed FlockGo demo data")
     parser.add_argument("--reset", action="store_true", help="Clear existing demo data before seeding")
     args = parser.parse_args()
 

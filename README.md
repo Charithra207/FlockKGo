@@ -1,278 +1,222 @@
-# PackVote+
+# FlockGo
 
-**Collaborative group travel consensus engine** — uses a hybrid ML/LLM pipeline to solve the hardest problem in group travel: getting 6 people with different budgets, vibes, and schedules to agree on a destination.
+**Group trips around Karnataka, decided together, plus the hidden spots only locals know.**
 
-> Deploy guide: [DEPLOY.md](DEPLOY.md) (Vercel + Render + Neon, all free tier)
+**Live:** https://flock-k-go.vercel.app  ·  **API:** https://packvote-api-nmz2.onrender.com/docs  ·  **Deploy guide:** [DEPLOY.md](DEPLOY.md)
 
----
+FlockGo does two things:
 
-## Karnataka, by locals
-
-The app focuses on **Karnataka only**: 65 destination hubs across the state, plus a map of individual spots.
-
-- **Give a spot, get a spot.** Hidden gems stay locked on the server until you unlock them. Every new account gets 1 free unlock. Sharing a spot earns credits once an admin approves it: +3 for a hidden spot, +1 for a public one. Spending 1 credit unlocks a hidden spot permanently.
-- **Vouching.** "I've been here" confirmations rank spots. Vouching earns nothing, so it can't be farmed.
-- **Cafes, waterfalls, viewpoints and peaks** come from OpenStreetMap (`backend/import_osm_spots.py`, ODbL). Famous places are public; lesser-known ones are hidden gems.
-- **Photo uploads.** The browser resizes photos before upload, and they are stored in Postgres.
-- **ಕನ್ನಡ / English** switch for the Karnataka screens.
-- **Trip companion.** Packing list, expense splitting, itinerary, getting there, and SOS with live nearby hospitals and police from OpenStreetMap.
+1. **Plans a group trip without the group-chat chaos.** Everyone fills a short survey. The app groups people by taste, ranks Karnataka destinations for the whole group, everyone votes, and a fair per-person budget comes out the other end.
+2. **Maps Karnataka's hidden spots, by locals.** Quiet waterfalls, hilltops, viewpoints and the cafe only the town knows. To see someone else's hidden spot, you share one of your own.
 
 ---
 
-## What makes this different
+## Give a spot, get a spot
 
-Most "AI trip planners" send a user prompt to ChatGPT and print the response. PackVote+ does not do that.
+| Action | Credits |
+|---|---|
+| Sign up | +1 free unlock |
+| Share a **hidden** spot (once an admin approves it) | +3 |
+| Share a **public** spot (once approved) | +1 |
+| Unlock a hidden spot (exact location, directions, photos) | −1 |
+| Vouch "I've been here" | 0 (ranks spots, can't be farmed) |
 
-The ML pipeline does the actual work:
-1. Survey responses are converted into 16-dimensional preference vectors
-2. KMeans clustering finds preference groups within the party
-3. Destinations are scored using cosine similarity (semantic embeddings when available, hand-crafted vectors as fallback)
-4. The top destinations go to GPT-4o — which **only writes descriptions**, it does not choose anything
-5. Participants vote using Instant Runoff Voting with ML scores as tiebreakers
-6. A linear programming budget optimizer (PuLP) produces a fair per-person spending plan
+- Locked spots are hidden **on the server**: the API returns only the district and an approximate area (shown as a dashed circle), never the real coordinates.
+- New submissions go to an admin review queue at `/admin/spots`. Duplicates (same kind of place within 150 m) are rejected, and each user can have at most 5 waiting for review.
+- Photos are resized in the browser and stored in the database.
+
+## What's on the map at launch
+
+619 spots across all 31 districts, from open data (no scraping):
+
+| | Count | Source |
+|---|---|---|
+| Hidden gems (locked) | 100 across 26 districts | OpenStreetMap + Wikidata |
+| Public waterfalls, peaks, viewpoints, lakes, temples | ~290 | OpenStreetMap + Wikidata |
+| Independent cafes | 230 | OpenStreetMap |
+
+Famous places (Jog, Abbey, Hebbe, Nandi Hills, …) are public; lesser-known ones far from the main tourist hubs are hidden. Descriptions contain only facts from the source data. Every place's district was confirmed by reverse geocoding, and anything outside Karnataka was dropped.
+
+The real value comes from locals adding places that aren't on any map. That's what "Share a spot" is for.
+
+## Other features
+
+- **ಕನ್ನಡ / English** switch (the trip-planning screens are English only for now).
+- **Trip companion** (`/trip/:id/plan`): packing list, shared expenses with "who pays whom", day-by-day itinerary, how to get there (KSRTC / IRCTC / redBus links), and SOS with the nearest hospitals and police stations from OpenStreetMap.
+- **65 destination hubs** across Karnataka, each with coordinates and district.
+
+---
+
+## How the group decision works
+
+The ML pipeline makes the choice; the language model (optional) only writes descriptions.
+
+1. Survey answers become 16-number preference vectors (budget in ₹, vibe, climate, activity level, flexibility).
+2. KMeans clustering finds the taste groups inside the party.
+3. Destinations are scored: 50% dominant group, 30% whole-group average, 20% minority group, so nobody is ignored.
+4. Optional: GPT-4o writes descriptions for the top 5. It doesn't choose anything. Without an `OPENAI_API_KEY`, the app still works and uses plain descriptions.
+5. Everyone ranks the shortlist; **Instant Runoff Voting** picks the winner, with ML scores as tiebreakers.
+6. A linear-programming optimiser (PuLP) splits the budget fairly across travel, stay, food and activities.
 
 ---
 
 ## Architecture
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                         React Frontend                          │
-│                    (Vite + Tailwind, Vercel)                    │
-└───────────────────────────┬─────────────────────────────────────┘
-                            │ HTTP + WebSocket
-                            ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                      FastAPI Backend                            │
-│                   (Python 3.11, Render)                         │
-│                                                                 │
-│  ┌─────────────┐  ┌──────────────┐  ┌───────────────────────┐  │
-│  │  REST API   │  │  WebSocket   │  │   Prometheus /metrics │  │
-│  │  /v1/...    │  │  /ws/...     │  │   + structlog JSON    │  │
-│  └──────┬──────┘  └──────┬───────┘  └───────────────────────┘  │
-│         │                │                                       │
-│         ▼                ▼                                       │
-│  ┌─────────────────────────────────────────────────────────┐    │
-│  │                   Service Layer                         │    │
-│  │  trip_service  survey_service  voting_service  cache    │    │
-│  └──────────────────────────┬──────────────────────────────┘    │
-│                             │                                    │
-│              ┌──────────────┼──────────────┐                    │
-│              ▼              ▼              ▼                    │
-│   ┌──────────────┐  ┌────────────┐  ┌──────────────┐           │
-│   │  ML Pipeline │  │LLM Gateway │  │Budget Optim. │           │
-│   │  (scikit-learn│  │(OpenAI +  │  │(PuLP LP model│           │
-│   │   + PuLP)    │  │ circuit    │  │ 6 categories)│           │
-│   └──────┬───────┘  │ breaker)  │  └──────────────┘           │
-│          │          └────────────┘                              │
-│          ▼                                                       │
-│   ┌──────────────┐                                              │
-│   │  Celery Task │  ← dispatched async, retries on failure      │
-│   │  Queue       │                                              │
-│   └──────────────┘                                              │
-└──────────┬──────────────────────────────────────────────────────┘
-           │
-    ┌──────┴──────┐
-    ▼             ▼
-┌───────┐    ┌───────┐
-│  PG   │    │ Redis │
-│  DB   │    │broker │
-└───────┘    └───────┘
+  Browser ──► React + Vite + Tailwind + Leaflet (Vercel)
+                    │  HTTPS, X-API-Key + Bearer token
+                    ▼
+            FastAPI (Render, free web service)
+            ├── /v1/trips, surveys, votes, budget    ─► ML pipeline (scikit-learn, PuLP)
+            ├── /v1/spots, /v1/auth, /v1/photos       ─► give-to-get credits
+            └── background analysis runs in-process (USE_CELERY=false)
+                    │
+                    ▼
+            PostgreSQL (Neon, free)
 ```
+
+Redis and Celery are supported but optional. They're switched off on the free deploy, and the cache fails gracefully without Redis.
+
+| Layer | Tech |
+|---|---|
+| Frontend | React 18, Vite, Tailwind, zustand, react-leaflet + OpenStreetMap tiles |
+| API | FastAPI, Pydantic v2, SQLAlchemy 2, Alembic, slowapi rate limits |
+| Auth | scrypt password hashes + signed bearer tokens (users); SHA-256 hashed API keys (site) |
+| ML | scikit-learn KMeans, numpy, PuLP |
+| LLM (optional) | OpenAI GPT-4o, text-embedding-3-small |
+| Data | OpenStreetMap (ODbL), Wikidata (CC0), Nominatim geocoding |
+| Hosting | Vercel + Render + Neon, all free tier |
 
 ---
 
-## ML Pipeline Detail
+## Project structure
 
 ```
-Survey Responses
-      │
-      ▼
-Feature Engineering (16-d vectors)
-  • budget_midpoint / 10000
-  • budget_range_size
-  • 8 vibe one-hot (beach, adventure, cultural...)
-  • 3 climate one-hot (warm, cold, any)
-  • activity_level (0.0 / 0.5 / 1.0)
-  • date_flexibility
-  • exclusion_strictness
-      │
-      ▼
-KMeans Clustering (k=2..4, best silhouette score)
-  • Finds dominant preference group
-  • Identifies minority preferences
-      │
-      ▼
-Destination Scoring
-  • Semantic mode: OpenAI text-embedding-3-small cosine similarity
-  • Feature mode:  hand-crafted vector L2 distance (offline fallback)
-  • Score = 50% dominant cluster + 30% group mean + 20% minority
-      │
-      ▼
-LLM Polish (GPT-4o)
-  • Receives top 5 ML-scored destinations
-  • Writes descriptions only — does NOT choose
-  • A/B tested prompts (v1: expert consultant, v2: mediator)
-  • Quality scored 0–1 by LLMEvaluator
-      │
-      ▼
-Instant Runoff Voting
-  • Participants rank destinations
-  • Elimination rounds until >50% majority
-  • ML scores used as tiebreakers
-      │
-      ▼
-Budget Optimizer (PuLP)
-  • Linear programme: minimise variance in budget utilisation
-  • Constraints: per-person budget range + optional category caps
-  • Returns itemized plan: flights 35%, accommodation 30%, food 15%...
-```
-
----
-
-## Tech Stack
-
-| Layer | Technology |
-|-------|-----------|
-| API | FastAPI 0.104, Python 3.11 |
-| ML | scikit-learn (KMeans), numpy, scipy |
-| LLM | OpenAI GPT-4o / text-embedding-3-small |
-| Optimization | PuLP 2.7 (CBC solver) |
-| Task Queue | Celery 5.3 + Redis |
-| Database | PostgreSQL (prod) / SQLite (dev) |
-| ORM + Migrations | SQLAlchemy 2.0 + Alembic |
-| Caching | Redis (recommendation cache, 1h TTL) |
-| Logging | structlog (JSON in prod, colored in dev) |
-| Metrics | Prometheus + custom gauges/histograms |
-| Auth | SHA-256 hashed API keys |
-| Deploy | Render (API + worker + PostgreSQL + Redis) |
-| Frontend | React + Vite + Tailwind (Vercel) |
-
----
-
-## Project Structure
-
-```
-packvote/
+FlockGo/
+├── render.yaml                 # Render blueprint (API only, free plan)
+├── DEPLOY.md                   # step-by-step deploy guide
+├── .github/workflows/
+│   └── keep-api-awake.yml      # pings the API every 10 min so it doesn't sleep
 ├── backend/
 │   ├── app/
-│   │   ├── api/           # FastAPI route handlers
-│   │   │   ├── trips.py       # trip CRUD + ML dispatch + results
-│   │   │   ├── surveys.py     # survey submission + token lookup
-│   │   │   ├── recommendations.py  # cached recommendations
-│   │   │   ├── voting.py      # ranked choice ballot submission
-│   │   │   ├── budget.py      # LP budget optimizer endpoint
-│   │   │   ├── analytics.py   # A/B test results + cost dashboard
-│   │   │   ├── admin.py       # API key management
-│   │   │   ├── health.py      # liveness + readiness probes
-│   │   │   └── ws.py          # WebSocket status updates
-│   │   ├── ml/            # Machine learning pipeline
-│   │   │   ├── feature_engineering.py  # 16-d preference vectors
-│   │   │   ├── clustering.py           # KMeans with silhouette selection
-│   │   │   ├── scoring.py              # destination scoring (semantic + feature)
-│   │   │   ├── similarity.py           # cosine similarity matrix
-│   │   │   ├── drift_detection.py      # preference change detection
-│   │   │   ├── embeddings.py           # OpenAI embedding cache
-│   │   │   ├── pipeline.py             # orchestrator
-│   │   │   └── budget_optimizer.py     # PuLP LP model
-│   │   ├── llm/           # LLM integration
-│   │   │   ├── gateway.py      # OpenAI client + circuit breaker
-│   │   │   ├── recommender.py  # generation + quality evaluation
-│   │   │   ├── ab_testing.py   # persistent A/B test manager
-│   │   │   └── prompts/        # versioned prompt templates
-│   │   ├── models/        # SQLAlchemy ORM models
-│   │   ├── schemas/       # Pydantic v2 request/response schemas
-│   │   ├── services/      # Business logic layer
-│   │   │   ├── auth.py              # API key auth
-│   │   │   ├── cache.py             # Redis cache helpers
-│   │   │   └── websocket_manager.py # WebSocket connection pool
-│   │   ├── workers/       # Celery task definitions
-│   │   ├── monitoring/    # Prometheus metrics + cost tracking
-│   │   └── core/          # Logging + middleware
-│   ├── alembic/           # Database migration scripts
-│   ├── tests/             # Integration + unit tests
-│   ├── seed.py            # Demo data generator
-│   ├── seed_destinations.py  # Destination catalog + embeddings
-│   └── build.sh           # Render deploy script
-└── frontend/              # React frontend (friend's work)
+│   │   ├── api/                # routes: trips, surveys, voting, budget, spots, accounts, photos, admin…
+│   │   ├── core/karnataka.py   # districts, bounding box, distance helpers
+│   │   ├── ml/                 # features, clustering, scoring, budget optimiser
+│   │   ├── models/             # SQLAlchemy models (Trip, Spot, User, Photo…)
+│   │   └── services/           # auth, cache, SOS, travel options…
+│   ├── alembic/                # migrations
+│   ├── data/                   # OSM/Wikidata spot snapshots loaded on deploy
+│   ├── build.sh                # runs on every Render start: migrate → seed → load spots
+│   ├── db_bootstrap.py         # creates tables on a fresh DB, upgrades an old one
+│   ├── seed_destinations.py    # the 65 Karnataka hubs
+│   ├── import_osm_spots.py     # fetch/refresh spots from OSM + Wikidata, load into DB
+│   ├── make_admin.py           # python make_admin.py you@example.com
+│   └── tests/                  # 300+ tests
+└── frontend/
+    └── src/
+        ├── pages/              # Home, Explore, SpotDetail, ShareSpot, TripCompanion, AdminSpots…
+        ├── components/spots/   # SpotMap, SpotCard
+        ├── services/           # api.js, spotsService.js, companionService.js
+        └── i18n.js             # English + Kannada strings
 ```
 
 ---
 
-## Running Locally
+## Running locally
 
-### Option A — SQLite (no Docker, instant)
+**Backend** (SQLite, no Docker needed):
 
 ```bash
 cd backend
 python -m venv .venv
-.venv\Scripts\activate        # Windows
-# source .venv/bin/activate   # Mac/Linux
-
+.venv\Scripts\activate            # Windows  (Mac/Linux: source .venv/bin/activate)
 pip install -r requirements.txt
+cp .env.example .env              # OPENAI_API_KEY is optional
 
-cp .env.example .env
-# Edit .env: add OPENAI_API_KEY if you want LLM features
-
-alembic upgrade head
-python seed_destinations.py
-python seed.py
-
-uvicorn app.main:app --reload
+python db_bootstrap.py            # create tables
+python seed_destinations.py       # 65 Karnataka hubs
+python import_osm_spots.py load   # 619 spots
+uvicorn app.main:app --reload     # http://localhost:8000/docs
 ```
 
-API: http://localhost:8000  
-Docs: http://localhost:8000/docs
+**Frontend:**
 
-### Option B — Docker (PostgreSQL + Redis + Celery)
+```bash
+cd frontend
+npm install
+npm run dev                       # http://localhost:5173 (proxies /v1 to :8000)
+```
+
+Make yourself an admin locally: sign up in the app, then run `python make_admin.py you@example.com`.
+
+**Tests:**
 
 ```bash
 cd backend
-cp .env.example .env
-# Edit .env: add OPENAI_API_KEY
-
-docker-compose up --build
+pytest
 ```
 
-Services:
-- API: http://localhost:8000
-- Flower (Celery monitor): http://localhost:5555
-- PostgreSQL: localhost:5432
-- Redis: localhost:6379
+If you have an old `flockgo_demo.db` from before the spots feature, delete it and rerun the setup. It only holds demo data.
 
 ---
 
-## Key API Endpoints
+## Key API endpoints
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
+| Method | Endpoint | What it does |
+|---|---|---|
+| POST | `/v1/auth/register`, `/v1/auth/login` | Accounts (returns a bearer token) |
+| GET | `/v1/spots?district=&category=&lat=&lng=&radius_km=` | Search spots (locked ones redacted) |
+| POST | `/v1/spots` | Share a spot (goes to review) |
+| POST | `/v1/spots/{id}/unlock` | Spend 1 credit (402 if you have none) |
+| POST | `/v1/spots/{id}/vouch` | "I've been here" |
+| GET/POST | `/v1/admin/spots/pending`, `/v1/admin/spots/{id}/review` | Admin queue |
+| POST | `/v1/photos` | Upload a photo (JPEG/PNG/WebP, ≤ 1.5 MB) |
 | POST | `/v1/trips` | Create a trip |
-| POST | `/v1/trips/{id}/participants` | Add participant, get survey link |
-| POST | `/v1/survey/{token}/submit` | Submit survey response |
-| GET | `/v1/trips/{id}/summary` | Dashboard — who submitted |
-| POST | `/v1/trips/{id}/run-analysis` | Trigger ML + LLM pipeline |
-| GET | `/v1/trips/{id}/analysis` | Poll pipeline status |
-| WS | `/ws/trips/{id}/status` | Real-time pipeline status |
-| GET | `/v1/trips/{id}/ml-insights` | Full ML breakdown |
-| GET | `/v1/trips/{id}/recommendations` | LLM recommendations |
-| POST | `/v1/trips/{id}/votes` | Submit ranked choice ballot |
-| GET | `/v1/trips/{id}/results` | IRV election results |
-| POST | `/v1/trips/{id}/budget-plan` | LP budget optimization |
-| GET | `/v1/analytics/ab-test` | Prompt A/B test results |
-| GET | `/v1/analytics/cost-dashboard` | LLM spend breakdown |
-| GET | `/health/detailed` | DB + Redis + OpenAI status |
+| POST | `/v1/survey/{token}/submit` | Submit a survey |
+| POST | `/v1/trips/{id}/run-analysis` | Run the ML pipeline |
+| POST | `/v1/trips/{id}/votes` | Ranked-choice ballot |
+| GET | `/v1/trips/{id}/results` | Voting results |
+| POST | `/v1/trips/{id}/budget-plan` | Fair budget split |
+| GET | `/health` | Liveness (no DB) |
 
-Full interactive docs: `/docs`
+Full interactive docs: `/docs` on the API.
 
 ---
 
-## Environment Variables
+## Environment variables
 
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `DATABASE_URL` | Yes | PostgreSQL or SQLite URL |
-| `REDIS_URL` | No | Redis URL (Celery + cache) |
-| `OPENAI_API_KEY` | No | Enables LLM + embeddings |
-| `FRONTEND_BASE_URL` | No | CORS origin for frontend |
-| `ENVIRONMENT` | No | `development` or `production` |
-| `API_SECRET_KEY` | No | Enables API key auth (prod) |
+**Backend** (Render, or `backend/.env` locally):
+
+| Variable | Needed | What it's for |
+|---|---|---|
+| `DATABASE_URL` | yes | Postgres (Neon) in production, SQLite locally |
+| `API_SECRET_KEY` | production | Admin secret for creating site API keys; turns on API-key checks |
+| `AUTH_TOKEN_SECRET` | production | Signs user login tokens (Render generates it) |
+| `FRONTEND_BASE_URL` | production | Your Vercel URL, for CORS |
+| `ENVIRONMENT` | production | `production` |
+| `USE_CELERY` | no | Keep `false` unless you run a Celery worker + Redis |
+| `OPENAI_API_KEY` | no | Nicer descriptions and semantic scoring |
+| `REDIS_URL` | no | Cache / Celery broker |
+| `TRAWEX_API_URL`, `TRAWEX_API_KEY` | no | Live bus prices (without them the app shows official booking links) |
+| `WIKIMEDIA_CONTACT` | no | Contact string, only needed to refresh spots from Wikidata |
+
+**Frontend** (Vercel):
+
+| Variable | Value |
+|---|---|
+| `VITE_API_URL` | `https://<your-api>.onrender.com/v1` |
+| `VITE_API_KEY` | key from `POST /v1/admin/api-keys` (see DEPLOY.md) |
+
+---
+
+## Known limitations
+
+- **Free hosting sleeps.** Render's free server sleeps after 15 min idle and takes ~50 s to wake. The keep-awake GitHub Action and a wake-up ping on page load hide this most of the time.
+- **Cafe coverage follows OpenStreetMap,** which is dense in Bengaluru and thin elsewhere. Locals sharing spots fills the gaps.
+- **Kannada translations need a native speaker's review.**
+- **Live bus and hotel prices** need a booking API account; until then the app links to KSRTC, IRCTC and redBus.
+- **The site API key (`VITE_API_KEY`) is visible in the browser.** It only stops casual scripting; rate limits and user accounts protect the real actions.
+
+## Data & credits
+
+Map data © [OpenStreetMap contributors](https://www.openstreetmap.org/copyright), available under the ODbL. Place data from [Wikidata](https://www.wikidata.org) (CC0). Geocoding by [Nominatim](https://nominatim.org). See [backend/data/README.md](backend/data/README.md).

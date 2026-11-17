@@ -1,16 +1,28 @@
-# React + Vite
+# FlockGo — frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React 18 + Vite + Tailwind + react-leaflet. See the [main README](../README.md) for the full project and [DEPLOY.md](../DEPLOY.md) for hosting.
 
-Currently, two official plugins are available:
+```bash
+npm install
+npm run dev      # http://localhost:5173 — /v1 is proxied to the API on :8000
+npm run build    # production build into dist/
+```
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+| Path | Page |
+|---|---|
+| `/` | Home |
+| `/explore` | Karnataka spot map + filters |
+| `/spots/share`, `/spots/:id/edit` | Share or edit a spot |
+| `/spots/:id` | Spot detail (locked / unlocked) |
+| `/login`, `/me` | Account, my spots and credits |
+| `/admin/spots` | Review queue (admins) |
+| `/create`, `/trip/:id`, `/survey/:token` | Group trip planning |
+| `/trip/:id/recs`, `/vote`, `/results` | Recommendations, voting, results |
+| `/trip/:id/plan` | Trip companion: packing, expenses, itinerary, travel, SOS |
 
-## React Compiler
+Environment variables (Vercel): `VITE_API_URL`, `VITE_API_KEY`. See `.env.example`.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Code map:
+- `src/services/api.js`: axios client (API key, login token, friendly errors, wake-up ping)
+- `src/services/spotsService.js`: spots, auth, photo upload helpers
+- `src/i18n.js`: English + Kannada strings
