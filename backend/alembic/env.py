@@ -44,6 +44,7 @@ import app.models.user                 # noqa: F401
 import app.models.spot                 # noqa: F401
 import app.models.photo                # noqa: F401
 import app.models.place_mark           # noqa: F401
+import app.models.trip_member          # noqa: F401
 
 target_metadata = Base.metadata
 

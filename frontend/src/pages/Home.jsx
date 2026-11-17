@@ -1,3 +1,4 @@
+import { collectionsFor, Shelf } from './Collections'
 import { motion } from 'framer-motion'
 import { Bird, ListTodo, Sparkles, ArrowRight } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
@@ -116,6 +117,14 @@ export default function Home() {
           ))}
         </ul>
       </section>
+
+      {/* In season right now */}
+      <div className="space-y-2">
+        <Shelf c={collectionsFor(new Date().getMonth() + 1)[0]} limit={10} />
+        <Link to="/collections" className="inline-block text-sm font-semibold text-primary underline-offset-2 hover:underline">
+          More collections: monsoon falls, sunrise treks, coffee country, the coast →
+        </Link>
+      </div>
 
       {/* Recent trips — only visible if localStorage has data */}
       <RecentTrips />

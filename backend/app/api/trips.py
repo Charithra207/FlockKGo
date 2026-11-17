@@ -19,6 +19,7 @@ from app.config import get_settings
 
 from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, Request
 from slowapi import Limiter
+from sqlalchemy import func
 from sqlalchemy.orm import Session
 
 from app.dependencies import get_db
@@ -289,6 +290,16 @@ def final_results(request: Request, trip_id: uuid.UUID, db: Session = Depends(ge
                 "estimated_budget_range": winner.estimated_budget_range,
                 "ml_score": winner.ml_score,
             }
+            dest = (
+                db.query(Destination)
+                .filter(func.lower(Destination.name) == (winner.destination_name or "").lower())
+                .first()
+            )
+            if dest:  # lets the Results page show hidden gems + cafes around the winner
+                result["winner"].update({
+                    "destination_id": str(dest.id), "district": dest.district,
+                    "latitude": dest.latitude, "longitude": dest.longitude,
+                })
 
     # Attach sacrifice telemetry to the results so the Results page can
     # display who compromised most and reference the budget relief they received.

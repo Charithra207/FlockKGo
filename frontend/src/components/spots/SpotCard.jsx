@@ -1,4 +1,4 @@
-import { Lock, MapPin, ShieldCheck, Star } from 'lucide-react'
+import { Home, Lock, MapPin, ShieldCheck, Star } from 'lucide-react'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import MarkButtons from '../profile/MarkButtons'
@@ -33,6 +33,11 @@ export default function SpotCard({ spot, showMarks = true }) {
           {spot.featured && (
             <span className="inline-flex items-center gap-0.5 font-semibold text-amber-600">
               <Star className="h-3.5 w-3.5 fill-amber-400 text-amber-400" /> {t('card.famous')}
+            </span>
+          )}
+          {spot.locals_pick && (
+            <span className="inline-flex items-center gap-0.5 font-semibold text-emerald-700" title="Shared by someone from this district">
+              <Home className="h-3.5 w-3.5" /> Local's pick
             </span>
           )}
           {spot.vouch_count > 0 && (

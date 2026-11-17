@@ -4,6 +4,7 @@ import ErrorBoundary from './components/common/ErrorBoundary'
 import Footer from './components/layout/Footer'
 import Navbar from './components/layout/Navbar'
 import AdminSpots from './pages/AdminSpots'
+import Collections from './pages/Collections'
 import CreateTrip from './pages/CreateTrip'
 import EditProfile from './pages/EditProfile'
 import Explore from './pages/Explore'
@@ -57,6 +58,7 @@ export default function App() {
                 <Route path="/trip/:tripId/results" element={<Page><Results /></Page>} />
                 <Route path="/trip/:tripId/plan"    element={<Page><TripCompanion /></Page>} />
                 <Route path="/explore"              element={<Page><Explore /></Page>} />
+                <Route path="/collections"          element={<Page><Collections /></Page>} />
                 <Route path="/spots/share"          element={<Page><ShareSpot /></Page>} />
                 <Route path="/spots/:spotId"        element={<Page><SpotDetail /></Page>} />
                 <Route path="/spots/:spotId/edit"   element={<Page><ShareSpot /></Page>} />

@@ -1,4 +1,4 @@
-import { Crosshair, Gift, Lock, Search } from 'lucide-react'
+import { Car, Crosshair, Gift, Leaf, Lock, Search } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
 import toast from 'react-hot-toast'
 import { Link, useSearchParams } from 'react-router-dom'
@@ -11,6 +11,18 @@ import useAuthStore from '../store/authStore'
 import { useT } from '../i18n'
 
 const VISIBILITY = ['all', 'hidden', 'public']
+
+// Weekend getaways: straight-line distance as a rough guide to drive time.
+const CITIES = {
+  Bengaluru: [12.9716, 77.5946], Mysuru: [12.2958, 76.6394], Mangaluru: [12.9141, 74.856],
+  'Hubballi-Dharwad': [15.3647, 75.124], Belagavi: [15.8497, 74.4977], Shivamogga: [13.9299, 75.5681],
+  Kalaburagi: [17.3297, 76.8343], Udupi: [13.3409, 74.7421], Davanagere: [14.4644, 75.9218],
+}
+const RANGES = [
+  { km: 100, label: '~2 hrs' },
+  { km: 200, label: '~4 hrs' },
+  { km: 300, label: '~6 hrs' },
+]
 
 export default function Explore() {
   const { token, user, setUser } = useAuthStore()
@@ -25,6 +37,9 @@ export default function Explore() {
   const [q, setQ] = useState('')
   const [query, setQuery] = useState('')
   const [near, setNear] = useState(null) // [lat, lng]
+  const [radius, setRadius] = useState(60)
+  const [fromCity, setFromCity] = useState('')
+  const [inSeason, setInSeason] = useState(searchParams.get('in_season') === '1')
   const [focus, setFocus] = useState(null)
 
   useEffect(() => {
@@ -39,9 +54,10 @@ export default function Explore() {
     if (visibility === 'hidden') p.hidden = true
     if (visibility === 'public') p.hidden = false
     if (query) p.q = query
-    if (near) Object.assign(p, { lat: near[0], lng: near[1], radius_km: 60 })
+    if (near) Object.assign(p, { lat: near[0], lng: near[1], radius_km: radius })
+    if (inSeason) p.in_season = new Date().getMonth() + 1
     return p
-  }, [category, district, visibility, query, near])
+  }, [category, district, visibility, query, near, radius, inSeason])
 
   useEffect(() => {
     setLoading(true)
@@ -57,6 +73,8 @@ export default function Explore() {
     navigator.geolocation.getCurrentPosition(
       (pos) => {
         const c = [pos.coords.latitude, pos.coords.longitude]
+        setFromCity('')
+        setRadius(60)
         setNear(c)
         setFocus({ center: c, zoom: 9 })
       },
@@ -69,6 +87,18 @@ export default function Explore() {
     setDistrict(d)
     const hub = meta?.hubs?.find((h) => h.district === d)
     setFocus(hub ? { center: [hub.latitude, hub.longitude], zoom: 9 } : { center: [14.6, 76.1], zoom: 7 })
+  }
+
+  function getaway(city, km = radius > 60 ? radius : 200) {
+    if (!city) {
+      setFromCity('')
+      setNear(null)
+      return
+    }
+    setFromCity(city)
+    setRadius(km)
+    setNear(CITIES[city])
+    setFocus({ center: CITIES[city], zoom: km > 200 ? 7 : 8 })
   }
 
   const credits = user?.unlock_credits
@@ -88,6 +118,9 @@ export default function Explore() {
             className="inline-flex items-center gap-2 rounded-xl bg-accent px-5 py-2.5 font-semibold text-white hover:opacity-90"
           >
             <Gift className="h-4 w-4" /> {t('explore.shareCta')}
+          </Link>
+          <Link to="/collections" className="inline-flex items-center gap-2 rounded-xl bg-white/15 px-4 py-2.5 text-sm font-semibold hover:bg-white/25">
+            🌿 Collections
           </Link>
           {token ? (
             <span className="inline-flex items-center gap-1.5 rounded-xl bg-white/15 px-4 py-2.5 text-sm font-semibold">
@@ -162,7 +195,30 @@ export default function Explore() {
             onClick={() => (near ? setNear(null) : locateMe())}
             className={`inline-flex items-center justify-center gap-1.5 rounded-xl px-3 py-2.5 text-sm font-medium shadow-card ${near ? 'bg-primary text-white' : 'bg-white text-slate-600'}`}
           >
-            <Crosshair className="h-4 w-4" /> {near ? `${t('explore.near')} ✕` : t('explore.near')}
+            <Crosshair className="h-4 w-4" /> {near && !fromCity ? `${t('explore.near')} ✕` : t('explore.near')}
+          </button>
+        </div>
+
+        <div className="flex flex-wrap items-center gap-2 rounded-2xl bg-white p-3 shadow-card">
+          <Car className="h-4 w-4 text-primary" />
+          <span className="text-sm font-semibold text-slate-700">Weekend getaway from</span>
+          <select value={fromCity} onChange={(e) => getaway(e.target.value)} className="rounded-lg border border-slate-200 px-2 py-1.5 text-sm">
+            <option value="">anywhere</option>
+            {Object.keys(CITIES).map((c) => <option key={c}>{c}</option>)}
+          </select>
+          {fromCity && RANGES.map((r) => (
+            <button
+              key={r.km} onClick={() => getaway(fromCity, r.km)}
+              className={`rounded-full px-3 py-1 text-xs font-semibold ${radius === r.km ? 'bg-primary text-white' : 'bg-slate-100 text-slate-600'}`}
+            >
+              {r.km} km · {r.label}
+            </button>
+          ))}
+          <button
+            onClick={() => setInSeason((v) => !v)}
+            className={`ml-auto inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold ${inSeason ? 'bg-success text-white' : 'bg-slate-100 text-slate-600'}`}
+          >
+            <Leaf className="h-3.5 w-3.5" /> Best this month
           </button>
         </div>
       </section>

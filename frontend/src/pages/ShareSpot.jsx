@@ -1,7 +1,7 @@
 import { Camera, Crosshair, Gift, MapPin, X } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import LoadingSpinner from '../components/common/LoadingSpinner'
 import SpotMap from '../components/spots/SpotMap'
 import { catName, CATEGORY_META, monthNames, photoSrc, resizeImage, spotsApi } from '../services/spotsService'
@@ -20,9 +20,15 @@ export default function ShareSpot() {
   const navigate = useNavigate()
   const { token } = useAuthStore()
   const t = useT()
-  const [form, setForm] = useState(empty)
+  // ?district=Kodagu&lat=..&lng=.. (from a trip: "share a spot you found there")
+  const [params] = useSearchParams()
+  const [form, setForm] = useState(() => ({ ...empty, district: params.get('district') || '' }))
   const [pin, setPin] = useState(null)
-  const [focus, setFocus] = useState(null)
+  const [focus, setFocus] = useState(() => {
+    const la = Number(params.get('lat'))
+    const ln = Number(params.get('lng'))
+    return la && ln ? { center: [la, ln], zoom: 11 } : null
+  })
   const [districts, setDistricts] = useState([])
   const [saving, setSaving] = useState(false)
   const [uploading, setUploading] = useState(false)

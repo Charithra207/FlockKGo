@@ -37,7 +37,7 @@ from typing import Literal, Optional
 
 from fastapi import APIRouter, Depends, HTTPException, Query, Request
 from pydantic import BaseModel, Field, field_validator
-from sqlalchemy import func, or_, update
+from sqlalchemy import case, func, or_, update
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
@@ -199,6 +199,33 @@ def _user_context(db: Session, user: Optional[User], spot_ids: list) -> tuple[se
     return unlocked, vouched
 
 
+# When each kind of place is at its best, for spots without their own best_months.
+DEFAULT_SEASON = {
+    "waterfall": {6, 7, 8, 9, 10},
+    "lake": {8, 9, 10, 11, 12},
+    "trek": {9, 10, 11, 12, 1, 2},
+    "viewpoint": {9, 10, 11, 12, 1, 2},
+    "beach": {10, 11, 12, 1, 2, 3},
+    "heritage": {10, 11, 12, 1, 2},
+    "temple": {10, 11, 12, 1, 2},
+    "wildlife": {10, 11, 12, 1, 2, 3, 4, 5},
+}
+
+
+def in_season(spot: Spot, month: int) -> bool:
+    months = set(spot.best_months or []) or DEFAULT_SEASON.get(spot.category)
+    return True if not months else month in months
+
+
+def _locals(db: Session, spots: list) -> set:
+    """Spots shared by someone whose home district is the spot's district."""
+    ids = {s.submitted_by for s in spots if s.submitted_by}
+    if not ids:
+        return set()
+    homes = dict(db.query(User.id, User.home_district).filter(User.id.in_(ids)).all())
+    return {s.id for s in spots if s.submitted_by and homes.get(s.submitted_by) == s.district}
+
+
 def _my_marks(db: Session, user: Optional[User], spot_ids: list) -> dict:
     """{spot_id: "been" | "want"} for the current user."""
     if not user or not spot_ids:
@@ -316,16 +343,19 @@ def list_spots(
     lat: Optional[float] = None,
     lng: Optional[float] = None,
     radius_km: float = Query(default=50.0, gt=0, le=500),
+    in_season_month: Optional[int] = Query(default=None, ge=1, le=12, alias="in_season"),
     limit: int = Query(default=200, ge=1, le=1000),
     offset: int = Query(default=0, ge=0),
     db: Session = Depends(get_db),
     user: Optional[User] = Depends(get_optional_user),
 ):
     query = db.query(Spot).filter(Spot.status == "approved")
-    if category:
-        query = query.filter(Spot.category == category.lower())
-    if district:
-        query = query.filter(Spot.district == (normalize_district(district) or district))
+    if category:  # one or several: "trek,viewpoint"
+        cats = [c.strip().lower() for c in category.split(",") if c.strip()]
+        query = query.filter(Spot.category.in_(cats))
+    if district:  # one or several: "Kodagu,Hassan"
+        names = [normalize_district(d.strip()) or d.strip() for d in district.split(",") if d.strip()]
+        query = query.filter(Spot.district.in_(names))
     if destination_id:
         query = query.filter(Spot.destination_id == destination_id)
     if hidden is not None:
@@ -350,10 +380,25 @@ def list_spots(
             Spot.longitude.between(lng - dlng, lng + dlng),
         )
 
-    query = query.order_by(Spot.featured.desc(), Spot.vouch_count.desc(), Spot.created_at.desc())
+    # Local's picks (shared by someone from that district) rank right after featured.
+    home = db.query(User.home_district).filter(User.id == Spot.submitted_by).scalar_subquery()
+    query = query.order_by(
+        Spot.featured.desc(),
+        case((home == Spot.district, 1), else_=0).desc(),
+        Spot.vouch_count.desc(),
+        Spot.created_at.desc(),
+    )
 
+    if in_season_month:
+        # Season can come from best_months (JSON) or the category default: filter in Python.
+        matched = [s for s in query.all() if in_season(s, in_season_month)]
+        if near:
+            query_rows = matched
+        else:
+            total = len(matched)
+            page = [(s, None) for s in matched[offset: offset + limit]]
     if near:
-        candidates = query.all()
+        candidates = query_rows if in_season_month else query.all()
         with_dist = []
         for s in candidates:
             d = haversine_km(lat, lng, s.latitude, s.longitude)
@@ -362,7 +407,7 @@ def list_spots(
         with_dist.sort(key=lambda x: x[1])
         total = len(with_dist)
         page = with_dist[offset: offset + limit]
-    else:
+    elif not in_season_month:
         total = query.count()
         page = [(s, None) for s in query.offset(offset).limit(limit).all()]
 
@@ -380,8 +425,10 @@ def list_spots(
             mine=bool(user and s.submitted_by == user.id),
         ))
     marks = _my_marks(db, user, [s.id for s in spots])
+    local_ids = _locals(db, spots)
     for s, item in zip(spots, items):
         item["my_mark"] = marks.get(s.id)
+        item["locals_pick"] = s.id in local_ids
     return {"total": total, "items": items, "credits": user.unlock_credits if user else None}
 
 
@@ -415,6 +462,7 @@ def get_spot(
         vouched=spot.id in vouched, mine=mine,
     )
     out["my_mark"] = _my_marks(db, user, [spot.id]).get(spot.id)
+    out["locals_pick"] = spot.id in _locals(db, [spot])
     return out
 
 

@@ -60,7 +60,11 @@ export function monthNames() {
 
 /** Locked spots get a generic title; build it in the viewer's language. */
 export function spotTitle(spot) {
-  if (!spot.locked) return spot.name
+  if (!spot.locked) {
+    // In Kannada mode, use the Kannada name when the map data has one.
+    const kn = spot.extra?.['name:kn']
+    return lang() === 'kn' && kn ? kn : spot.name
+  }
   return translate(lang(), 'card.hiddenName', { cat: catName(spot.category), place: spot.destination || spot.district })
 }
 

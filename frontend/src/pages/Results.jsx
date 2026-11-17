@@ -3,12 +3,17 @@ import { Link, useParams } from 'react-router-dom'
 import ConfettiEffect from '../components/common/ConfettiEffect'
 import LoadingSpinner from '../components/common/LoadingSpinner'
 import { getResults } from '../services/votingService'
+import { getTrip } from '../services/tripService'
+import TripPlace from '../components/trip/TripPlace'
 
 export default function Results() {
   const { tripId } = useParams()
   const [results, setResults] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+  const [trip, setTrip] = useState(null)
+
+  useEffect(() => { getTrip(tripId).then(setTrip).catch(() => {}) }, [tripId])
 
   const load = () => {
     setLoading(true)
@@ -125,6 +130,8 @@ export default function Results() {
           ))}
         </div>
       )}
+
+      {winnerName && <TripPlace tripId={tripId} tripMonth={trip?.trip_month} />}
 
       <div className="flex flex-wrap gap-3">
         <Link
