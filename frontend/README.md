@@ -14,7 +14,10 @@ npm run build    # production build into dist/
 | `/explore` | Karnataka spot map + filters |
 | `/spots/share`, `/spots/:id/edit` | Share or edit a spot |
 | `/spots/:id` | Spot detail (locked / unlocked) |
-| `/login`, `/me` | Account, my spots and credits |
+| `/login`, `/me` | Log in; my spots, unlocks and credits |
+| `/u/:username` | Public profile: passport stamps, bucket list, districts explored |
+| `/u/:username/wrapped?year=&month=` | Monthly / yearly Wrapped + Share to story |
+| `/settings/profile` | Edit profile |
 | `/admin/spots` | Review queue (admins) |
 | `/create`, `/trip/:id`, `/survey/:token` | Group trip planning |
 | `/trip/:id/recs`, `/vote`, `/results` | Recommendations, voting, results |
@@ -25,4 +28,8 @@ Environment variables (Vercel): `VITE_API_URL`, `VITE_API_KEY`. See `.env.exampl
 Code map:
 - `src/services/api.js`: axios client (API key, login token, friendly errors, wake-up ping)
 - `src/services/spotsService.js`: spots, auth, photo upload helpers
+- `src/services/profileService.js`: profiles, stamps / bucket list, Wrapped
+- `src/components/profile/`: `TravelBadges` (passport stamp, boarding pass), `MarkButtons`, `StampDialog`, `Avatar`
+- `src/utils/exif.js`: reads a photo's date and GPS in the browser (before resizing strips it)
+- `src/utils/wrappedImage.js`: draws the 1080×1920 Instagram story image
 - `src/i18n.js`: English + Kannada strings

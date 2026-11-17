@@ -4,10 +4,11 @@
 
 **Live:** https://flock-k-go.vercel.app  ·  **API:** https://packvote-api-nmz2.onrender.com/docs  ·  **Deploy guide:** [DEPLOY.md](DEPLOY.md)
 
-FlockGo does two things:
+FlockGo does three things:
 
 1. **Plans a group trip without the group-chat chaos.** Everyone fills a short survey. The app groups people by taste, ranks Karnataka destinations for the whole group, everyone votes, and a fair per-person budget comes out the other end.
 2. **Maps Karnataka's hidden spots, by locals.** Quiet waterfalls, hilltops, viewpoints and the cafe only the town knows. To see someone else's hidden spot, you share one of your own.
+3. **Gives every traveller a Karnataka passport.** Stamp the places you've been (with the date and a trip photo), keep a bucket list, watch the 31-district map fill up, and get a monthly and yearly **Wrapped** to share on Instagram.
 
 ---
 
@@ -46,7 +47,11 @@ The real value comes from locals adding places that aren't on any map. That's wh
   - Stamping asks when you went and lets you add a photo from the trip, which becomes that place's postcard on your profile.
   - If the photo's GPS shows it was taken within 25 km of the place, you get a gold **VERIFIED** stamp. The GPS is read in the browser, used once, and never stored.
   - Locked hidden spots never verify, and their trip photos are hidden from people who haven't unlocked them, so the stamps can't give their location away.
-- **FlockGo Wrapped** at `/u/<username>/wrapped?year=2026[&month=11]`: story-style slides with places stamped, kilometres between them, new districts, travel personality ("Waterfall Chaser", "Peak Bagger"…), busiest month, and "Top X% of explorers". **Share to story** builds a 1080×1920 image for Instagram.
+- **Edit profile** at `/settings/profile`: name, username, bio, home district, photo, public or private.
+- **FlockGo Wrapped** at `/u/<username>/wrapped?year=2026[&month=11]`: story-style slides with places stamped, kilometres between them, new districts, travel personality ("Waterfall Chaser", "Peak Bagger"…), busiest month, and "Top X% of explorers". **Share to story** builds a 1080×1920 image: on a phone it opens the share sheet (pick Instagram), on a laptop it downloads.
+  - A stamp counts in the month you visited (the date you entered), or the day you stamped it if you didn't give a date.
+  - Kilometres are the straight-line distance hopping between your stamped places in date order.
+  - "Top X%" only appears once at least 5 people have stamped places in that period.
 
 ## Other features
 
@@ -108,10 +113,11 @@ FlockGo/
 │   └── keep-api-awake.yml      # pings the API every 10 min so it doesn't sleep
 ├── backend/
 │   ├── app/
-│   │   ├── api/                # routes: trips, surveys, voting, budget, spots, accounts, photos, admin…
+│   │   ├── api/                # routes: trips, surveys, voting, budget, spots, accounts, photos,
+│   │   │                       #         profiles (stamps, bucket list, profiles, Wrapped), admin…
 │   │   ├── core/karnataka.py   # districts, bounding box, distance helpers
 │   │   ├── ml/                 # features, clustering, scoring, budget optimiser
-│   │   ├── models/             # SQLAlchemy models (Trip, Spot, User, Photo…)
+│   │   ├── models/             # SQLAlchemy models (Trip, Spot, User, Photo, PlaceMark…)
 │   │   └── services/           # auth, cache, SOS, travel options…
 │   ├── alembic/                # migrations
 │   ├── data/                   # OSM/Wikidata spot snapshots loaded on deploy
@@ -120,12 +126,15 @@ FlockGo/
 │   ├── seed_destinations.py    # the 65 Karnataka hubs
 │   ├── import_osm_spots.py     # fetch/refresh spots from OSM + Wikidata, load into DB
 │   ├── make_admin.py           # python make_admin.py you@example.com
-│   └── tests/                  # 300+ tests
+│   └── tests/                  # 320+ tests
 └── frontend/
     └── src/
-        ├── pages/              # Home, Explore, SpotDetail, ShareSpot, TripCompanion, AdminSpots…
+        ├── pages/              # Home, Explore, SpotDetail, ShareSpot, Profile, EditProfile,
+        │                       # Wrapped, TripCompanion, AdminSpots…
         ├── components/spots/   # SpotMap, SpotCard
-        ├── services/           # api.js, spotsService.js, companionService.js
+        ├── components/profile/ # passport stamp + boarding pass badges, stamp dialog, avatar
+        ├── services/           # api.js, spotsService.js, profileService.js, companionService.js
+        ├── utils/              # exif.js (photo date + GPS), wrappedImage.js (story image)
         └── i18n.js             # English + Kannada strings
 ```
 
@@ -229,6 +238,8 @@ Full interactive docs: `/docs` on the API.
 - **Cafe coverage follows OpenStreetMap,** which is dense in Bengaluru and thin elsewhere. Locals sharing spots fills the gaps.
 - **Kannada translations need a native speaker's review.**
 - **Live bus and hotel prices** need a booking API account; until then the app links to KSRTC, IRCTC and redBus.
+- **Photo verification is a fun badge, not proof.** The GPS comes from the photo, which a determined person could edit.
+- **Story images on the live site** load trip photos from the API. If a browser blocks that, the image still gets made, with coloured tiles where the photos would be.
 - **The site API key (`VITE_API_KEY`) is visible in the browser.** It only stops casual scripting; rate limits and user accounts protect the real actions.
 
 ## Data & credits
