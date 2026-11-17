@@ -39,6 +39,15 @@ Famous places (Jog, Abbey, Hebbe, Nandi Hills, …) are public; lesser-known one
 
 The real value comes from locals adding places that aren't on any map. That's what "Share a spot" is for.
 
+## Traveller profiles, passport stamps and Wrapped
+
+- **Public profile** at `/u/<username>`: avatar, bio, home district, stats, and a "Karnataka explored" grid of all 31 districts that fills in as you travel. Profiles can be made private.
+- **Passport stamps (been there) and bucket list (want to go)** on any spot or any of the 65 destination hubs, shown as Netflix-style rows of postcards.
+  - Stamping asks when you went and lets you add a photo from the trip, which becomes that place's postcard on your profile.
+  - If the photo's GPS shows it was taken within 25 km of the place, you get a gold **VERIFIED** stamp. The GPS is read in the browser, used once, and never stored.
+  - Locked hidden spots never verify, and their trip photos are hidden from people who haven't unlocked them, so the stamps can't give their location away.
+- **FlockGo Wrapped** at `/u/<username>/wrapped?year=2026[&month=11]`: story-style slides with places stamped, kilometres between them, new districts, travel personality ("Waterfall Chaser", "Peak Bagger"…), busiest month, and "Top X% of explorers". **Share to story** builds a 1080×1920 image for Instagram.
+
 ## Other features
 
 - **ಕನ್ನಡ / English** switch (the trip-planning screens are English only for now).
@@ -177,6 +186,10 @@ If you have an old `flockgo_demo.db` from before the spots feature, delete it an
 | POST | `/v1/trips/{id}/votes` | Ranked-choice ballot |
 | GET | `/v1/trips/{id}/results` | Voting results |
 | POST | `/v1/trips/{id}/budget-plan` | Fair budget split |
+| PATCH | `/v1/auth/me` | Edit profile (username, bio, home district, avatar, public/private) |
+| PUT | `/v1/marks` | Stamp (`been`, with optional date + photo) / bucket list (`want`) / remove |
+| GET | `/v1/users/{username}` | Public profile |
+| GET | `/v1/users/{username}/wrapped?year=&month=` | Monthly / yearly Wrapped |
 | GET | `/health` | Liveness (no DB) |
 
 Full interactive docs: `/docs` on the API.

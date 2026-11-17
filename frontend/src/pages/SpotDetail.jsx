@@ -5,6 +5,8 @@ import { Link, useNavigate, useParams } from 'react-router-dom'
 import LoadingSpinner from '../components/common/LoadingSpinner'
 import SpotCard from '../components/spots/SpotCard'
 import SpotMap from '../components/spots/SpotMap'
+import MarkButtons from '../components/profile/MarkButtons'
+import { BoardingPass, PassportStamp } from '../components/profile/TravelBadges'
 import { categoryLabel, catName, directionsUrl, monthNames, photoSrc, spotsApi, spotTitle } from '../services/spotsService'
 import useAuthStore from '../store/authStore'
 import { useT } from '../i18n'
@@ -76,7 +78,7 @@ export default function SpotDetail() {
     setBusy(true)
     try {
       const r = await spotsApi.unlock(spotId)
-      setSpot(r.spot)
+      setSpot((s) => ({ ...r.spot, my_mark: s?.my_mark ?? null }))
       setCredits(r.credits)
       toast.success(r.spent ? `Unlocked! ${r.credits} credit${r.credits === 1 ? '' : 's'} left` : 'Unlocked')
     } catch (e) {
@@ -128,7 +130,11 @@ export default function SpotDetail() {
 
       <div className="grid gap-6 lg:grid-cols-5">
         <div className="space-y-4 lg:col-span-3">
-          <div className="rounded-2xl bg-white p-6 shadow-card">
+          <div className="relative rounded-2xl bg-white p-6 shadow-card">
+            {spot.my_mark === 'been' && (
+              <PassportStamp size="lg" date={spot.my_mark_detail?.visited_on} verified={spot.my_mark_detail?.photo_verified} className="absolute right-4 top-10 z-10" />
+            )}
+            {spot.my_mark === 'want' && <BoardingPass className="absolute right-4 top-12 z-10" />}
             <div className="flex flex-wrap items-center gap-2 text-sm">
               <span className="font-semibold text-slate-600">{categoryLabel(spot.category)}</span>
               <span className="text-slate-300">•</span>
@@ -140,10 +146,21 @@ export default function SpotDetail() {
                 <Link to={`/spots/${spot.id}/edit`} className="ml-auto text-xs font-semibold text-primary underline">{t('spot.edit')}</Link>
               )}
             </div>
-            <h1 className={`mt-2 text-3xl font-extrabold ${spot.locked ? 'italic text-slate-500' : 'text-primary'}`}>
+            <h1 className={`mt-2 text-3xl font-extrabold ${spot.my_mark ? 'pr-24' : ''} ${spot.locked ? 'italic text-slate-500' : 'text-primary'}`}>
               {spot.locked && <Lock className="mr-2 inline h-6 w-6 text-accent" />}
               {spotTitle(spot)}
             </h1>
+
+            {spot.status === 'approved' && (
+              <div className="mt-4">
+                <MarkButtons
+                  spotId={spot.id}
+                  value={spot.my_mark ?? null}
+                  placeName={spotTitle(spot)}
+                  onChange={(v, r) => setSpot((s) => ({ ...s, my_mark: v, ...(r ? { my_mark_detail: r } : {}) }))}
+                />
+              </div>
+            )}
 
             {spot.locked ? (
               <div className="mt-5 rounded-xl border-2 border-dashed border-accent/40 bg-accent/5 p-5">

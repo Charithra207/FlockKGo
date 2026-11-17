@@ -18,3 +18,4 @@ from app.models.expense import Expense, ExpenseSplit  # noqa
 from app.models.user import User  # noqa
 from app.models.spot import Spot, SpotUnlock, SpotVouch  # noqa
 from app.models.photo import Photo  # noqa
+from app.models.place_mark import PlaceMark  # noqa

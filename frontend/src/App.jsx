@@ -5,11 +5,13 @@ import Footer from './components/layout/Footer'
 import Navbar from './components/layout/Navbar'
 import AdminSpots from './pages/AdminSpots'
 import CreateTrip from './pages/CreateTrip'
+import EditProfile from './pages/EditProfile'
 import Explore from './pages/Explore'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import MySpots from './pages/MySpots'
 import NotFound from './pages/NotFound'
+import Profile from './pages/Profile'
 import Recommendations from './pages/Recommendations'
 import Results from './pages/Results'
 import ShareSpot from './pages/ShareSpot'
@@ -18,6 +20,7 @@ import Survey from './pages/Survey'
 import TripCompanion from './pages/TripCompanion'
 import TripDashboard from './pages/TripDashboard'
 import Voting from './pages/Voting'
+import Wrapped from './pages/Wrapped'
 
 const pageTransition = {
   initial: { opacity: 0, y: 12 },
@@ -60,6 +63,9 @@ export default function App() {
                 <Route path="/login"                element={<Page><Login /></Page>} />
                 <Route path="/me"                   element={<Page><MySpots /></Page>} />
                 <Route path="/admin/spots"          element={<Page><AdminSpots /></Page>} />
+                <Route path="/u/:username"          element={<Page><Profile /></Page>} />
+                <Route path="/u/:username/wrapped"  element={<Page><Wrapped /></Page>} />
+                <Route path="/settings/profile"     element={<Page><EditProfile /></Page>} />
                 <Route path="*"                     element={<NotFound />} />
               </Routes>
             </motion.div>

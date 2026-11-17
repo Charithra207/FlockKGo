@@ -2,6 +2,7 @@ import uuid
 
 from sqlalchemy import Boolean, Column, DateTime, Integer, String, Uuid
 from sqlalchemy.sql import func
+from sqlalchemy.sql.expression import true as sa_true
 
 from app.db.database import Base
 
@@ -23,3 +24,10 @@ class User(Base):
     unlock_credits = Column(Integer, nullable=False, default=0)
     is_admin = Column(Boolean, nullable=False, default=False)
     created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
+
+    # Public profile (/u/<username>)
+    username = Column(String(30), nullable=True, unique=True, index=True)
+    bio = Column(String(200), nullable=True)
+    home_district = Column(String(100), nullable=True)
+    avatar_url = Column(String(500), nullable=True)
+    profile_public = Column(Boolean, nullable=False, default=True, server_default=sa_true())

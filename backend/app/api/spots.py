@@ -48,6 +48,7 @@ from app.core.karnataka import (
 )
 from app.dependencies import get_db
 from app.models.destination import Destination
+from app.models.place_mark import PlaceMark
 from app.models.spot import SPOT_CATEGORIES, Spot, SpotUnlock, SpotVouch
 from app.models.user import User
 from app.services.user_auth import get_admin_user, get_current_user, get_optional_user
@@ -196,6 +197,16 @@ def _user_context(db: Session, user: Optional[User], spot_ids: list) -> tuple[se
         .filter(SpotVouch.user_id == user.id, SpotVouch.spot_id.in_(spot_ids)).all()
     }
     return unlocked, vouched
+
+
+def _my_marks(db: Session, user: Optional[User], spot_ids: list) -> dict:
+    """{spot_id: "been" | "want"} for the current user."""
+    if not user or not spot_ids:
+        return {}
+    rows = db.query(PlaceMark.spot_id, PlaceMark.status).filter(
+        PlaceMark.user_id == user.id, PlaceMark.spot_id.in_(spot_ids),
+    ).all()
+    return {sid: st for sid, st in rows}
 
 
 def _can_see(spot: Spot, user: Optional[User], unlocked: set) -> bool:
@@ -368,6 +379,9 @@ def list_spots(
             s, visible=visible, hub_names=hubs, vouched=s.id in vouched, distance_km=d,
             mine=bool(user and s.submitted_by == user.id),
         ))
+    marks = _my_marks(db, user, [s.id for s in spots])
+    for s, item in zip(spots, items):
+        item["my_mark"] = marks.get(s.id)
     return {"total": total, "items": items, "credits": user.unlock_credits if user else None}
 
 
@@ -396,10 +410,12 @@ def get_spot(
     if spot.status != "approved" and not (mine or (user and user.is_admin)):
         raise HTTPException(status_code=404, detail="Spot not found")
     unlocked, vouched = _user_context(db, user, [spot.id])
-    return _serialize(
+    out = _serialize(
         spot, visible=_can_see(spot, user, unlocked), hub_names=_hub_names(db, [spot]),
         vouched=spot.id in vouched, mine=mine,
     )
+    out["my_mark"] = _my_marks(db, user, [spot.id]).get(spot.id)
+    return out
 
 
 # ── Contribute ────────────────────────────────────────────────────────────────

@@ -1,4 +1,4 @@
-import { Gift, Lock, LogOut, ShieldCheck } from 'lucide-react'
+import { Gift, Lock, LogOut, ShieldCheck, Stamp } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
@@ -7,6 +7,7 @@ import LoadingSpinner from '../components/common/LoadingSpinner'
 import SpotCard from '../components/spots/SpotCard'
 import { spotsApi } from '../services/spotsService'
 import useAuthStore from '../store/authStore'
+import { profilePath } from '../services/profileService'
 
 const STATUS_STYLE = {
   pending: 'bg-warning/15 text-warning',
@@ -43,6 +44,9 @@ export default function MySpots() {
           </p>
         </div>
         <div className="flex flex-wrap gap-2">
+          <Link to={profilePath(user)} className="inline-flex items-center gap-2 rounded-xl bg-orange-700 px-4 py-2.5 text-sm font-semibold text-white hover:bg-orange-800">
+            <Stamp className="h-4 w-4" /> My passport
+          </Link>
           <Link to="/spots/share" className="inline-flex items-center gap-2 rounded-xl bg-accent px-4 py-2.5 text-sm font-semibold text-white hover:opacity-90">
             <Gift className="h-4 w-4" /> Share a spot
           </Link>

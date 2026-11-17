@@ -1,16 +1,23 @@
 import { Lock, MapPin, ShieldCheck, Star } from 'lucide-react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import MarkButtons from '../profile/MarkButtons'
+import { BoardingPass, PassportStamp } from '../profile/TravelBadges'
 import { catName, CATEGORY_META, photoSrc, spotTitle } from '../../services/spotsService'
 import { categoryColor } from './SpotMap'
 import { useT } from '../../i18n'
 
-export default function SpotCard({ spot }) {
+export default function SpotCard({ spot, showMarks = true }) {
   const meta = CATEGORY_META[spot.category] || CATEGORY_META.other
   const t = useT()
+  const [mark, setMark] = useState(spot.my_mark ?? null)
   return (
+    <div className="relative">
+    {mark === 'been' && <PassportStamp size="sm" className="absolute -right-2 -top-3 z-10" />}
+    {mark === 'want' && <BoardingPass size="sm" className="absolute -right-1 -top-2 z-10" />}
     <Link
       to={`/spots/${spot.id}`}
-      className="group flex flex-col gap-2 rounded-2xl bg-white p-4 shadow-card transition-shadow hover:shadow-md"
+      className={`group flex h-full flex-col gap-2 rounded-2xl bg-white p-4 shadow-card transition-shadow hover:shadow-md ${showMarks && spot.status === 'approved' ? 'pb-12' : ''}`}
     >
       {!spot.locked && spot.photo_url && (
         <img src={photoSrc(spot.photo_url)} alt="" loading="lazy" className="-mx-4 -mt-4 mb-1 h-36 w-[calc(100%+2rem)] max-w-none rounded-t-2xl object-cover" />
@@ -54,5 +61,11 @@ export default function SpotCard({ spot }) {
         <p className="text-xs font-medium text-accent">{t('card.unlockHint')}</p>
       )}
     </Link>
+    {showMarks && spot.status === 'approved' && (
+      <div className="absolute bottom-3 right-3">
+        <MarkButtons compact spotId={spot.id} value={mark} onChange={(v) => setMark(v)} placeName={spotTitle(spot)} />
+      </div>
+    )}
+    </div>
   )
 }

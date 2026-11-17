@@ -6,3 +6,39 @@ body {
   @apply bg-slate-50 text-slate-800 antialiased;
   font-family: Inter, 'Noto Sans Kannada', ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
 }
+
+/* ── Travel marks: passport stamp + boarding pass ─────────────────────────── */
+.stamp-ink {
+  color: #c2410c;
+  mix-blend-mode: multiply;
+  opacity: 0.88;
+  filter: drop-shadow(0 0 0.5px rgba(194, 65, 12, 0.6));
+}
+.ticket {
+  color: #fcd34d;
+  background: #1e3a5f;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(30, 58, 95, 0.35);
+  /* punched notches on both ends */
+  -webkit-mask: radial-gradient(circle 5px at 0 50%, transparent 98%, #000) left / 51% 100% no-repeat,
+    radial-gradient(circle 5px at 100% 50%, transparent 98%, #000) right / 51% 100% no-repeat;
+  mask: radial-gradient(circle 5px at 0 50%, transparent 98%, #000) left / 51% 100% no-repeat,
+    radial-gradient(circle 5px at 100% 50%, transparent 98%, #000) right / 51% 100% no-repeat;
+}
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { scrollbar-width: none; }
+.stamp-light {
+  color: #fde68a;
+  opacity: 0.95;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.6));
+}
+.stamp-gold {
+  color: #a16207;
+  mix-blend-mode: multiply;
+  filter: drop-shadow(0 0 0.5px rgba(161, 98, 7, 0.6));
+}
+.stamp-gold-light {
+  color: #fcd34d;
+  filter: drop-shadow(0 0 6px rgba(252, 211, 77, 0.55)) drop-shadow(0 1px 2px rgba(0, 0, 0, 0.6));
+}
+@keyframes wrapped-progress { from { width: 0% } to { width: 100% } }

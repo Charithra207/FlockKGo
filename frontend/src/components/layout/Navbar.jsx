@@ -1,8 +1,10 @@
-import { Compass, Gift, LogIn, Lock, ShieldCheck, UserRound } from 'lucide-react'
+import { Compass, Gift, LogIn, Lock, ShieldCheck } from 'lucide-react'
 import { useEffect } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { useLang, useT } from '../../i18n'
 import { authApi } from '../../services/spotsService'
+import { profilePath } from '../../services/profileService'
+import Avatar from '../profile/Avatar'
 import useAuthStore from '../../store/authStore'
 
 export default function Navbar() {
@@ -35,8 +37,8 @@ export default function Navbar() {
             </NavLink>
           )}
           {token ? (
-            <NavLink to="/me" className={link} title="My account">
-              <UserRound className="h-4 w-4" />
+            <NavLink to={profilePath(user)} className={link} title="My profile">
+              <Avatar user={user} size={26} />
               <span className="hidden max-w-[8rem] truncate md:inline">{user?.display_name || 'Me'}</span>
               <span className="inline-flex items-center gap-0.5 rounded-full bg-accent/10 px-2 py-0.5 text-xs text-accent" title="Unlock credits">
                 <Lock className="h-3 w-3" /> {user?.unlock_credits ?? 0}

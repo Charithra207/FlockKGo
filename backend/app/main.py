@@ -9,7 +9,7 @@ from slowapi.errors import RateLimitExceeded
 
 from app.api import admin, analytics, budget, health as health_router, participants, recommendations, surveys, trips, voting, ws, sync_admin
 from app.api import checklist, expenses
-from app.api import accounts, photos, spots
+from app.api import accounts, photos, profiles, spots
 from app.config import get_settings
 from app.core.logging import configure_logging, get_logger
 from app.core.middleware import AccessLogMiddleware, RequestIDMiddleware
@@ -72,6 +72,7 @@ app.include_router(expenses.router, prefix="/v1")
 app.include_router(accounts.router, prefix="/v1")
 app.include_router(spots.router, prefix="/v1")
 app.include_router(photos.router, prefix="/v1")
+app.include_router(profiles.router, prefix="/v1")
 
 
 # ── Health + utility endpoints ────────────────────────────────────────────────

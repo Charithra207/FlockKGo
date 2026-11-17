@@ -13,6 +13,12 @@ const en = {
   'nav.share': 'Share a spot',
   'nav.login': 'Log in',
   'nav.plan': 'Plan a trip',
+  'mark.stamp': 'Stamp my passport',
+  'mark.stamped': 'Been here',
+  'mark.unstamp': 'Remove stamp',
+  'mark.want': 'Bucket list',
+  'mark.onList': 'On my list',
+  'mark.unwant': 'Remove from bucket list',
 
   'cat.cafe': 'Cafe', 'cat.viewpoint': 'Viewpoint', 'cat.waterfall': 'Waterfall', 'cat.trek': 'Trek',
   'cat.beach': 'Beach', 'cat.lake': 'Lake', 'cat.temple': 'Temple', 'cat.heritage': 'Heritage',
@@ -113,6 +119,10 @@ const kn = {
   'nav.share': 'ಸ್ಥಳ ಹಂಚಿಕೊಳ್ಳಿ',
   'nav.login': 'ಲಾಗಿನ್',
   'nav.plan': 'ಪ್ರವಾಸ ಯೋಜಿಸಿ',
+  'mark.stamp': 'ಪಾಸ್‌ಪೋರ್ಟ್‌ಗೆ ಮುದ್ರೆ',
+  'mark.stamped': 'ಇಲ್ಲಿಗೆ ಹೋಗಿದ್ದೇನೆ',
+  'mark.want': 'ಹೋಗಬೇಕಾದ ಪಟ್ಟಿ',
+  'mark.onList': 'ಪಟ್ಟಿಯಲ್ಲಿದೆ',
 
   'cat.cafe': 'ಕೆಫೆ', 'cat.viewpoint': 'ವೀಕ್ಷಣಾ ಸ್ಥಳ', 'cat.waterfall': 'ಜಲಪಾತ', 'cat.trek': 'ಚಾರಣ',
   'cat.beach': 'ಕಡಲತೀರ', 'cat.lake': 'ಕೆರೆ', 'cat.temple': 'ದೇವಸ್ಥಾನ', 'cat.heritage': 'ಪಾರಂಪರಿಕ ತಾಣ',

@@ -1,7 +1,7 @@
 import { Crosshair, Gift, Lock, Search } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
 import toast from 'react-hot-toast'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import EmptyState from '../components/common/EmptyState'
 import LoadingSpinner from '../components/common/LoadingSpinner'
 import SpotCard from '../components/spots/SpotCard'
@@ -19,7 +19,8 @@ export default function Explore() {
   const [data, setData] = useState({ total: 0, items: [] })
   const [loading, setLoading] = useState(true)
   const [category, setCategory] = useState('')
-  const [district, setDistrict] = useState('')
+  const [searchParams] = useSearchParams()
+  const [district, setDistrict] = useState(searchParams.get('district') || '')
   const [visibility, setVisibility] = useState('all')
   const [q, setQ] = useState('')
   const [query, setQuery] = useState('')
