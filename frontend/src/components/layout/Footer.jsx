@@ -10,11 +10,13 @@ export default function Footer() {
           FlockGo 🐦
         </Link>
         <p>{t('footer.tag')}</p>
-        <p className="text-xs">
-          Map data ©{' '}
+        <p className="flex flex-wrap items-center justify-center gap-x-3 text-xs">
+          <Link to="/privacy" className="underline">Privacy</Link>
+          <Link to="/terms" className="underline">Terms</Link>
+          <span>Map data ©{' '}
           <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer" className="underline">
             OpenStreetMap contributors
-          </a>
+          </a></span>
         </p>
       </div>
     </footer>

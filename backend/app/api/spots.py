@@ -25,6 +25,9 @@ GET    /v1/spots/{id}            one spot (redacted if locked)
 POST   /v1/spots                 submit (login required)
 POST   /v1/spots/{id}/unlock     spend 1 credit
 POST   /v1/spots/{id}/vouch      "I've been here"
+POST   /v1/spots/{id}/report     closed / wrong place / unsafe / private land / overcrowded...
+GET    /v1/admin/reports         open reports, grouped by spot (admin)
+POST   /v1/admin/reports/{spot_id}/resolve   dismiss / unpublish / make_hidden (admin)
 GET    /v1/admin/spots/pending   review queue (admin)
 POST   /v1/admin/spots/{id}/review  approve / reject / feature (admin)
 """
@@ -49,7 +52,9 @@ from app.core.karnataka import (
 from app.dependencies import get_db
 from app.models.destination import Destination
 from app.models.place_mark import PlaceMark
-from app.models.spot import SPOT_CATEGORIES, Spot, SpotUnlock, SpotVouch
+from app.models.spot import REPORT_REASONS, SAFETY_TAGS, SPOT_CATEGORIES, Spot, SpotReport, SpotUnlock, SpotVouch
+from app.services.captcha import check_human
+from app.services.mailer import email_configured
 from app.models.user import User
 from app.services.user_auth import get_admin_user, get_current_user, get_optional_user
 
@@ -75,6 +80,17 @@ def _norm_months(v: list[int]) -> list[int]:
     return sorted(set(v))
 
 
+def _norm_safety(v: list[str]) -> list[str]:
+    out = []
+    for t in v:
+        t = (t or "").strip().lower()
+        if t not in SAFETY_TAGS:
+            raise ValueError(f"Unknown safety note: {t}")
+        if t not in out:
+            out.append(t)
+    return out
+
+
 def _norm_tags(v: list[str]) -> list[str]:
     return [t.strip().lower()[:30] for t in v if t.strip()]
 
@@ -92,6 +108,14 @@ class SpotSubmit(BaseModel):
     permit_required: bool = False
     photo_url: Optional[str] = Field(default=None, max_length=500)
     tags: list[str] = Field(default_factory=list, max_length=10)
+    safety: list[str] = Field(default_factory=list, max_length=10)
+    captcha_token: Optional[str] = Field(default=None, max_length=4000)
+    website: Optional[str] = Field(default=None, max_length=200)  # honeypot
+
+    @field_validator("safety")
+    @classmethod
+    def _safety(cls, v: list[str]) -> list[str]:
+        return _norm_safety(v)
 
     @field_validator("category")
     @classmethod
@@ -141,6 +165,12 @@ class SpotEdit(BaseModel):
     permit_required: Optional[bool] = None
     photo_url: Optional[str] = Field(default=None, max_length=500)
     tags: Optional[list[str]] = Field(default=None, max_length=10)
+    safety: Optional[list[str]] = Field(default=None, max_length=10)
+
+    @field_validator("safety")
+    @classmethod
+    def _safety(cls, v: Optional[list[str]]) -> Optional[list[str]]:
+        return None if v is None else _norm_safety(v)
 
     @field_validator("category")
     @classmethod
@@ -162,6 +192,15 @@ class SpotEdit(BaseModel):
     def _photo(cls, v: Optional[str]) -> Optional[str]:
         # "" clears the photo
         return "" if v == "" else _check_photo_url(v)
+
+
+class ReportRequest(BaseModel):
+    reason: Literal["closed", "wrong_location", "unsafe", "private_property", "crowded", "spam", "other"]
+    note: Optional[str] = Field(default=None, max_length=500)
+
+
+class ResolveRequest(BaseModel):
+    action: Literal["dismiss", "unpublish", "make_hidden"]
 
 
 class ReviewRequest(BaseModel):
@@ -260,6 +299,7 @@ def _serialize(
         "best_months": spot.best_months or [],
         "permit_required": spot.permit_required,
         "tags": spot.tags or [],
+        "safety": spot.safety or [],
         "status": spot.status,
         "locked": not visible,
         "distance_km": round(distance_km, 1) if distance_km is not None else None,
@@ -477,6 +517,9 @@ def submit_spot(
     user: User = Depends(get_current_user),
 ):
     settings = get_settings()
+    check_human(body.captcha_token, body.website, request.client.host if request.client else None)
+    if settings.require_email_verification and email_configured() and not (user.email_verified or user.is_admin):
+        raise HTTPException(status_code=403, detail="Please confirm your email first (check your inbox)")
     if not in_karnataka_bbox(body.latitude, body.longitude):
         raise HTTPException(status_code=422, detail="That pin is outside Karnataka. We're Karnataka-only for now.")
     district = normalize_district(body.district)
@@ -527,6 +570,7 @@ def submit_spot(
         permit_required=body.permit_required,
         photo_url=body.photo_url,
         tags=body.tags,
+        safety=body.safety,
         submitted_by=user.id,
         reviewed_at=datetime.now(timezone.utc) if auto_approve else None,
     )
@@ -642,6 +686,83 @@ def vouch_spot(
     db.commit()
     db.refresh(spot)
     return {"vouch_count": spot.vouch_count, "already": False}
+
+
+# ── Reports ───────────────────────────────────────────────────────────────────
+
+@router.post("/spots/{spot_id}/report")
+@limiter.limit("20/hour")
+def report_spot(
+    request: Request,
+    spot_id: uuid.UUID,
+    body: ReportRequest,
+    db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
+):
+    spot = _get_spot(db, spot_id)
+    if spot.status not in ("approved", "flagged"):
+        raise HTTPException(status_code=404, detail="Spot not found")
+    existing = db.query(SpotReport).filter(SpotReport.spot_id == spot.id, SpotReport.user_id == user.id).first()
+    if existing:  # one report per person per spot; update it
+        existing.reason, existing.note, existing.status = body.reason, (body.note or "").strip() or None, "open"
+    else:
+        db.add(SpotReport(spot_id=spot.id, user_id=user.id, reason=body.reason, note=(body.note or "").strip() or None))
+    db.commit()
+
+    serious = db.query(func.count(SpotReport.id)).filter(
+        SpotReport.spot_id == spot.id, SpotReport.status == "open", SpotReport.reason != "crowded",
+    ).scalar()
+    hidden_now = False
+    if serious >= get_settings().report_threshold and spot.status == "approved":
+        # Several people say something's wrong: take it off the map until an admin checks.
+        spot.status = "flagged"
+        db.commit()
+        hidden_now = True
+    return {"reported": True, "hidden_for_review": hidden_now}
+
+
+def _report_summary(db: Session, spot: Spot) -> dict:
+    rows = db.query(SpotReport).filter(SpotReport.spot_id == spot.id, SpotReport.status == "open").all()
+    counts: dict = {}
+    for r in rows:
+        counts[r.reason] = counts.get(r.reason, 0) + 1
+    return {
+        "spot": _serialize(spot, visible=True, hub_names=_hub_names(db, [spot])),
+        "reasons": counts,
+        "notes": [r.note for r in rows if r.note][:10],
+        "total": len(rows),
+    }
+
+
+@router.get("/admin/reports")
+def open_reports(db: Session = Depends(get_db), admin: User = Depends(get_admin_user)):
+    spot_ids = [r[0] for r in db.query(SpotReport.spot_id).filter(SpotReport.status == "open").distinct().all()]
+    spots = db.query(Spot).filter(Spot.id.in_(spot_ids)).all() if spot_ids else []
+    items = sorted((_report_summary(db, s) for s in spots), key=lambda x: -x["total"])
+    return {"items": items}
+
+
+@router.post("/admin/reports/{spot_id}/resolve")
+def resolve_reports(
+    spot_id: uuid.UUID,
+    body: ResolveRequest,
+    db: Session = Depends(get_db),
+    admin: User = Depends(get_admin_user),
+):
+    spot = _get_spot(db, spot_id)
+    if body.action == "dismiss":
+        if spot.status == "flagged":
+            spot.status = "approved"  # reports were wrong: back on the map
+    elif body.action == "unpublish":
+        spot.status = "rejected"
+        spot.review_note = "Removed after reports"
+    elif body.action == "make_hidden":  # too crowded: make it a hidden gem again
+        spot.is_hidden = True
+        if spot.status == "flagged":
+            spot.status = "approved"
+    db.query(SpotReport).filter(SpotReport.spot_id == spot.id, SpotReport.status == "open").update({"status": "resolved"})
+    db.commit()
+    return {"status": spot.status, "is_hidden": spot.is_hidden}
 
 
 # ── Moderation ────────────────────────────────────────────────────────────────

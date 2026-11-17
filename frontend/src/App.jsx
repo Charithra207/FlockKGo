@@ -4,6 +4,8 @@ import ErrorBoundary from './components/common/ErrorBoundary'
 import Footer from './components/layout/Footer'
 import Navbar from './components/layout/Navbar'
 import AdminSpots from './pages/AdminSpots'
+import { ForgotPassword, Privacy, ResetPassword, Terms, VerifyEmail } from './pages/AccountPages'
+import VerifyBanner from './components/auth/VerifyBanner'
 import Collections from './pages/Collections'
 import CreateTrip from './pages/CreateTrip'
 import EditProfile from './pages/EditProfile'
@@ -41,6 +43,7 @@ export default function App() {
     <ErrorBoundary>
       <div className="min-h-screen bg-slate-50">
         <Navbar />
+        <VerifyBanner />
         <main className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
           <AnimatePresence mode="wait">
             <motion.div
@@ -63,6 +66,11 @@ export default function App() {
                 <Route path="/spots/:spotId"        element={<Page><SpotDetail /></Page>} />
                 <Route path="/spots/:spotId/edit"   element={<Page><ShareSpot /></Page>} />
                 <Route path="/login"                element={<Page><Login /></Page>} />
+                <Route path="/forgot-password"      element={<Page><ForgotPassword /></Page>} />
+                <Route path="/reset-password"       element={<Page><ResetPassword /></Page>} />
+                <Route path="/verify-email"         element={<Page><VerifyEmail /></Page>} />
+                <Route path="/privacy"              element={<Page><Privacy /></Page>} />
+                <Route path="/terms"                element={<Page><Terms /></Page>} />
                 <Route path="/me"                   element={<Page><MySpots /></Page>} />
                 <Route path="/admin/spots"          element={<Page><AdminSpots /></Page>} />
                 <Route path="/u/:username"          element={<Page><Profile /></Page>} />

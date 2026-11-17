@@ -93,6 +93,42 @@ def decode_token(token: str) -> Optional[uuid.UUID]:
         return None
 
 
+# ── One-purpose tokens (password reset, email verification) ──────────────────
+# Signed with a key derived per purpose, so they can never work as login tokens.
+
+def _purpose_key(purpose: str) -> bytes:
+    return hmac.new(_secret(), f"purpose:{purpose}".encode(), hashlib.sha256).digest()
+
+
+def create_purpose_token(user_id: uuid.UUID, purpose: str, ttl_seconds: int, bind: str = "") -> str:
+    """bind: a value that must still match when used (e.g. part of the password
+    hash, so a reset link stops working once the password changes)."""
+    body = {"sub": str(user_id), "exp": int(time.time()) + ttl_seconds,
+            "b": hashlib.sha256(bind.encode()).hexdigest()[:16]}
+    payload = _b64(json.dumps(body).encode())
+    sig = _b64(hmac.new(_purpose_key(purpose), payload.encode(), hashlib.sha256).digest())
+    return f"{payload}.{sig}"
+
+
+def decode_purpose_token(token: str, purpose: str) -> Optional[tuple[uuid.UUID, str]]:
+    """(user_id, bind_hash) if valid and unexpired."""
+    try:
+        payload, sig = token.split(".")
+        expected = _b64(hmac.new(_purpose_key(purpose), payload.encode(), hashlib.sha256).digest())
+        if not hmac.compare_digest(sig, expected):
+            return None
+        data = json.loads(_unb64(payload))
+        if int(data["exp"]) < time.time():
+            return None
+        return uuid.UUID(data["sub"]), data.get("b", "")
+    except (ValueError, KeyError, TypeError, json.JSONDecodeError):
+        return None
+
+
+def bind_hash(bind: str) -> str:
+    return hashlib.sha256(bind.encode()).hexdigest()[:16]
+
+
 def get_optional_user(
     creds: Optional[HTTPAuthorizationCredentials] = Depends(_bearer),
     db: Session = Depends(get_db),

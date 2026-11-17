@@ -4,13 +4,14 @@ import toast from 'react-hot-toast'
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import LoadingSpinner from '../components/common/LoadingSpinner'
 import SpotMap from '../components/spots/SpotMap'
-import { catName, CATEGORY_META, monthNames, photoSrc, resizeImage, spotsApi } from '../services/spotsService'
+import { catName, CATEGORY_META, monthNames, photoSrc, resizeImage, SAFETY_META, spotsApi } from '../services/spotsService'
+import Turnstile, { Honeypot } from '../components/auth/Turnstile'
 import useAuthStore from '../store/authStore'
 import { useT } from '../i18n'
 
 const empty = {
   name: '', category: 'viewpoint', district: '', description: '', access_notes: '',
-  best_months: [], permit_required: false, is_hidden: true, photo_url: '', tags: '',
+  best_months: [], permit_required: false, is_hidden: true, photo_url: '', tags: '', safety: [],
 }
 
 /** Share a new spot, or edit one (/spots/:spotId/edit). */
@@ -33,6 +34,8 @@ export default function ShareSpot() {
   const [saving, setSaving] = useState(false)
   const [uploading, setUploading] = useState(false)
   const [loaded, setLoaded] = useState(!editing)
+  const [captcha, setCaptcha] = useState(null)
+  const [website, setWebsite] = useState('')
 
   useEffect(() => {
     spotsApi.meta().then((m) => setDistricts(m.districts)).catch(() => {})
@@ -45,7 +48,7 @@ export default function ShareSpot() {
       setForm({
         name: s.name, category: s.category, district: s.district, description: s.description || '',
         access_notes: s.access_notes || '', best_months: s.best_months || [], permit_required: s.permit_required,
-        is_hidden: s.is_hidden, photo_url: s.photo_url || '', tags: (s.tags || []).join(', '),
+        is_hidden: s.is_hidden, photo_url: s.photo_url || '', tags: (s.tags || []).join(', '), safety: s.safety || [],
       })
       setPin([s.latitude, s.longitude])
       setFocus({ center: [s.latitude, s.longitude], zoom: 13 })
@@ -113,6 +116,8 @@ export default function ShareSpot() {
       access_notes: form.access_notes || null,
       photo_url: form.photo_url.trim() || (editing ? '' : null),
       tags: form.tags.split(',').map((t) => t.trim()).filter(Boolean),
+      captcha_token: captcha || undefined,
+      website: website || undefined,
     }
     try {
       if (editing) {
@@ -237,6 +242,26 @@ export default function ShareSpot() {
               <span>{t('share.permit')}</span>
             </label>
           </div>
+
+          <div className="space-y-2">
+            <span className="text-sm font-semibold text-slate-700">Safety notes <span className="font-normal text-slate-400">(tick all that apply)</span></span>
+            <div className="flex flex-wrap gap-1.5">
+              {Object.entries(SAFETY_META).map(([k, m]) => {
+                const on = form.safety.includes(k)
+                return (
+                  <button
+                    key={k} type="button" title={m.tip}
+                    onClick={() => setForm((f) => ({ ...f, safety: on ? f.safety.filter((x) => x !== k) : [...f.safety, k] }))}
+                    className={`rounded-full border px-3 py-1 text-xs font-semibold ${on ? 'border-amber-500 bg-amber-100 text-amber-800' : 'border-slate-200 text-slate-500'}`}
+                  >
+                    {m.emoji} {m.label}
+                  </button>
+                )
+              })}
+            </div>
+          </div>
+          <Honeypot value={website} onChange={setWebsite} />
+          {!editing && <Turnstile onToken={setCaptcha} />}
 
           <p className="text-xs text-slate-400">
             {t('share.rules')}

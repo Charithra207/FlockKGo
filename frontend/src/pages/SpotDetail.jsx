@@ -5,6 +5,8 @@ import { Link, useNavigate, useParams } from 'react-router-dom'
 import LoadingSpinner from '../components/common/LoadingSpinner'
 import SpotCard from '../components/spots/SpotCard'
 import SpotMap from '../components/spots/SpotMap'
+import SafetyNotes from '../components/spots/SafetyNotes'
+import ReportButton from '../components/spots/ReportButton'
 import MarkButtons from '../components/profile/MarkButtons'
 import { BoardingPass, PassportStamp } from '../components/profile/TravelBadges'
 import { categoryLabel, catName, directionsUrl, monthNames, photoSrc, spotsApi, spotTitle } from '../services/spotsService'
@@ -67,6 +69,13 @@ export default function SpotDetail() {
   const [spot, setSpot] = useState(null)
   const [error, setError] = useState(null)
   const [busy, setBusy] = useState(false)
+  const [pledged, setPledged] = useState(() => {
+    try { return localStorage.getItem('flockgo-pledge') === '1' } catch { return false }
+  })
+  function pledge(v) {
+    setPledged(v)
+    try { localStorage.setItem('flockgo-pledge', v ? '1' : '0') } catch { /* private mode */ }
+  }
 
   useEffect(() => {
     setSpot(null)
@@ -162,6 +171,8 @@ export default function SpotDetail() {
               </div>
             )}
 
+            <div className="mt-4"><SafetyNotes spot={spot} /></div>
+
             {spot.locked ? (
               <div className="mt-5 rounded-xl border-2 border-dashed border-accent/40 bg-accent/5 p-5">
                 <p className="font-semibold text-slate-700">{t('spot.lockedTitle', { cat: catName(spot.category) })}</p>
@@ -170,8 +181,14 @@ export default function SpotDetail() {
                   {spot.vouch_count > 0 && ` ${t('spot.confirmed', { n: spot.vouch_count })}`}
                 </p>
                 <div className="mt-4 flex flex-wrap items-center gap-3">
+                  {token && credits > 0 && (
+                    <label className="flex w-full items-start gap-2 text-xs text-slate-600">
+                      <input type="checkbox" checked={pledged} onChange={(e) => pledge(e.target.checked)} className="mt-0.5" />
+                      <span>🌱 I'll leave no trace: carry my trash back, keep it quiet, and won't post the exact location publicly.</span>
+                    </label>
+                  )}
                   {token && credits > 0 ? (
-                    <button disabled={busy} onClick={unlock} className="inline-flex items-center gap-2 rounded-xl bg-accent px-5 py-2.5 font-semibold text-white hover:opacity-90 disabled:opacity-50">
+                    <button disabled={busy || !pledged} onClick={unlock} className="inline-flex items-center gap-2 rounded-xl bg-accent px-5 py-2.5 font-semibold text-white hover:opacity-90 disabled:opacity-50">
                       <Unlock className="h-4 w-4" /> {t('spot.unlock', { n: credits })}
                     </button>
                   ) : token ? (
@@ -242,6 +259,7 @@ export default function SpotDetail() {
               {spot.source === 'osm' && (
                 <p className="text-xs text-slate-400">Listing from © OpenStreetMap contributors</p>
               )}
+              <ReportButton spotId={spot.id} />
               {spot.is_hidden && !spot.locked && (
                 <p className="text-xs text-slate-400">
                   {t('spot.respect')}

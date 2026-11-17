@@ -12,7 +12,12 @@ SPOT_CATEGORIES = [
     "cafe", "viewpoint", "waterfall", "trek", "beach", "lake", "temple",
     "heritage", "food", "stay", "wildlife", "other",
 ]
-SPOT_STATUSES = ["pending", "approved", "rejected"]
+SPOT_STATUSES = ["pending", "approved", "rejected", "flagged"]
+SAFETY_TAGS = [
+    "monsoon_danger", "slippery", "steep", "no_swimming", "no_network",
+    "forest_permission", "wildlife", "private_property", "no_facilities",
+]
+REPORT_REASONS = ["closed", "wrong_location", "unsafe", "private_property", "crowded", "spam", "other"]
 
 
 class Spot(Base):
@@ -53,6 +58,7 @@ class Spot(Base):
     permit_required = Column(Boolean, nullable=False, default=False)
     photo_url = Column(String(500), nullable=True)
     tags = Column(JSON, nullable=False, default=list)              # ["monsoon", "sunrise"]
+    safety = Column(JSON, nullable=False, default=list)            # ["monsoon_danger", "no_network"]
     extra = Column(JSON, nullable=False, default=dict)             # source-specific (opening hours...)
 
     submitted_by = Column(Uuid, ForeignKey("users.id", ondelete="SET NULL"), nullable=True, index=True)
@@ -81,4 +87,18 @@ class SpotVouch(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     user_id = Column(Uuid, ForeignKey("users.id", ondelete="CASCADE"), nullable=False, index=True)
     spot_id = Column(Uuid, ForeignKey("spots.id", ondelete="CASCADE"), nullable=False, index=True)
+    created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
+
+
+class SpotReport(Base):
+    """Someone flags a spot: closed, wrong place, unsafe, private land, overcrowded..."""
+    __tablename__ = "spot_reports"
+    __table_args__ = (UniqueConstraint("user_id", "spot_id", name="uq_spot_report"),)
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    spot_id = Column(Uuid, ForeignKey("spots.id", ondelete="CASCADE"), nullable=False, index=True)
+    user_id = Column(Uuid, ForeignKey("users.id", ondelete="CASCADE"), nullable=False, index=True)
+    reason = Column(String(30), nullable=False)
+    note = Column(String(500), nullable=True)
+    status = Column(String(20), nullable=False, default="open", index=True)  # open | resolved
     created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)

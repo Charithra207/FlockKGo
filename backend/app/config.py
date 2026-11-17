@@ -1,4 +1,4 @@
-﻿from functools import lru_cache
+from functools import lru_cache
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -29,6 +29,26 @@ class Settings(BaseSettings):
     # (so you don't need a server shell to run make_admin.py).
     admin_emails: str = ""
     max_pending_submissions: int = 5       # anti-spam: per user
+    report_threshold: int = 3              # this many people report a spot -> hidden until reviewed
+
+    # Email (password reset, verification). Resend is simplest; SMTP also works.
+    # With neither set, emails are only logged and features degrade gracefully.
+    resend_api_key: str | None = None
+    mail_from: str = "FlockGo <onboarding@resend.dev>"
+    smtp_host: str | None = None
+    smtp_port: int = 587
+    smtp_user: str | None = None
+    smtp_password: str | None = None
+    # Only enforce once email actually works.
+    require_email_verification: bool = False
+
+    # Sign in with Google (Google Cloud console -> OAuth client ID, type "Web")
+    google_client_id: str | None = None
+    # Cloudflare Turnstile captcha on sign-up + sharing (optional)
+    turnstile_secret: str | None = None
+    turnstile_site_key: str | None = None   # public half, handed to the website
+    # Error tracking (optional)
+    sentry_dsn: str | None = None
 
     # India Sync settings
     overpass_api_url: str = "https://overpass-api.de/api/interpreter"

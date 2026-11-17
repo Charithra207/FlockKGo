@@ -41,6 +41,18 @@ export const CATEGORY_META = {
   other: { label: 'Other', emoji: '📍' },
 }
 
+export const SAFETY_META = {
+  monsoon_danger: { emoji: '🌊', label: 'Dangerous in monsoon', tip: 'Strong currents and flash floods from June to September. Stay well back from the water.' },
+  slippery: { emoji: '⚠️', label: 'Slippery rocks', tip: 'Wear shoes with grip. Moss makes rocks very slippery.' },
+  steep: { emoji: '⛰️', label: 'Steep climb', tip: 'Steep or exposed path. Not for small kids or after dark.' },
+  no_swimming: { emoji: '🚫', label: 'No swimming', tip: 'Deep or fast water. Do not enter.' },
+  no_network: { emoji: '📵', label: 'No phone network', tip: 'Tell someone your plan and download offline maps first.' },
+  forest_permission: { emoji: '🌳', label: 'Forest permission needed', tip: 'Inside a forest or reserve: entry may need a permit and is often closed in monsoon.' },
+  wildlife: { emoji: '🐘', label: 'Wildlife area', tip: 'Elephants and bison move here. Keep quiet, keep distance, leave before dusk.' },
+  private_property: { emoji: '🏡', label: 'Private land nearby', tip: 'Ask before entering estates or farms.' },
+  no_facilities: { emoji: '🚻', label: 'No food or toilets', tip: 'Carry water and snacks, and bring your trash back.' },
+}
+
 export const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 
 const lang = () => useLang.getState().lang

@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import toast from 'react-hot-toast'
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
+import GoogleButton from '../components/auth/GoogleButton'
+import Turnstile, { Honeypot } from '../components/auth/Turnstile'
 import { authApi } from '../services/spotsService'
 import useAuthStore from '../store/authStore'
 import { useT } from '../i18n'
@@ -13,6 +15,8 @@ export default function Login() {
   const [mode, setMode] = useState('register')
   const [form, setForm] = useState({ email: '', password: '', display_name: '' })
   const [busy, setBusy] = useState(false)
+  const [captcha, setCaptcha] = useState(null)
+  const [website, setWebsite] = useState('')
 
   const next = params.get('next') || '/explore'
   const safeNext = next.startsWith('/') && !next.startsWith('//') ? next : '/explore'
@@ -22,16 +26,20 @@ export default function Login() {
     setBusy(true)
     try {
       const r = mode === 'register'
-        ? await authApi.register(form)
+        ? await authApi.register({ ...form, captcha_token: captcha || undefined, website: website || undefined })
         : await authApi.login({ email: form.email, password: form.password })
-      setSession(r.token, r.user)
-      toast.success(mode === 'register' ? 'Welcome! You have 1 free unlock 🎁' : `Welcome back, ${r.user.display_name}`)
-      navigate(safeNext)
+      done(r, mode === 'register')
     } catch (err) {
       toast.error(err.message)
     } finally {
       setBusy(false)
     }
+  }
+
+  function done(r, isNew) {
+    setSession(r.token, r.user)
+    toast.success(isNew ? 'Welcome! You have 1 free unlock 🎁' : `Welcome back, ${r.user.display_name}`)
+    navigate(safeNext)
   }
 
   const input = 'w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm focus:border-primary focus:outline-none'
@@ -50,7 +58,12 @@ export default function Login() {
         ))}
       </div>
 
-      <form onSubmit={submit} className="space-y-4">
+      <div className="mb-4">
+        <GoogleButton onSession={(r) => done(r, false)} />
+      </div>
+
+      <form onSubmit={submit} className="relative space-y-4">
+        <Honeypot value={website} onChange={setWebsite} />
         {mode === 'register' && (
           <label className="block">
             <span className="text-sm font-semibold text-slate-700">{t('login.name')}</span>
@@ -73,13 +86,23 @@ export default function Login() {
             className={input}
           />
           {mode === 'register' && <span className="text-xs text-slate-400">{t('login.min')}</span>}
+          {mode === 'login' && (
+            <Link to="/forgot-password" className="mt-1 block text-right text-xs font-semibold text-primary">Forgot password?</Link>
+          )}
         </label>
+        {mode === 'register' && <Turnstile onToken={setCaptcha} />}
         <button disabled={busy} className="w-full rounded-xl bg-primary py-3 font-semibold text-white hover:opacity-90 disabled:opacity-50">
           {busy ? '…' : mode === 'register' ? t('login.create') : t('login.login')}
         </button>
       </form>
       {mode === 'register' && (
-        <p className="mt-4 text-center text-xs text-slate-400">{t('login.free')}</p>
+        <>
+          <p className="mt-4 text-center text-xs text-slate-400">{t('login.free')}</p>
+          <p className="mt-2 text-center text-xs text-slate-400">
+            By signing up you agree to the <Link to="/terms" className="underline">Terms</Link> and{' '}
+            <Link to="/privacy" className="underline">Privacy policy</Link>.
+          </p>
+        </>
       )}
     </div>
   )

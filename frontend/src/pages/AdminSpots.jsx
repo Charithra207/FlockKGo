@@ -5,6 +5,7 @@ import { Navigate } from 'react-router-dom'
 import EmptyState from '../components/common/EmptyState'
 import LoadingSpinner from '../components/common/LoadingSpinner'
 import SpotMap from '../components/spots/SpotMap'
+import { ReportsQueue, ResetLinkTool } from '../components/spots/AdminExtras'
 import { categoryLabel, directionsUrl, MONTHS, photoSrc, spotsApi } from '../services/spotsService'
 import useAuthStore from '../store/authStore'
 
@@ -38,6 +39,7 @@ export default function AdminSpots() {
 
   return (
     <div className="space-y-6">
+      <ReportsQueue />
       <h1 className="text-2xl font-extrabold text-primary">Review queue ({items.length})</h1>
       {items.length === 0 && <EmptyState emoji="✅" title="All caught up" />}
       {items.map((s) => (
@@ -72,6 +74,7 @@ export default function AdminSpots() {
           <SpotMap spots={[s]} center={[s.latitude, s.longitude]} zoom={13} height={300} />
         </div>
       ))}
+      <ResetLinkTool />
     </div>
   )
 }
