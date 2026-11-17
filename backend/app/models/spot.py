@@ -102,3 +102,19 @@ class SpotReport(Base):
     note = Column(String(500), nullable=True)
     status = Column(String(20), nullable=False, default="open", index=True)  # open | resolved
     created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
+
+
+class SpotReview(Base):
+    """A star rating + short review + up to 4 photos. One per person per spot."""
+    __tablename__ = "spot_reviews"
+    __table_args__ = (UniqueConstraint("user_id", "spot_id", name="uq_spot_review"),)
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    spot_id = Column(Uuid, ForeignKey("spots.id", ondelete="CASCADE"), nullable=False, index=True)
+    user_id = Column(Uuid, ForeignKey("users.id", ondelete="CASCADE"), nullable=False, index=True)
+    rating = Column(Integer, nullable=False)          # 1-5
+    text = Column(Text, nullable=True)
+    photos = Column(JSON, nullable=False, default=list)  # ["/v1/photos/<id>", ...]
+    visited_month = Column(String(7), nullable=True)  # "2026-07"
+    created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
+    updated_at = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=False)

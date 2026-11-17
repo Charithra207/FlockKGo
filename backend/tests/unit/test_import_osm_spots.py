@@ -101,3 +101,8 @@ def test_wikidata_candidates_keep_documented_only():
     assert set(by) == {"Q1", "Q3"}
     assert by["Q3"]["category"] == "trek" and by["Q3"]["extra"]["ele"] == "1234"
     assert (by["Q1"]["latitude"], by["Q1"]["longitude"]) == (13.2, 75.5)
+
+
+def test_description_skips_zero_distance():
+    row = {"category": "waterfall", "district": "Bengaluru South", "extra": {}}
+    assert m._describe(row, "Chunchi Falls", 0.3) == "Waterfall in Bengaluru South district."

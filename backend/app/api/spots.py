@@ -502,6 +502,12 @@ def get_spot(
         vouched=spot.id in vouched, mine=mine,
     )
     out["my_mark"] = _my_marks(db, user, [spot.id]).get(spot.id)
+    if user and out["my_mark"] == "been":  # so the stamp shows your visit date after a reload
+        m = db.query(PlaceMark).filter(PlaceMark.user_id == user.id, PlaceMark.spot_id == spot.id).first()
+        out["my_mark_detail"] = {
+            "visited_on": m.visited_on.isoformat() if m and m.visited_on else None,
+            "photo_verified": bool(m and m.photo_verified),
+        }
     out["locals_pick"] = spot.id in _locals(db, [spot])
     return out
 

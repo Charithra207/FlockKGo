@@ -16,7 +16,8 @@ from app.models.checklist import ChecklistItem  # noqa
 from app.models.expense import Expense, ExpenseSplit  # noqa
 # Karnataka spots — give a spot, get a spot
 from app.models.user import User  # noqa
-from app.models.spot import Spot, SpotReport, SpotUnlock, SpotVouch  # noqa
+from app.models.spot import Spot, SpotReport, SpotReview, SpotUnlock, SpotVouch  # noqa
 from app.models.photo import Photo  # noqa
 from app.models.place_mark import PlaceMark  # noqa
 from app.models.trip_member import TripMember  # noqa
+from app.models.trip_comment import TripComment  # noqa

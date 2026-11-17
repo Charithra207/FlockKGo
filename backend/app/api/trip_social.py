@@ -7,6 +7,8 @@ GET    /v1/trips/{id}/destination   the group's chosen place (vote winner, else 
 POST   /v1/trips/{id}/join          "I'm on this trip" (logged in)
 DELETE /v1/trips/{id}/join          leave
 GET    /v1/trips/{id}/memories      who's on the trip, who has stamped the place, trip photos
+GET    /v1/trips/{id}/comments      trip notes / chat (?after=<last id> for polling)
+POST   /v1/trips/{id}/comments      {text, author_name?}
 
 Anyone with the trip link can see memories (the link is already the trip's
 access control). Trip photos are only shown for members with public profiles.
@@ -15,11 +17,13 @@ access control). Trip photos are only shown for members with public profiles.
 import uuid
 from typing import Optional
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Request
+from pydantic import BaseModel, Field
 from sqlalchemy import func
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
+from app.api.trips import limiter
 from app.dependencies import get_db
 from app.services.voting_service import RankedChoiceVoting
 from app.models.destination import Destination
@@ -27,6 +31,7 @@ from app.models.place_mark import PlaceMark
 from app.models.recommendation import Recommendation
 from app.models.trip import Trip
 from app.models.trip_member import TripMember
+from app.models.trip_comment import TripComment
 from app.models.user import User
 from app.models.vote import Vote
 from app.services.user_auth import get_current_user, get_optional_user
@@ -153,3 +158,48 @@ def trip_memories(
         "me_joined": bool(viewer and any(u.id == viewer.id for _, u in rows)),
         "stamped_count": sum(1 for m in members if m["stamped"]),
     }
+
+
+# ── Trip notes / chat ─────────────────────────────────────────────────────────
+
+class CommentIn(BaseModel):
+    text: str = Field(min_length=1, max_length=1000)
+    author_name: Optional[str] = Field(default=None, max_length=80)  # if not logged in
+
+
+@router.get("/{trip_id}/comments")
+def list_comments(trip_id: uuid.UUID, after: int = 0, db: Session = Depends(get_db)):
+    trip = _get_trip(db, trip_id)
+    rows = (
+        db.query(TripComment, User).outerjoin(User, User.id == TripComment.user_id)
+        .filter(TripComment.trip_id == trip.id, TripComment.id > after)
+        .order_by(TripComment.id.asc()).limit(300).all()
+    )
+    return {"items": [
+        {
+            "id": c.id, "text": c.text, "author_name": c.author_name,
+            "username": u.username if u else None, "avatar_url": u.avatar_url if u else None,
+            "created_at": c.created_at.isoformat() if c.created_at else None,
+        }
+        for c, u in rows
+    ]}
+
+
+@router.post("/{trip_id}/comments", status_code=201)
+@limiter.limit("30/minute")
+def add_comment(
+    request: Request,
+    trip_id: uuid.UUID,
+    body: CommentIn,
+    db: Session = Depends(get_db),
+    user: Optional[User] = Depends(get_optional_user),
+):
+    trip = _get_trip(db, trip_id)
+    name = user.display_name if user else (body.author_name or "").strip()
+    if not name:
+        raise HTTPException(status_code=422, detail="Add your name (or log in)")
+    c = TripComment(trip_id=trip.id, user_id=user.id if user else None, author_name=name[:80], text=body.text.strip())
+    db.add(c)
+    db.commit()
+    db.refresh(c)
+    return {"id": c.id}

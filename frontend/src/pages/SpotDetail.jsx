@@ -7,6 +7,8 @@ import SpotCard from '../components/spots/SpotCard'
 import SpotMap from '../components/spots/SpotMap'
 import SafetyNotes from '../components/spots/SafetyNotes'
 import ReportButton from '../components/spots/ReportButton'
+import LiveConditions from '../components/spots/LiveConditions'
+import Reviews from '../components/spots/Reviews'
 import MarkButtons from '../components/profile/MarkButtons'
 import { BoardingPass, PassportStamp } from '../components/profile/TravelBadges'
 import { categoryLabel, catName, directionsUrl, monthNames, photoSrc, spotsApi, spotTitle } from '../services/spotsService'
@@ -171,7 +173,10 @@ export default function SpotDetail() {
               </div>
             )}
 
-            <div className="mt-4"><SafetyNotes spot={spot} /></div>
+            <div className="mt-4 space-y-3">
+              <SafetyNotes spot={spot} />
+              <LiveConditions lat={spot.latitude ?? spot.approx_latitude} lng={spot.longitude ?? spot.approx_longitude} category={spot.category} />
+            </div>
 
             {spot.locked ? (
               <div className="mt-5 rounded-xl border-2 border-dashed border-accent/40 bg-accent/5 p-5">
@@ -279,6 +284,7 @@ export default function SpotDetail() {
         </div>
       </div>
 
+      {!spot.locked && spot.status === 'approved' && <Reviews spot={spot} />}
       <Nearby spot={spot} />
     </div>
   )

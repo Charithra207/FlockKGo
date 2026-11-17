@@ -1,4 +1,5 @@
-﻿import { useCallback } from 'react'
+import TripNotes from '../components/trip/TripNotes'
+import { useCallback } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-hot-toast'
 import { Copy, Check } from 'lucide-react'
@@ -205,6 +206,8 @@ export default function TripDashboard() {
           🎒 Packing, expenses &amp; SOS
         </Link>
       </div>
+
+      <TripNotes tripId={trip.id} />
     </div>
   )
 }

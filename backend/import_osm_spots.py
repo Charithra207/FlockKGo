@@ -576,7 +576,7 @@ def _describe(row: dict, hub_name: str | None, hub_km: float | None) -> str:
     noun = {"waterfall": "Waterfall", "viewpoint": "Viewpoint", "trek": "Hilltop / peak",
             "cafe": "Cafe", "lake": "Lake"}.get(row["category"], "Place")
     bits = [f"{noun} in {row['district']} district"]
-    if hub_name and hub_km is not None:
+    if hub_name and hub_km is not None and hub_km >= 1:  # "about 0 km from X" reads oddly
         bits[0] += f", about {round(hub_km)} km from {hub_name}"
     text = bits[0] + "."
     if x.get("description_en"):
@@ -628,6 +628,8 @@ def load() -> None:
                         continue  # an admin edited it; leave it alone
                     s.name, s.latitude, s.longitude = r["name"], r["latitude"], r["longitude"]
                     s.extra = {**(s.extra or {}), **r["extra"]}
+                    if r["category"] != "cafe":
+                        s.description = _describe(r, hub.name if hub else None, km)
                     updated += 1
                     continue
                 db.add(Spot(

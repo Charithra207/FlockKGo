@@ -9,7 +9,7 @@ from slowapi.errors import RateLimitExceeded
 
 from app.api import admin, analytics, budget, health as health_router, participants, recommendations, surveys, trips, voting, ws, sync_admin
 from app.api import checklist, expenses
-from app.api import accounts, photos, profiles, spots, trip_social
+from app.api import accounts, photos, profiles, reviews, spots, trip_social
 from app.config import get_settings
 from app.core.logging import configure_logging, get_logger
 from app.core.middleware import AccessLogMiddleware, RequestIDMiddleware
@@ -20,6 +20,19 @@ from app.monitoring.metrics import llm_circuit_breaker_state, ws_active_connecti
 # Configure structured logging before anything else
 configure_logging()
 log = get_logger(__name__)
+
+if get_settings().sentry_dsn:  # error tracking, only when SENTRY_DSN is set
+    try:
+        import sentry_sdk
+
+        sentry_sdk.init(
+            dsn=get_settings().sentry_dsn,
+            environment=get_settings().environment,
+            traces_sample_rate=0.05,
+            send_default_pii=False,  # no emails / IPs in error reports
+        )
+    except Exception:  # pragma: no cover - never block startup on monitoring
+        pass
 
 app = FastAPI(title="FlockGo API", version="1.0.0")
 app.state.limiter = trips.limiter
@@ -74,6 +87,7 @@ app.include_router(spots.router, prefix="/v1")
 app.include_router(photos.router, prefix="/v1")
 app.include_router(profiles.router, prefix="/v1")
 app.include_router(trip_social.router, prefix="/v1")
+app.include_router(reviews.router, prefix="/v1")
 
 
 # ── Health + utility endpoints ────────────────────────────────────────────────

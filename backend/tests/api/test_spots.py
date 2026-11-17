@@ -12,7 +12,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import StaticPool
 
 import app.models  # noqa: F401
-from app.api import accounts, photos, profiles, spots, trip_social
+from app.api import accounts, photos, profiles, reviews, spots, trip_social
 from app.api.trips import limiter
 from app.db.database import Base
 from app.dependencies import get_db
@@ -47,6 +47,7 @@ def ctx():
     api.include_router(photos.router, prefix="/v1")
     api.include_router(profiles.router, prefix="/v1")
     api.include_router(trip_social.router, prefix="/v1")
+    api.include_router(reviews.router, prefix="/v1")
 
     def _db():
         s = Session()
