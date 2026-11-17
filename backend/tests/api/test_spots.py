@@ -272,3 +272,20 @@ def test_edit_rules(ctx):
     assert client.patch(f"/v1/spots/{sid}", json={"name": "New"}, headers=owner_h).status_code == 403
     r = client.patch(f"/v1/spots/{sid}", json={"name": "Renamed by admin", "photo_url": ""}, headers=admin_h)
     assert r.status_code == 200 and r.json()["name"] == "Renamed by admin" and r.json()["photo_url"] is None
+
+
+def test_admin_emails_setting_promotes_on_signup_and_admin_request(ctx, monkeypatch):
+    from app.config import get_settings
+
+    client, _ = ctx
+    regular_h, _ = _signup(client, "early@example.com")  # signed up before being listed
+    monkeypatch.setattr(get_settings(), "admin_emails", " Boss@Example.com , early@example.com")
+
+    _, boss = _signup(client, "boss@example.com")
+    assert boss["is_admin"] is True
+    # Existing account: promoted on its first admin request, no re-login needed.
+    assert client.get("/v1/admin/spots/pending", headers=regular_h).status_code == 200
+    assert client.get("/v1/auth/me", headers=regular_h).json()["is_admin"] is True
+
+    _, other = _signup(client, "someone@example.com")
+    assert other["is_admin"] is False

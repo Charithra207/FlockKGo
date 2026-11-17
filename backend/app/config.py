@@ -25,6 +25,9 @@ class Settings(BaseSettings):
     signup_bonus_credits: int = 1          # one free unlock to show the value
     credits_per_hidden_spot: int = 3       # reward when a hidden spot is approved
     credits_per_public_spot: int = 1       # reward when a cafe/public spot is approved
+    # Comma-separated emails that become admin when they sign up / log in
+    # (so you don't need a server shell to run make_admin.py).
+    admin_emails: str = ""
     max_pending_submissions: int = 5       # anti-spam: per user
 
     # India Sync settings

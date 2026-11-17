@@ -147,7 +147,7 @@ npm install
 npm run dev                       # http://localhost:5173 (proxies /v1 to :8000)
 ```
 
-Make yourself an admin locally: sign up in the app, then run `python make_admin.py you@example.com`.
+Make yourself an admin: put your email in `ADMIN_EMAILS` (or run `python make_admin.py you@example.com`), then sign up or log in.
 
 **Tests:**
 
@@ -193,6 +193,7 @@ Full interactive docs: `/docs` on the API.
 | `API_SECRET_KEY` | production | Admin secret for creating site API keys; turns on API-key checks |
 | `AUTH_TOKEN_SECRET` | production | Signs user login tokens (Render generates it) |
 | `FRONTEND_BASE_URL` | production | Your Vercel URL, for CORS |
+| `ADMIN_EMAILS` | production | Your login email(s), comma-separated; these accounts become admin |
 | `ENVIRONMENT` | production | `production` |
 | `USE_CELERY` | no | Keep `false` unless you run a Celery worker + Redis |
 | `OPENAI_API_KEY` | no | Nicer descriptions and semantic scoring |

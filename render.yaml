@@ -28,6 +28,8 @@ services:
         generateValue: true  # signs user login tokens
       - key: API_SECRET_KEY
         sync: false          # admin secret: openssl rand -hex 32
+      - key: ADMIN_EMAILS
+        sync: false          # your login email(s), comma-separated: become admin on login
       - key: OPENAI_API_KEY
         sync: false          # optional: better descriptions + embeddings
       - key: USE_CELERY

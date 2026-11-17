@@ -117,5 +117,14 @@ def get_current_user(user: Optional[User] = Depends(get_optional_user)) -> User:
 
 def get_admin_user(user: User = Depends(get_current_user)) -> User:
     if not user.is_admin:
+        # Accounts listed in ADMIN_EMAILS are promoted on first admin request.
+        from sqlalchemy.orm import object_session
+
+        allowed = {e.strip().lower() for e in get_settings().admin_emails.split(",") if e.strip()}
+        db = object_session(user)
+        if user.email.lower() in allowed and db is not None:
+            user.is_admin = True
+            db.commit()
+    if not user.is_admin:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Admins only")
     return user

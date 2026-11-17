@@ -1,10 +1,18 @@
-import { Compass, Gift, Lock, UserRound } from 'lucide-react'
+import { Compass, Gift, LogIn, Lock, ShieldCheck, UserRound } from 'lucide-react'
+import { useEffect } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { useLang, useT } from '../../i18n'
+import { authApi } from '../../services/spotsService'
 import useAuthStore from '../../store/authStore'
 
 export default function Navbar() {
-  const { token, user } = useAuthStore()
+  const { token, user, setUser } = useAuthStore()
+
+  // Refresh credits / admin status once per page load.
+  useEffect(() => {
+    if (token) authApi.me().then(setUser).catch(() => {})
+  }, [token, setUser])
+
   const t = useT()
   const { lang, setLang } = useLang()
   const link = ({ isActive }) =>
@@ -21,15 +29,26 @@ export default function Navbar() {
           <NavLink to="/spots/share" className={link}>
             <Gift className="h-4 w-4" /> <span className="hidden sm:inline">{t('nav.share')}</span>
           </NavLink>
+          {token && user?.is_admin && (
+            <NavLink to="/admin/spots" className={link} title="Review spots">
+              <ShieldCheck className="h-4 w-4" /> <span className="hidden md:inline">Admin</span>
+            </NavLink>
+          )}
           {token ? (
-            <NavLink to="/me" className={link}>
+            <NavLink to="/me" className={link} title="My account">
               <UserRound className="h-4 w-4" />
-              <span className="inline-flex items-center gap-0.5 rounded-full bg-accent/10 px-2 py-0.5 text-xs text-accent">
+              <span className="hidden max-w-[8rem] truncate md:inline">{user?.display_name || 'Me'}</span>
+              <span className="inline-flex items-center gap-0.5 rounded-full bg-accent/10 px-2 py-0.5 text-xs text-accent" title="Unlock credits">
                 <Lock className="h-3 w-3" /> {user?.unlock_credits ?? 0}
               </span>
             </NavLink>
           ) : (
-            <NavLink to="/login" className={link}>{t('nav.login')}</NavLink>
+            <NavLink
+              to="/login"
+              className="inline-flex items-center gap-1.5 rounded-lg border-2 border-primary px-3 py-1.5 text-sm font-semibold text-primary hover:bg-primary hover:text-white"
+            >
+              <LogIn className="h-4 w-4" /> {t('nav.login')}
+            </NavLink>
           )}
           <button
             onClick={() => setLang(lang === 'kn' ? 'en' : 'kn')}
