@@ -1,29 +1,37 @@
 import { AnimatePresence, motion } from 'framer-motion'
+import { lazy, Suspense } from 'react'
 import { Route, Routes, useLocation } from 'react-router-dom'
+import LoadingSpinner from './components/common/LoadingSpinner'
 import ErrorBoundary from './components/common/ErrorBoundary'
 import Footer from './components/layout/Footer'
 import Navbar from './components/layout/Navbar'
-import AdminSpots from './pages/AdminSpots'
-import { ForgotPassword, Privacy, ResetPassword, Terms, VerifyEmail } from './pages/AccountPages'
 import VerifyBanner from './components/auth/VerifyBanner'
-import Collections from './pages/Collections'
-import CreateTrip from './pages/CreateTrip'
-import EditProfile from './pages/EditProfile'
-import Explore from './pages/Explore'
 import Home from './pages/Home'
-import Login from './pages/Login'
-import MySpots from './pages/MySpots'
 import NotFound from './pages/NotFound'
-import Profile from './pages/Profile'
-import Recommendations from './pages/Recommendations'
-import Results from './pages/Results'
-import ShareSpot from './pages/ShareSpot'
-import SpotDetail from './pages/SpotDetail'
-import Survey from './pages/Survey'
-import TripCompanion from './pages/TripCompanion'
-import TripDashboard from './pages/TripDashboard'
-import Voting from './pages/Voting'
-import Wrapped from './pages/Wrapped'
+
+// Pages load on demand, so the first visit downloads much less.
+const AdminSpots = lazy(() => import('./pages/AdminSpots'))
+const ForgotPassword = lazy(() => import('./pages/AccountPages').then((m) => ({ default: m.ForgotPassword })))
+const Privacy = lazy(() => import('./pages/AccountPages').then((m) => ({ default: m.Privacy })))
+const ResetPassword = lazy(() => import('./pages/AccountPages').then((m) => ({ default: m.ResetPassword })))
+const Terms = lazy(() => import('./pages/AccountPages').then((m) => ({ default: m.Terms })))
+const VerifyEmail = lazy(() => import('./pages/AccountPages').then((m) => ({ default: m.VerifyEmail })))
+const Collections = lazy(() => import('./pages/Collections'))
+const CreateTrip = lazy(() => import('./pages/CreateTrip'))
+const EditProfile = lazy(() => import('./pages/EditProfile'))
+const Explore = lazy(() => import('./pages/Explore'))
+const Login = lazy(() => import('./pages/Login'))
+const MySpots = lazy(() => import('./pages/MySpots'))
+const Profile = lazy(() => import('./pages/Profile'))
+const Recommendations = lazy(() => import('./pages/Recommendations'))
+const Results = lazy(() => import('./pages/Results'))
+const ShareSpot = lazy(() => import('./pages/ShareSpot'))
+const SpotDetail = lazy(() => import('./pages/SpotDetail'))
+const Survey = lazy(() => import('./pages/Survey'))
+const TripCompanion = lazy(() => import('./pages/TripCompanion'))
+const TripDashboard = lazy(() => import('./pages/TripDashboard'))
+const Voting = lazy(() => import('./pages/Voting'))
+const Wrapped = lazy(() => import('./pages/Wrapped'))
 
 const pageTransition = {
   initial: { opacity: 0, y: 12 },
@@ -33,7 +41,11 @@ const pageTransition = {
 
 /** Wraps a page element in its own ErrorBoundary so one crash stays isolated. */
 function Page({ children }) {
-  return <ErrorBoundary>{children}</ErrorBoundary>
+  return (
+    <ErrorBoundary>
+      <Suspense fallback={<LoadingSpinner message="Loading…" />}>{children}</Suspense>
+    </ErrorBoundary>
+  )
 }
 
 export default function App() {

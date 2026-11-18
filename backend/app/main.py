@@ -48,6 +48,9 @@ def _create_tables():
 
 
 # ── Middleware (order matters — first added = outermost) ──────────────────────
+from fastapi.middleware.gzip import GZipMiddleware  # noqa: E402
+
+app.add_middleware(GZipMiddleware, minimum_size=1000)  # spot lists shrink ~7x
 app.add_middleware(AccessLogMiddleware)
 app.add_middleware(RequestIDMiddleware)
 app.add_middleware(
