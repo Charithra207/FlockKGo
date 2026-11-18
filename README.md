@@ -221,6 +221,11 @@ Full interactive docs: `/docs` on the API.
 | `OPENAI_API_KEY` | no | Nicer descriptions and semantic scoring |
 | `REDIS_URL` | no | Cache / Celery broker |
 | `TRAWEX_API_URL`, `TRAWEX_API_KEY` | no | Live bus prices (without them the app shows official booking links) |
+| `RESEND_API_KEY`, `MAIL_FROM` (or `SMTP_*`) | no | Password-reset and verification emails |
+| `GOOGLE_CLIENT_ID` | no | "Sign in with Google" |
+| `TURNSTILE_SECRET`, `TURNSTILE_SITE_KEY` | no | Cloudflare "I'm human" check on sign-up and sharing |
+| `SENTRY_DSN` | no | Error tracking (frontend: `VITE_SENTRY_DSN` on Vercel) |
+| `REQUIRE_EMAIL_VERIFICATION` | no | `true` = only verified emails can share spots (needs email set up) |
 | `WIKIMEDIA_CONTACT` | no | Contact string, only needed to refresh spots from Wikidata |
 
 **Frontend** (Vercel):

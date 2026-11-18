@@ -91,6 +91,52 @@ No Render Shell is needed. If you'd rather run the script on your own computer, 
 
 ---
 
+## 7. Optional features (each switches on when you add its key)
+
+All of these are off until you set them, and the site works fine without them. Add server keys in
+**Render → packvote-api → Environment**, then click **Save, rebuild, and deploy**.
+`GET /v1/auth/config` on the API shows which ones are on.
+
+| Feature | Render keys | Where to get them | Cost |
+|---|---|---|---|
+| Password-reset + verification emails | `RESEND_API_KEY`, `MAIL_FROM` | resend.com | free: 3,000/month |
+| Sign in with Google | `GOOGLE_CLIENT_ID` | Google Cloud console | free |
+| "I'm human" check on sign-up and sharing | `TURNSTILE_SECRET`, `TURNSTILE_SITE_KEY` | Cloudflare Turnstile | free |
+| Error tracking | `SENTRY_DSN` (Render) + `VITE_SENTRY_DSN` (Vercel) | sentry.io | free tier |
+| Page-view analytics | none | Vercel → project → **Analytics → Enable** | free on Hobby |
+| Only verified emails can share spots | `REQUIRE_EMAIL_VERIFICATION=true` | turn on after email works | |
+
+### Email (Resend)
+1. Sign up at resend.com → **API Keys → Create** → copy the key into `RESEND_API_KEY`.
+2. Until you verify a domain, Resend only delivers to **your own sign-up email**. For testing, leave `MAIL_FROM` unset (it defaults to `FlockGo <onboarding@resend.dev>`).
+3. To email everyone: **Domains → Add domain**, add the DNS records it shows, then set `MAIL_FROM` to e.g. `FlockGo <hello@yourdomain.com>`.
+4. Without email, admins can still make a password-reset link at `/admin/spots` (bottom of the page) and send it on WhatsApp.
+
+SMTP works instead of Resend: set `SMTP_HOST`, `SMTP_PORT` (587), `SMTP_USER`, `SMTP_PASSWORD`, `MAIL_FROM`.
+
+### Google sign-in
+1. console.cloud.google.com → create a project → **APIs & Services → OAuth consent screen**: External, app name FlockGo, your support email, then **Publish app**.
+2. **Credentials → Create credentials → OAuth client ID** → type **Web application**.
+3. **Authorised JavaScript origins**: `https://flock-k-go.vercel.app` (and `http://localhost:5173` for local testing). No redirect URI is needed.
+4. Copy the **Client ID** (ends in `.apps.googleusercontent.com`) into `GOOGLE_CLIENT_ID` on Render. The website picks it up from the API automatically.
+
+### Captcha (Cloudflare Turnstile)
+1. dash.cloudflare.com (free account) → **Turnstile → Add widget**, domain `flock-k-go.vercel.app`, mode **Managed**.
+2. Copy the **Site key** into `TURNSTILE_SITE_KEY` and the **Secret key** into `TURNSTILE_SECRET` on Render.
+3. A hidden honeypot field already blocks simple bots even without this.
+
+### Error tracking (Sentry)
+1. sentry.io → create two projects: **FastAPI** and **React**.
+2. FastAPI project DSN → `SENTRY_DSN` on Render. React project DSN → `VITE_SENTRY_DSN` on Vercel, then **Redeploy**.
+3. Reports don't include emails or IP addresses.
+
+### Analytics (Vercel)
+Vercel → your project → **Analytics** tab → **Enable**. The code is already in the site; nothing else to set.
+
+## Installable app + link previews (already on)
+- **Installable app:** on a phone, open the site → browser menu → **Add to Home screen**. Spots, profiles and map areas you've opened keep working offline. After a deploy, the new version loads on the next visit.
+- **Link previews:** links to `/spots/…`, `/u/…` and `/u/…/wrapped` show a title, description and image on WhatsApp, Instagram, X, Telegram and Slack (`frontend/api/og.js`, routed by user agent in `frontend/vercel.json`).
+
 ## Refreshing the spot data
 
 The spots in `backend/data/*.json` load automatically on every deploy. To refresh them from OpenStreetMap, run these locally, then commit the JSON files:
@@ -112,4 +158,7 @@ Refreshing from Wikidata also needs `WIKIMEDIA_CONTACT` set to a contact address
 | `Auth error (401/403) … API key` | `VITE_API_KEY` in Vercel is missing or wrong. Fix it, then redeploy. |
 | Blocked by CORS in the browser console | Set `FRONTEND_BASE_URL` on Render to the exact Vercel URL. |
 | Render deploy fails | Open the service's **Logs**, and check that `DATABASE_URL` is set and starts with `postgresql://`. |
+| Google button doesn't appear | `GOOGLE_CLIENT_ID` missing on Render, or the site's address isn't in the OAuth client's **Authorised JavaScript origins**. |
+| Reset emails not arriving | Without a verified domain, Resend only sends to your own address. Check spam, or use the admin reset-link tool. |
+| Old version still showing after a deploy | The installable app caches the shell: close all tabs of the site and reopen it (or pull to refresh twice). |
 | Map is empty | Open `https://<service>.onrender.com/v1/spots/meta`; if counts are 0, check the deploy logs for the `import_osm_spots.py load` step. |
